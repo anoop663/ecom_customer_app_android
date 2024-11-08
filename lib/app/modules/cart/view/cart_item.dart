@@ -1,8 +1,6 @@
 import 'package:ecommerce_app/app/core/values/api_configs.dart';
 import 'package:ecommerce_app/app/core/values/colors.dart';
 import 'package:ecommerce_app/app/modules/cart/controller/cart_controller.dart';
-import 'package:ecommerce_app/app/modules/cart/controller/move_to_wishlist.dart';
-import 'package:ecommerce_app/app/modules/cart/controller/remove_from_cart.dart';
 import 'package:ecommerce_app/app/modules/home/models/home_product_model.dart';
 import 'package:ecommerce_app/app/widgets/curve_button.dart';
 import 'package:ecommerce_app/app/widgets/loading_widget.dart';
@@ -16,10 +14,8 @@ class CartItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final CartController controller = Get.find<CartController>();
-    final RemoveFromCartController removeFromCartController =
-        RemoveFromCartController();
-    final MoveToWishlistController moveToWishlistController =
-        MoveToWishlistController();
+    
+    
 
     return GetBuilder<CartController>(
       builder: (cartController) => Padding(
@@ -148,7 +144,7 @@ class CartItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Obx(() => CurvedButton(
-                          onClick: () => removeFromCartController
+                          onClick: () => controller
                               .removefromCartFunction(product.slug),
                           width: MediaQuery.of(context).size.width * 0.3,
                           height: MediaQuery.of(context).size.height * 0.05,
@@ -166,7 +162,7 @@ class CartItem extends StatelessWidget {
                         )),
                     SizedBox(width: MediaQuery.of(context).size.width * 0.015),
                     Obx(() => CurvedButton(
-                          onClick: () => moveToWishlistController
+                          onClick: () => controller
                               .movetoWishListFunction(product.slug),
                           width: MediaQuery.of(context).size.width * 0.4,
                           height: MediaQuery.of(context).size.height * 0.05,
