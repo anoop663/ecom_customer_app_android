@@ -120,4 +120,15 @@ class AuthService {
     );
     return response;
   }
+
+    Future<http.Response> moveToWishlist(
+      Map<String, dynamic> productDetails) async {
+    final response = await http.post(
+      Uri.parse('${ApiConfig.apiUrl}${ApiConstants.moveToWishlist}'),
+      body: productDetails,
+    );
+    return response;
+  }
+
+
 }

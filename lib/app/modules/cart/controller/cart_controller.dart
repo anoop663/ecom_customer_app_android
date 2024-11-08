@@ -14,37 +14,29 @@ class CartController extends GetxController {
   final loading = false.obs;
   var cartResponse = Rxn<CartResponse>();
   final scrollController = ScrollController();
+  var cartItems = <Product>[].obs;
+  var isRemoving = false.obs;
+  var isMovingToWishlist = false.obs;
 
   @override
   void onInit() {
     super.onInit();
     viewCart();
   }
-   void toggleLoading() {
+
+  void toggleLoading() {
     loading.value = !loading.value;
   }
-  
-   var isRemoving = false.obs;
-  var isMovingToWishlist = false.obs;
 
-  void removeItem(Product product) {
-    isRemoving.value = true;
-    // Perform remove operation
-    isRemoving.value = false;
+  var isRemoving1 = false.obs;
+  var isMovingToWishlist1 = false.obs;
+  var rebuildTrigger = false.obs;
+
+  void refreshCartView() {
+    //viewCart();
+     rebuildTrigger.value = !rebuildTrigger.value;
   }
 
-  void moveToWishList(Product product) {
-    isMovingToWishlist.value = true;
-    // Perform move to wishlist operation
-    isMovingToWishlist.value = false;
-    
-  }
-
-void proceedToCheckout(Product product) {
-    isMovingToWishlist.value = true;
-    // Perform proceed to checkout operation
-    isMovingToWishlist.value = false;
-  }
   void viewCart() async {
     final (String?, String?) idToken = storageProvider.readLoginDetails();
     loading.value = true;
