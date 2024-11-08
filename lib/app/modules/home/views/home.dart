@@ -1,0 +1,470 @@
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecommerce_app/app/routes/routes.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ecommerce_app/app/modules/home/controllers/home_controller.dart';
+import 'package:ecommerce_app/app/core/values/api_configs.dart';
+import 'package:ecommerce_app/app/widgets/appbar.dart';
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final HomeController homeController = Get.put(HomeController());
+
+    homeController.homeLoad();
+
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: CommonAppBar(showLogo: true),
+      body: Obx(() {
+        if (homeController.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (homeController.homeResponse.value != null) {
+          final homeResponse = homeController.homeResponse.value;
+
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                if (homeResponse?.banner1 != null &&
+                    homeResponse!.banner1!.isNotEmpty)
+
+                  //First Banner Carosal
+                  CarouselSlider(
+                    options: CarouselOptions(
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      autoPlay: false,
+                      enlargeCenterPage: false,
+                      aspectRatio: 16 / 9,
+                      viewportFraction: 1.0,
+                    ),
+                    items: homeResponse.banner1!.map((banner) {
+                      return Builder(
+                        builder: (BuildContext context) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Image.network(
+                              '${ApiConfig.bannerImageUrl}${banner.image ?? ''}',
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                            ),
+                          );
+                        },
+                      );
+                    }).toList(),
+                  ),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      /// Brands section
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Our Brands',
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (homeResponse?.featuredbrands != null &&
+                          homeResponse!.featuredbrands!.isNotEmpty)
+
+                        //Brand Slider
+                        CarouselSlider(
+                          options: CarouselOptions(
+                            height: MediaQuery.of(context).size.height * 0.2,
+                            autoPlay: true,
+                            enlargeCenterPage: false,
+                            viewportFraction: 0.34,
+                          ),
+                          items: homeResponse.featuredbrands!.map((brand) {
+                            return Builder(
+                              builder: (BuildContext context) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed(
+                                      Routes.brandproducts,
+                                      arguments: {
+                                        'by': 'brand',
+                                        'value': brand.slug,
+                                      },
+                                    );
+                                  },
+                                  child: Container(
+                                    margin: const EdgeInsets.all(7.0),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      image: DecorationImage(
+                                        image: NetworkImage(brand.image!),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          }).toList(),
+                        ),
+
+                      /// Suggested for you section
+                      SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Suggested for you',
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      //ProductCarousal(),
+                      if (homeResponse?.suggestedProducts != null &&
+                          homeResponse!.suggestedProducts!.isNotEmpty)
+                        CarouselSlider(
+                          options: CarouselOptions(
+                            height: MediaQuery.of(context).size.height *
+                                0.40, // Adjust height as needed
+                            autoPlay: true,
+                            enlargeCenterPage: false,
+                            viewportFraction: 0.455,
+                          ),
+                          items: homeResponse.suggestedProducts!
+                              .map((sugproducts) {
+                            return Builder(
+                              builder: (BuildContext context) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    // Navigate to the product details page using GetX
+                                    Get.toNamed(
+                                      Routes.productdetails,
+                                      arguments: {
+                                        'product-slug': sugproducts.slug
+                                             // Use actual product slug
+                                      },
+                                    );
+                                  },
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.28,
+                                        margin: const EdgeInsets.all(7.0),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                              '${ApiConfig.productImageUrl}${sugproducts.image ?? ''}',
+                                            ),
+                                            fit: BoxFit.cover,
+                                            onError: (exception, stackTrace) {},
+                                          ),
+                                        ),
+                                      ),
+                                      // Name and price below the image
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10.0, top: 1.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              sugproducts.name ??
+                                                  'Unknown Product',
+                                              style: const TextStyle(
+                                                fontSize: 12.0,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            Text(
+                                              '₹ ${sugproducts.price}',
+                                              style: const TextStyle(
+                                                fontSize: 16.0,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          }).toList(),
+                        ),
+
+                      /// Brand Special Section
+                      // SizedBox(height: 16),
+                      if (homeResponse?.banner2 != null &&
+                          homeResponse!.banner2!.isNotEmpty)
+
+                        //First Banner Carosal
+                        CarouselSlider(
+                          options: CarouselOptions(
+                            height: MediaQuery.of(context).size.height * 0.4,
+
+                            autoPlay: false,
+                            enlargeCenterPage: false,
+                            //aspectRatio: 16 / 9,
+                            viewportFraction: 1.0,
+                          ),
+                          items: homeResponse.banner2!.map((bannersecond) {
+                            return Builder(
+                              builder: (BuildContext context) {
+                                return Container(
+                                  width: MediaQuery.of(context).size.width * 1,
+                                  //margin: const EdgeInsets.all(0),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(1.0),
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                          ApiConfig.bannerImageUrl +
+                                              bannersecond.image!),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          }).toList(),
+                        ),
+
+                      /// Best Sellers section
+                      SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Best Sellers',
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (homeResponse?.bestSeller != null &&
+                          homeResponse!.bestSeller!.isNotEmpty)
+                        CarouselSlider(
+                          options: CarouselOptions(
+                            height: MediaQuery.of(context).size.height * 0.40,
+                            autoPlay: true,
+                            enlargeCenterPage: false,
+                            viewportFraction: 0.455,
+                          ),
+                          items: homeResponse.bestSeller!.map((bestproducts) {
+                            return Builder(
+                              builder: (BuildContext context) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      height: MediaQuery.of(context)
+                                              .size
+                                              .height *
+                                          0.28, // Set height of image container
+                                      margin: const EdgeInsets.all(7.0),
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                            '${ApiConfig.productImageUrl}${bestproducts.image ?? ''}',
+                                          ),
+                                          fit: BoxFit.cover,
+                                          onError: (exception, stackTrace) {
+                                            // ignore: avoid_print
+                                            print('error');
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                    // Name and price below the image
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10.0, top: 1.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            bestproducts.name ??
+                                                'Unknown Product',
+                                            style: const TextStyle(
+                                              fontSize: 12.0,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          Text(
+                                            '₹ ${bestproducts.price}',
+                                            style: const TextStyle(
+                                              fontSize: 16.0,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }).toList(),
+                        ),
+
+                      /// Trending Categories
+                      // SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Trending Categories',
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      GridView.builder(
+                        itemCount: homeResponse?.categories?.length ??
+                            0, // Check for null
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 8.0,
+                          mainAxisSpacing: 9.0,
+                          childAspectRatio: 0.75,
+                        ),
+                        itemBuilder: (BuildContext context, int index) {
+                          // Null-safe access to the category and its properties
+                          final category = homeResponse?.categories?[index];
+                          final imageUrl = category?.category?.image ??
+                              ''; // Replace with a placeholder if needed
+                          final categoryTitle =
+                              category?.category?.name ?? 'Unknown Category';
+
+                          return GestureDetector(
+                            onTap: () {
+                              Get.toNamed(
+                                Routes.brandproducts,
+                                arguments: {
+                                  'by': 'category',
+                                  'value': category?.category?.slug,
+                                },
+                              );
+                            },
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      image: DecorationImage(
+                                        image: NetworkImage(imageUrl),
+                                        fit: BoxFit.cover,
+                                        onError: (error, stackTrace) {
+                                          // ignore: avoid_print
+                                          print('Failed to load image: $error');
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  categoryTitle,
+                                  style: const TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                      ),
+
+                      SizedBox(height: 20),
+                      Text(
+                        'Shop Exclusive Deals',
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+
+                      SizedBox(height: 10),
+                      if (homeResponse!.banner1 != null &&
+                          homeResponse.banner1!.isNotEmpty)
+                        //Last BannerCarosal
+                        CarouselSlider(
+                          options: CarouselOptions(
+                            height: MediaQuery.of(context).size.height * 0.3,
+                            autoPlay: false,
+                            enlargeCenterPage: false,
+                            aspectRatio: 16 / 9,
+                            viewportFraction: 1.0,
+                          ),
+                          items: homeResponse.banner3!.map((banner) {
+                            return Builder(
+                              builder: (BuildContext context) {
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8.0),
+                                  child: Image.network(
+                                    '${ApiConfig.bannerImageUrl}${banner.image ?? ''}',
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                  ),
+                                );
+                              },
+                            );
+                          }).toList(),
+                        ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        } else {
+          return Center(
+            child: Text(
+              'Failed to load home page data',
+              style: TextStyle(color: Colors.red),
+            ),
+          );
+        }
+      }),
+    );
+  }
+}

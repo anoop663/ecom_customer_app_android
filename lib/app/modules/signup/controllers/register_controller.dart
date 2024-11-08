@@ -1,0 +1,85 @@
+import 'dart:convert'; // Needed for json decoding
+import 'package:ecommerce_app/app/core/values/enums.dart';
+import 'package:ecommerce_app/app/data/api_provider.dart';
+import 'package:ecommerce_app/app/modules/signup/models/register_model.dart';
+import 'package:ecommerce_app/app/routes/routes.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class SignupController extends GetxController {
+  final AuthService authService = AuthService();
+
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+
+  var isPasswordVisible = true.obs;
+  var isConfirmPasswordVisible = true.obs;
+  var selectedGender = Gender.male.obs;
+  var isLoading = false.obs;
+
+  // Toggles for password visibility
+  void togglePasswordVisibility() {
+    isPasswordVisible.value = !isPasswordVisible.value;
+  }
+
+  void toggleConfirmPasswordVisibility() {
+    isConfirmPasswordVisible.value = !isConfirmPasswordVisible.value;
+  }
+
+  // Function to handle user registration
+  void register() async {
+    if (passwordController.text != confirmPasswordController.text) {
+      Get.snackbar('Error', 'Passwords do not match',
+          colorText: Colors.white, backgroundColor: Colors.black);
+      return;
+    }
+
+    isLoading.value = true;
+
+    // Construct the user model with input values
+    UserModel userModel = UserModel(
+      name: nameController.text,
+      email: emailController.text,
+      phoneCountryCode: '971',
+      phoneNumber: phoneController.text,
+      password: passwordController.text,
+      gender: selectedGender.value == Gender.male ? 'male' : 'female',
+    );
+
+    try {
+      final response = await authService.registerUser(userModel.toJson());
+
+      isLoading.value = false;
+
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+
+        if (responseData['success'] == 1) {
+          String userId =
+              responseData['customerdata']['id']; // Get user ID from response
+
+          // Navigate to OTP page, passing the user ID
+          Get.snackbar(
+              'Success', responseData['message'] ?? 'Registration successful',
+              colorText: Colors.white, backgroundColor: Colors.black);
+          Get.toNamed(Routes.otp,
+              arguments: {'id': userId}); // Pass 'id' to OTP page
+        } else {
+          Get.snackbar(
+              'Error', responseData['message'] ?? 'Registration failed',
+              colorText: Colors.white, backgroundColor: Colors.black);
+        }
+      } else {
+        Get.snackbar('Error', 'Server error: ${response.statusCode}',
+            colorText: Colors.white, backgroundColor: Colors.black);
+      }
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar('Error', 'Failed to register: $e',
+          colorText: Colors.white, backgroundColor: Colors.black);
+    }
+  }
+}
