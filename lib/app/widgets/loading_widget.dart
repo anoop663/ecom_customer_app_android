@@ -20,7 +20,7 @@ class LoadingWidget extends StatelessWidget {
           AnimationStrings.loadingAnimation,
           alignment: Alignment.center,
           height: height ?? 150,
-          width: width ?? 150,
+          width: 100,
         ),
       ],
     );

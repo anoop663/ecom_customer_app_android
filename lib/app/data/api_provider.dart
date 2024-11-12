@@ -85,8 +85,7 @@ class AuthService {
     return response;
   }
 
-   Future<http.Response> addToCart(
-      Map<String, dynamic> productDetails) async {
+  Future<http.Response> addToCart(Map<String, dynamic> productDetails) async {
     final response = await http.post(
       Uri.parse('${ApiConfig.apiUrl}${ApiConstants.addToCart}'),
       body: productDetails,
@@ -112,8 +111,7 @@ class AuthService {
     return response;
   }
 
-  Future<http.Response> viewtheCart(
-      Map<String, dynamic> cartView) async {
+  Future<http.Response> viewtheCart(Map<String, dynamic> cartView) async {
     final response = await http.post(
       Uri.parse('${ApiConfig.apiUrl}${ApiConstants.cart}'),
       body: cartView,
@@ -121,7 +119,7 @@ class AuthService {
     return response;
   }
 
-    Future<http.Response> moveToWishlist(
+  Future<http.Response> moveToWishlist(
       Map<String, dynamic> productDetails) async {
     final response = await http.post(
       Uri.parse('${ApiConfig.apiUrl}${ApiConstants.moveToWishlist}'),
@@ -130,5 +128,45 @@ class AuthService {
     return response;
   }
 
+  Future<http.Response> addAddress(Map<String, dynamic> productDetails) async {
+    final response = await http.post(
+      Uri.parse('${ApiConfig.apiUrl}${ApiConstants.addAddress}'),
+      body: productDetails,
+    );
+    return response;
+  }
 
+  Future<http.Response> editAddress(Map<String, dynamic> productDetails) async {
+    final response = await http.post(
+      Uri.parse('${ApiConfig.apiUrl}${ApiConstants.editAddress}'),
+      body: productDetails,
+    );
+    return response;
+  }
+
+  Future<http.Response> deleteAddress(
+      Map<String, dynamic> productDetails) async {
+    final response = await http.post(
+      Uri.parse('${ApiConfig.apiUrl}${ApiConstants.removeAddress}'),
+      body: productDetails,
+    );
+    return response;
+  }
+
+  Future<http.Response> updateAddress(
+      Map<String, dynamic> productDetails) async {
+    final response = await http.post(
+      Uri.parse('${ApiConfig.apiUrl}${ApiConstants.editAddress}'),
+      body: productDetails,
+    );
+    return response;
+  }
+
+  Future<http.Response> listAddress(Map<String, dynamic> productDetails) async {
+    final response = await http.post(
+      Uri.parse('${ApiConfig.apiUrl}${ApiConstants.customerAddresses}'),
+      body: productDetails,
+    );
+    return response;
+  }
 }

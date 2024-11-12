@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/app/controllers/base_controller.dart';
 import 'package:ecommerce_app/app/core/values/colors.dart';
 import 'package:ecommerce_app/app/core/values/strings.dart';
+import 'package:ecommerce_app/app/modules/account/view/account_view.dart';
 import 'package:ecommerce_app/app/modules/best_items/view/best_items_view.dart';
 import 'package:ecommerce_app/app/modules/brands/view/brand_view.dart';
 import 'package:ecommerce_app/app/modules/categories/view/categories_view.dart';
@@ -30,7 +31,7 @@ class AppBottomBar extends StatelessWidget {
           BrandPage(),
           BestItems(),
           CategoriesPage(),
-         // ProductPage(),
+          AccountView(),
         ],
       ),
       bottomNavigationBar: Obx(() => BottomAppBar(

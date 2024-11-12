@@ -1,9 +1,12 @@
+import 'package:ecommerce_app/app/modules/account/view/account_view.dart';
+import 'package:ecommerce_app/app/modules/address_manage/view/new_address.dart';
 import 'package:ecommerce_app/app/modules/best_items/view/best_items_view.dart';
 import 'package:ecommerce_app/app/modules/brands/view/brand_products.dart';
 import 'package:ecommerce_app/app/modules/brands/view/brand_view.dart';
 import 'package:ecommerce_app/app/modules/cart/binding/cart_binding.dart';
 import 'package:ecommerce_app/app/modules/cart/view/cart_view.dart';
 import 'package:ecommerce_app/app/modules/categories/view/categories_view.dart';
+import 'package:ecommerce_app/app/modules/checkout/view/checkout_view.dart';
 import 'package:ecommerce_app/app/modules/forgot_pass/view/forgot_pass.dart';
 import 'package:ecommerce_app/app/modules/forgot_pass/view/setnew_pass.dart';
 import 'package:ecommerce_app/app/modules/home/views/home.dart';
@@ -32,6 +35,10 @@ class Routes {
   static const String productdetails = '/product-details';
   static const String wishlist = '/wishlist';
   static const String cart = '/cart';
+  static const String address = '/address';
+  static const String checkout = '/checkout';
+  static const String account = '/account';
+
 
   static final List<GetPage> pages = [
     GetPage(name: home, page: () => HomePage()),
@@ -48,7 +55,10 @@ class Routes {
     GetPage(name: bestItems, page: () => BestItems()),
     GetPage(name: productdetails, page: () => ProductPage()),
     GetPage(name: wishlist, page: () => WishListView()),
-    GetPage(name: Routes.cart, page: () => CartView(), binding: CartBinding(),
+    GetPage(name: Routes.cart, page: () => CartView(), binding: CartBinding()),
+    GetPage(name: address, page: () => CreateAddressView()),
+    GetPage(name: checkout, page: () => CheckoutScreenView()),
+    GetPage(name: account, page: () => AccountView(),
     ),
   ];
 }

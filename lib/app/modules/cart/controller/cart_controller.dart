@@ -18,6 +18,8 @@ class CartController extends GetxController {
   var cartItems = <Product>[].obs;
   var isRemoving = false.obs;
   var isMovingToWishlist = false.obs;
+  var rebuildTrigger = false.obs;
+  var cartResponse1 = Rx<CartModel?>(null);
 
   @override
   void onInit() {
@@ -29,14 +31,7 @@ class CartController extends GetxController {
     loading.value = !loading.value;
   }
 
-  var isRemoving1 = false.obs;
-  var isMovingToWishlist1 = false.obs;
-  var rebuildTrigger = false.obs;
-
   void refreshCartView() {
-    //viewCart();
-    //rebuildTrigger.value = !rebuildTrigger.value;
-    //rebuildTrigger.value = false;
     update();
   }
 
@@ -60,10 +55,9 @@ class CartController extends GetxController {
         final responseData = json.decode(response.body);
 
         if (responseData['success'] == 1) {
-          cartResponse.value = CartResponse.fromJson(responseData);
 
-          Get.snackbar('Success', 'Cart listed successfully',
-              colorText: Colors.white, backgroundColor: Colors.black);
+          cartResponse.value = CartResponse.fromJson(responseData);
+          cartItems.value = cartResponse.value!.products!; // Update cart items
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Items viewing failed',
@@ -81,10 +75,9 @@ class CartController extends GetxController {
   }
 
   // Move to wishlist function
-  var isLoading = false.obs;
-  void movetoWishListFunction(productSlug) async {
+  movetoWishListFunction(productSlug) async {
     (String?, String?) idToken = storageProvider.readLoginDetails();
-    isLoading.value = true;
+    isMovingToWishlist.value = true;
 
     HomeAuth3 homeAuth3 = HomeAuth3(
       id: idToken.$1,
@@ -96,13 +89,16 @@ class CartController extends GetxController {
 
     try {
       final response = await authService.moveToWishlist(homeAuth3.toJson());
-      isLoading.value = false;
-      //Check other status codes
+      isMovingToWishlist.value = false;
+
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
 
         if (responseData['success'] == 1) {
-          refreshCartView();
+          // Remove the item from cartItems
+          cartItems.removeWhere((item) => item.slug == productSlug);
+          cartResponse.refresh();
+          //cartResponse1.refresh();// Update UI
           Get.snackbar('Success', 'Item moved to wishlist',
               colorText: Colors.white, backgroundColor: Colors.black);
         } else {
@@ -114,18 +110,18 @@ class CartController extends GetxController {
             colorText: Colors.white, backgroundColor: Colors.black);
       }
     } catch (e) {
-      isLoading.value = false;
+      isMovingToWishlist.value = false;
       Get.snackbar('Error', 'Failed to move to wishlist: $e',
           colorText: Colors.white, backgroundColor: Colors.black);
     }
   }
 
-// Remove from cart function
-  void removefromCartFunction(productSlug) async {
+  // Remove from cart function
+  removefromCartFunction(productSlug) async {
     (String?, String?) idToken = storageProvider.readLoginDetails();
-    isLoading.value = true;
+    isRemoving.value = true;
 
-    HomeAuth3 homeAuth3 = HomeAuth3(
+    HomeAuth4 homeAuth4 = HomeAuth4(
       id: idToken.$1,
       token: idToken.$2,
       slug: productSlug,
@@ -134,14 +130,17 @@ class CartController extends GetxController {
     );
 
     try {
-      final response = await authService.addToCart(homeAuth3.toJson());
-      isLoading.value = false;
-      //Check other status codes
+      final response = await authService.addToCart(homeAuth4.toJson());
+      isRemoving.value = false;
+
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
 
         if (responseData['success'] == 1) {
-          refreshCartView();
+          // Remove the item from cartItems
+          cartItems.removeWhere((item) => item.slug == productSlug);
+         cartResponse.refresh();
+         //cartResponse1.refresh(); // Update UI
           Get.snackbar('Success', 'Item removed from cart',
               colorText: Colors.white, backgroundColor: Colors.black);
         } else {
@@ -154,7 +153,7 @@ class CartController extends GetxController {
             colorText: Colors.white, backgroundColor: Colors.black);
       }
     } catch (e) {
-      isLoading.value = false;
+      isRemoving.value = false;
       Get.snackbar('Error', 'Failed to remove from Cart: $e',
           colorText: Colors.white, backgroundColor: Colors.black);
     }

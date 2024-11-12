@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecommerce_app/app/modules/cart/controller/cart_controller.dart';
 import 'package:ecommerce_app/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeController homeController = Get.put(HomeController());
+   // ignore: unused_local_variable
+   final CartController cartController = Get.put(CartController());
 
     homeController.homeLoad();
 
@@ -145,12 +148,10 @@ class HomePage extends StatelessWidget {
                               builder: (BuildContext context) {
                                 return GestureDetector(
                                   onTap: () {
-                                    // Navigate to the product details page using GetX
                                     Get.toNamed(
                                       Routes.productdetails,
                                       arguments: {
                                         'product-slug': sugproducts.slug
-                                             // Use actual product slug
                                       },
                                     );
                                   },
@@ -166,15 +167,25 @@ class HomePage extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(12.0),
-                                          image: DecorationImage(
-                                            image: NetworkImage(
-                                              '${ApiConfig.productImageUrl}${sugproducts.image ?? ''}',
-                                            ),
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                          child: Image.network(
+                                            '${ApiConfig.productImageUrl}${sugproducts.image}',
                                             fit: BoxFit.cover,
-                                            onError: (exception, stackTrace) {},
+                                            errorBuilder:
+                                                (context, error, stackTrace) {
+                                              // Display a placeholder image on error
+                                              return Image.asset(
+                                                'assets/images/no_image.png',
+                                                fit: BoxFit.cover,
+                                              );
+                                            },
                                           ),
                                         ),
                                       ),
+
                                       // Name and price below the image
                                       Padding(
                                         padding: const EdgeInsets.only(
@@ -273,58 +284,72 @@ class HomePage extends StatelessWidget {
                           items: homeResponse.bestSeller!.map((bestproducts) {
                             return Builder(
                               builder: (BuildContext context) {
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      height: MediaQuery.of(context)
-                                              .size
-                                              .height *
-                                          0.28, // Set height of image container
-                                      margin: const EdgeInsets.all(7.0),
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                        image: DecorationImage(
-                                          image: NetworkImage(
-                                            '${ApiConfig.productImageUrl}${bestproducts.image ?? ''}',
+                                return GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed(
+                                      Routes.productdetails,
+                                      arguments: {
+                                        'product-slug': bestproducts.slug
+                                      },
+                                    );
+                                  },
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.28,
+                                        margin: const EdgeInsets.all(7.0),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                          child: Image.network(
+                                            '${ApiConfig.productImageUrl}${bestproducts.image}',
+                                            fit: BoxFit.cover,
+                                            errorBuilder:
+                                                (context, error, stackTrace) {
+                                              return Image.asset(
+                                                'assets/images/no_image.png',
+                                                fit: BoxFit.cover,
+                                              );
+                                            },
                                           ),
-                                          fit: BoxFit.cover,
-                                          onError: (exception, stackTrace) {
-                                            // ignore: avoid_print
-                                            print('error');
-                                          },
                                         ),
                                       ),
-                                    ),
-                                    // Name and price below the image
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 10.0, top: 1.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            bestproducts.name ??
-                                                'Unknown Product',
-                                            style: const TextStyle(
-                                              fontSize: 12.0,
-                                              color: Colors.black,
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10.0, top: 1.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              bestproducts.name ??
+                                                  'Unknown Product',
+                                              style: const TextStyle(
+                                                fontSize: 12.0,
+                                                color: Colors.black,
+                                              ),
                                             ),
-                                          ),
-                                          Text(
-                                            '₹ ${bestproducts.price}',
-                                            style: const TextStyle(
-                                              fontSize: 16.0,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w500,
+                                            Text(
+                                              '₹ ${bestproducts.price}',
+                                              style: const TextStyle(
+                                                fontSize: 16.0,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 );
                               },
                             );
@@ -332,7 +357,7 @@ class HomePage extends StatelessWidget {
                         ),
 
                       /// Trending Categories
-                      // SizedBox(height: 16),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

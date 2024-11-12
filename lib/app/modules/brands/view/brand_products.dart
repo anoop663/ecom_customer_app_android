@@ -54,15 +54,29 @@ class BrandProducts extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            height: MediaQuery.of(context).size.height *
-                                0.3, // Adjusted height
+                            height: MediaQuery.of(context).size.height * 0.3,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                    ApiConfig.productImageUrl + product.image),
-                                fit: BoxFit.cover,
-                              ),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10.0),
+                              child: product.image.isNotEmpty
+                                  ? Image.network(
+                                      ApiConfig.productImageUrl + product.image,
+                                      fit: BoxFit.cover,
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        // Display placeholder image on error
+                                        return Image.asset(
+                                          'assets/images/no_image.png',
+                                          fit: BoxFit.cover,
+                                        );
+                                      },
+                                    )
+                                  : Image.asset(
+                                      'assets/images/no_image.png',
+                                      fit: BoxFit.cover,
+                                    ),
                             ),
                           ),
                           const SizedBox(height: 5),

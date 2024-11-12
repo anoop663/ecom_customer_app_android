@@ -17,13 +17,14 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.color,
     this.toolBarTitleWidget,
   });
+  
   final bool showLogo, showSearch, showWishList, showCart;
   final String toolBarTitle;
   final Color? color;
   final Widget? toolBarTitleWidget;
 
-  // Use Get.find to get the CartController instance
-    final CartController controller = Get.put(CartController());
+  // Using Get.find to retrieve the existing CartController instance
+  final CartController controller = Get.find<CartController>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,6 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: color ?? AppColors.primary,
       foregroundColor: AppColors.textColor2,
-      forceMaterialTransparency: false,
       leading: !showLogo
           ? Hero(
               tag: 'logo',
@@ -44,18 +44,14 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                     Get.back();
                   }
                 },
-                child: const Icon(
-                  Icons.arrow_back_ios_new_rounded,
-                ),
+                child: const Icon(Icons.arrow_back_ios_new_rounded),
               ),
             )
           : Hero(
               tag: 'logo',
               child: Padding(
                 padding: const EdgeInsets.only(left: 8.0),
-                child: Image.asset(
-                  ImageStrings.logo,
-                ),
+                child: Image.asset(ImageStrings.logo),
               ),
             ),
       title: toolBarTitleWidget ??
@@ -78,10 +74,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                 Hero(
                   tag: 'search',
                   child: InkWell(
-                    onTap: () async {
-                      await Future.delayed(const Duration(milliseconds: 10));
-                      await Get.toNamed(Routes.signin);
-                    },
+                    onTap: () => Get.toNamed(Routes.signin),
                     child: Image.asset(
                       IconStrings.searchIcon,
                       height: 25,
@@ -90,22 +83,16 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
               if (showWishList)
                 InkWell(
-                    onTap: () async {
-                      await Future.delayed(const Duration(milliseconds: 10));
-                      await Get.toNamed(
-                        Routes.wishlist,
-                      );
-                    },
-                    child: Image.asset(
-                      IconStrings.likeOutlined,
-                      height: 25,
-                      width: 35,
-                    )),
+                  onTap: () => Get.toNamed(Routes.wishlist),
+                  child: Image.asset(
+                    IconStrings.likeOutlined,
+                    height: 25,
+                    width: 35,
+                  ),
+                ),
               if (showCart)
                 InkWell(
-                  onTap: () {
-                    Get.toNamed(Routes.cart);
-                  },
+                  onTap: () => Get.toNamed(Routes.cart),
                   child: SizedBox(
                     height: 30,
                     width: 35,
@@ -118,7 +105,6 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                             height: 25,
                           ),
                         ),
-                        // Cart badge with Obx for dynamic updates
                         Align(
                           alignment: Alignment.topRight,
                           child: Obx(() => CircleAvatar(

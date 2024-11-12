@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/app/core/values/colors.dart';
 import 'package:ecommerce_app/app/core/values/strings.dart';
+import 'package:ecommerce_app/app/modules/cart/controller/cart_controller.dart';
 import 'package:ecommerce_app/app/modules/products/controllers/add_to_cart.dart';
 import 'package:ecommerce_app/app/modules/products/controllers/add_to_wishlist.dart';
 import 'package:ecommerce_app/app/modules/products/controllers/product_controller.dart';
@@ -18,6 +19,7 @@ class ProductPage extends StatelessWidget {
   ProductPage({super.key});
   AddToWishlistController wishlistController = AddToWishlistController();
   AddToCartController addToCartController = AddToCartController();
+  final CartController cartcontroller = Get.put(CartController());
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +31,15 @@ class ProductPage extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         } else if (controller.productResponse.value?.product != null) {
           final product = controller.productResponse.value!.product!;
-
+          final selectoption =
+              controller.productResponse.value!.selectedOption!.first;
+          //print(selectoption);
           return Column(
             children: [
               buildImageSlider(context, product.images!),
               const SizedBox(height: 8),
               buildIndicator(product.images!.length),
-              buildProductDetailsSection(product),
+              buildProductDetailsSection(product, selectoption),
               buildBottomButtons()
             ],
           );
@@ -55,6 +59,13 @@ class ProductPage extends StatelessWidget {
               imageUrl,
               fit: BoxFit.cover,
               width: MediaQuery.of(context).size.width,
+              errorBuilder: (context, error, stackTrace) {
+                return Image.asset(
+                  'assets/images/no_image.png',
+                  fit: BoxFit.cover,
+                  width: MediaQuery.of(context).size.width,
+                );
+              },
             );
           }).toList(),
           options: CarouselOptions(
@@ -102,7 +113,7 @@ class ProductPage extends StatelessWidget {
               // Cart Button
               InkWell(
                 onTap: () {
-                  Get.toNamed(Routes.signin);
+                  Get.toNamed(Routes.cart);
                 },
                 child: SizedBox(
                   height: 30,
@@ -122,8 +133,8 @@ class ProductPage extends StatelessWidget {
                         child: CircleAvatar(
                           radius: 8,
                           backgroundColor: AppColors.accessoriesColor5,
-                          child: const Text(
-                            '0', // Replace with the actual cart count
+                          child:  Text(
+                            '${cartcontroller.cartResponse.value?.cartcount ?? 0}',
                             style: TextStyle(
                               fontSize: 11,
                               color: AppColors.textColor1,
@@ -157,7 +168,7 @@ class ProductPage extends StatelessWidget {
     );
   }
 
-  Widget buildProductDetailsSection(product) {
+  Widget buildProductDetailsSection(product, selectedoption) {
     return Expanded(
       child: Container(
         padding: const EdgeInsets.all(16.0),
@@ -189,6 +200,7 @@ class ProductPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
+            
             const Divider(color: Color.fromARGB(255, 231, 222, 222)),
             buildProductDescription(product.description),
           ],
