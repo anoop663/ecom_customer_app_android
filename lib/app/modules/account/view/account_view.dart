@@ -83,7 +83,6 @@ class AccountView extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 15),
-                      // Support Icons (removed condition for testing)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -138,7 +137,7 @@ class AccountView extends StatelessWidget {
                         fontweight: FontWeight.w500,
                         borderRadius: 4.0,
                         onClick: () {
-                          Get.offAllNamed(Routes.bottombar);
+                          controller.logoutFunction();
                         },
                         width: MediaQuery.of(context).size.width * 0.8,
                         height: 44,
@@ -153,7 +152,6 @@ class AccountView extends StatelessWidget {
     );
   }
 }
-
 
 // Function to show the input popup
 class SupportIcon extends StatelessWidget {

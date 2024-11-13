@@ -144,14 +144,7 @@ class AuthService {
     return response;
   }
 
-  Future<http.Response> deleteAddress(
-      Map<String, dynamic> productDetails) async {
-    final response = await http.post(
-      Uri.parse('${ApiConfig.apiUrl}${ApiConstants.removeAddress}'),
-      body: productDetails,
-    );
-    return response;
-  }
+  
 
   Future<http.Response> updateAddress(
       Map<String, dynamic> productDetails) async {
@@ -162,10 +155,30 @@ class AuthService {
     return response;
   }
 
-  Future<http.Response> listAddress(Map<String, dynamic> productDetails) async {
+  
+  Future<http.Response> logOut(Map<String, dynamic> authData) async {
     final response = await http.post(
-      Uri.parse('${ApiConfig.apiUrl}${ApiConstants.customerAddresses}'),
-      body: productDetails,
+      Uri.parse('${ApiConfig.apiUrl}${ApiConstants.logout}'),
+      body: authData,
+    );
+    return response;
+  }
+
+  Future<http.Response> getAddress(Map<String, dynamic> authData) async {
+  final url = '${ApiConfig.apiUrl}${ApiConstants.customerAddresses}';
+
+  final response = await http.post(
+    Uri.parse(url),
+    body: authData,
+  );
+
+  return response;
+}
+
+    Future<http.Response> removeAddress(Map<String, dynamic> authData) async {
+    final response = await http.post(
+      Uri.parse('${ApiConfig.apiUrl}${ApiConstants.removeAddress}'),
+      body: authData,
     );
     return response;
   }

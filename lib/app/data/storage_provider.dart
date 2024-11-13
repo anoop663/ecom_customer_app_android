@@ -1,4 +1,7 @@
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+
+import '../routes/routes.dart';
 
 class StorageProvider {
   GetStorage storage = GetStorage();
@@ -22,8 +25,8 @@ class StorageProvider {
     );
   }
 
-  //clearStored() {
-  //  storage.erase();
-  //  Get.toNamed(Routes.signin);
-  //}
+  clearStored() {
+  storage.erase();
+   Get.toNamed(Routes.signin);
+  }
 }

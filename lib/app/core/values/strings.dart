@@ -11,6 +11,7 @@ class IconStrings {
   static const String passwordIcon = '${AppConstants.iconPath}password.png';
   static const String obscureIcon = '${AppConstants.iconPath}obscure.png';
 
+
   ///sign up screen
   static const String fullNameIcon = '${AppConstants.iconPath}full_name.png';
   static const String phoneIcon = '${AppConstants.iconPath}phone.png';
@@ -219,6 +220,8 @@ class ImageStrings {
   ///success
   static const String success = '${AppConstants.imagePath}success.png';
   static const String fullBag = '${AppConstants.imagePath}full_bag.png';
+
+  static const String noconnection = '${AppConstants.imagePath}no_connection.png';
 }
 
 class AnimationStrings {

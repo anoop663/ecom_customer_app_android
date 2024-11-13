@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/app/modules/account/view/account_view.dart';
+import 'package:ecommerce_app/app/modules/address_manage/view/address_list.dart';
 import 'package:ecommerce_app/app/modules/address_manage/view/new_address.dart';
 import 'package:ecommerce_app/app/modules/best_items/view/best_items_view.dart';
 import 'package:ecommerce_app/app/modules/brands/view/brand_products.dart';
@@ -17,6 +18,7 @@ import 'package:ecommerce_app/app/modules/signup/views/signup.dart';
 import 'package:ecommerce_app/app/modules/splash_screen/view/splash_view.dart';
 import 'package:ecommerce_app/app/modules/wishlist/view/wishlist_view.dart';
 import 'package:ecommerce_app/app/widgets/app_bottom_bar.dart';
+import 'package:ecommerce_app/app/widgets/no_connection.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
 class Routes {
@@ -35,9 +37,11 @@ class Routes {
   static const String productdetails = '/product-details';
   static const String wishlist = '/wishlist';
   static const String cart = '/cart';
-  static const String address = '/address';
+  static const String addressnew = '/address-new';
   static const String checkout = '/checkout';
   static const String account = '/account';
+  static const String address = '/address';
+  static const String noconnection = '/noconnection';
 
 
   static final List<GetPage> pages = [
@@ -56,9 +60,11 @@ class Routes {
     GetPage(name: productdetails, page: () => ProductPage()),
     GetPage(name: wishlist, page: () => WishListView()),
     GetPage(name: Routes.cart, page: () => CartView(), binding: CartBinding()),
-    GetPage(name: address, page: () => CreateAddressView()),
+    GetPage(name: addressnew, page: () => CreateAddressView()),
     GetPage(name: checkout, page: () => CheckoutScreenView()),
-    GetPage(name: account, page: () => AccountView(),
+    GetPage(name: account, page: () => AccountView()),
+    GetPage(name: address, page: () => MyAddressListView()),
+    GetPage(name: noconnection, page: () => NoConnection(),
     ),
   ];
 }

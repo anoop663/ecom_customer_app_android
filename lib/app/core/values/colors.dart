@@ -100,4 +100,6 @@ class AppColors {
   static const Color addressTypeBox = Color.fromRGBO(241, 242, 244, 1);
   static const Color summaryTitle = Color.fromRGBO(158, 158, 158, 1);
 
+  
+
 }

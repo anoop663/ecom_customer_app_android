@@ -18,10 +18,10 @@ class ApiConstants {
   static const moveToCart = '/wishlist/move/en';
   static const cart = '/cart/en';
   static const wishlist = '/wishlist/en';
-  static const customerAddresses = '/customer-addresses/';
-  static const addAddress = '/customer-addresses/add/';
-  static const editAddress = '/customer-addresses/update/';
-  static const removeAddress = '/customer-addresses/delete/';
+  static const customerAddresses = '/customer-addresses/en';
+  static const addAddress = '/customer-addresses/add/en';
+  static const editAddress = '/customer-addresses/update/en';
+  static const removeAddress = '/customer-addresses/delete/en';
   static const addressFields = '/customer-addresses/new-address/';
   static const areas = '/areas/';
   static const categories = '/categories/';
@@ -42,4 +42,5 @@ class ApiConstants {
   static const shipmentPolicy = '/page_contents/sp_app';
   static const termsAndConditions = '/page_contents/tnc_app';
   static const aboutUs = '/page_contents/ourstory';
+  static const logout = '/logout/en';
 }

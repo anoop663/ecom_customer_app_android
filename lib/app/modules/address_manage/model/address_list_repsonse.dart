@@ -49,7 +49,7 @@ class Address {
   final int? countryId;
   final String? zipcode;
   final String? mobile;
-  late final String? addressType;
+  final String? addressType;
   final dynamic latitude;
   final dynamic longtitude;
   final int? isDefault;
