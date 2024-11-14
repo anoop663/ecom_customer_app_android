@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/app/core/values/strings.dart';
+import 'package:ecommerce_app/app/modules/address_manage/controller/address_list_controller.dart';
 import 'package:ecommerce_app/app/modules/address_manage/model/address_response_model.dart';
 import 'package:ecommerce_app/app/modules/cart/controller/cart_controller.dart';
 import 'package:ecommerce_app/app/modules/cart/model/cart_response_model.dart';
@@ -30,10 +31,8 @@ class CheckoutScreenView extends StatelessWidget {
         Get.put(CheckoutScreenController());
 
     final CartController cartController = Get.find<CartController>();
-    
 
     return Scaffold(
-      
       appBar: CommonAppBar(
         toolBarTitle:
             'Payment: ₹ ${cartController.cartResponse.value?.grandTotal ?? '0'}',
@@ -70,9 +69,9 @@ class CheckoutScreenView extends StatelessWidget {
                                 )),
                             const SizedBox(height: 20),
                             Obx(() => ItemsExpandTile(
-                                  items:
-                                      controller.cartResponse1.value?.products ??
-                                          [],
+                                  items: controller
+                                          .cartResponse1.value?.products ??
+                                      [],
                                 )),
                             const SizedBox(height: 20),
                             ColoredBox(
@@ -224,6 +223,7 @@ class AddressExpandTile extends StatefulWidget {
 
 class _AddressExpandTileState extends State<AddressExpandTile> {
   bool addressTileOpen = false;
+  MyAddressListController controller = Get.put(MyAddressListController());
 
   @override
   Widget build(BuildContext context) {
@@ -246,7 +246,7 @@ class _AddressExpandTileState extends State<AddressExpandTile> {
                   CurvedButton(
                     height: 24,
                     width: 55,
-                    text: 'Address Type',
+                    text: controller.address.value!.addressType,
                     borderRadius: 0.0,
                     textColor: AppColors.textColor2,
                     fontSize: 12,
@@ -256,7 +256,7 @@ class _AddressExpandTileState extends State<AddressExpandTile> {
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    widget.address.name ?? '',
+                    controller.address.value!.name ?? '',
                     style: Get.theme.textTheme.bodyMedium!.copyWith(
                       color: AppColors.removeButton,
                       fontSize: 14,
@@ -277,7 +277,7 @@ class _AddressExpandTileState extends State<AddressExpandTile> {
             children: [
               ListTile(
                 title: Text(
-                  widget.address.name ?? '',
+                  controller.address.value!.name ?? '',
                   style: Get.theme.textTheme.bodyMedium!.copyWith(
                     color: AppColors.textColor2,
                     fontSize: 14,
@@ -290,7 +290,7 @@ class _AddressExpandTileState extends State<AddressExpandTile> {
                   children: [
                     const SizedBox(height: 10),
                     Text(
-                      '${widget.address.address ?? ''}\n${widget.address.city ?? ''}\n${widget.address.state ?? ''}\n${widget.address.zipcode ?? ''}',
+                      '${controller.address.value!.address ?? ''}\n${controller.address.value!.city ?? ''}\n${controller.address.value!.state ?? ''}\n${controller.address.value!.zipcode ?? ''}',
                       style: Get.theme.textTheme.bodyMedium!.copyWith(
                         color: AppColors.textColor2,
                         fontSize: 14,
@@ -636,13 +636,15 @@ class _ItemsExpandTileState extends State<ItemsExpandTile> {
   }
 }
 
-class PriceExpandTile extends StatefulWidget {final String netTotal;
+class PriceExpandTile extends StatefulWidget {
+  final String netTotal;
   final String wallet;
   final String tax;
   final String deliveryCharge;
   final String grandTotal;
 
-  const PriceExpandTile({super.key, 
+  const PriceExpandTile({
+    super.key,
     required this.netTotal,
     required this.wallet,
     required this.tax,

@@ -66,7 +66,7 @@ class AccountView extends StatelessWidget {
                         onTap: () => Get.toNamed(Routes.address),
                         text: 'My Profile',
                         subTitle: 'View my profile related details',
-                        icon: IconStrings.profilePicFemale,
+                        icon: IconStrings.deleteAccount,
                       ),
                       const Divider(color: AppColors.brandSeperator),
                       const SizedBox(height: 15),

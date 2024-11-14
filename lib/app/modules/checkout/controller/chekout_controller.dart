@@ -25,6 +25,7 @@ class CheckoutScreenController extends GetxController {
   var isMovingToWishlist = false.obs;
   var rebuildTrigger = false.obs;
   var cartModel = Rx<CartModel?>(null);
+  
 
   @override
   @override

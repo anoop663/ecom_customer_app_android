@@ -1,82 +1,77 @@
 import 'dart:convert';
-import 'package:ecommerce_app/app/core/extensions/api_base_helper.dart';
 import 'package:ecommerce_app/app/data/api_provider.dart';
 import 'package:ecommerce_app/app/data/storage_provider.dart';
 import 'package:ecommerce_app/app/modules/address_manage/model/address_create_model.dart';
-import 'package:ecommerce_app/app/modules/address_manage/model/address_response_model.dart';
 import 'package:ecommerce_app/app/modules/address_manage/model/addressfunction_model.dart';
-import 'package:ecommerce_app/app/modules/address_manage/model/area_response.dart';
-import 'package:ecommerce_app/app/modules/address_manage/model/country_list.reponse.dart';
+import 'package:ecommerce_app/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CreateAddressController extends GetxController {
   final AuthService authService = AuthService();
   final StorageProvider storageProvider = StorageProvider();
+
   var isLoading = false.obs;
-  var response = Rxn<AddressListResponse>();
-  var address = Rxn<Address>();
-  Rxn<Address> address1 = Rxn();
-  final count = 0.obs;
-  final selectedAddressType = ''.obs;
-  final selectedCountry = ''.obs;
-  final selectedAreaId = ''.obs;
-  final selectedAreaName = ''.obs;
-  final selectedRegionId = ''.obs;
-  final selectedZipcode = ''.obs;
-  final Map<String, String> addressMap = {};
-  final loading = false.obs;
+  //final addressTypeValue = AddressType.home.obs;
   var addressTypeValue = 0.obs;
-  //final repository = EcomApiClient();
+  final addressForm = GlobalKey<FormState>();
 
-  AddressListResponse? response1;
-  Map<String, TextEditingController> textControllers = {};
+  // Address input controllers
+  final nameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final buildingController = TextEditingController();
+  final cityController = TextEditingController();
+  final stateController = TextEditingController();
+  final zipcodeController = TextEditingController();
 
-  final addressAddResponse = Rxn<Success>();
-  final countriesResponse = Rxn<CountryListResponse>();
-  final areaResponse = Rxn<AreaResponse>();
-
-//Adding new address
-  void addtoAddressFunction(name, city, buildingnumber, country, mobile,area, zipcode, addresstype) async {
-    (String?, String?) idToken = storageProvider.readLoginDetails();
+  void addAddressFunction({
+    required String fullName,
+    required String phoneNumber,
+    required String building,
+    required String city,
+    required String state,
+    required String postCode,
+    required String country,
+    required String addressType,
+  }) async {
+    // Retrieve stored user ID and token
+    final idToken = storageProvider.readLoginDetails();
     isLoading.value = true;
 
-    AddressCreateModel addaddressData = AddressCreateModel(
+    // Create address model
+    final addressData = AddressCreateModel(
       id: idToken.$1,
       token: idToken.$2,
-      name: name,
+      name: fullName,
       city: city,
-      buildingnumber: buildingnumber,
-      country: country,
-      mobile: mobile,
-      area: area,
-      zipcode: zipcode,
-      addresstype: addresstype,
-      );
+      buildingnumber: building,
+      country: '190',
+      mobile: phoneNumber,
+      area: city,
+      zipcode: postCode,
+      addresstype: addressType,
+    );
 
     try {
-      final response = await authService.addAddress(addaddressData.toJson());
-      isLoading.value = false;
-//Check other status codes
-      if (response.statusCode == 200) {
-        final responseData = json.decode(response.body);
+      final response = await authService.addAddress(addressData.toJson());
+      isLoading.value = true;
 
-        if (responseData['success'] == 1) {
-          Get.snackbar('Success', 'Address added',
-              colorText: Colors.white, backgroundColor: Colors.black);
-        } else {
-          Get.snackbar(
-              'Error', responseData['message'] ?? 'Address adding failed',
-              colorText: Colors.white, backgroundColor: Colors.black);
-        }
-      } else {
-        Get.snackbar('Error', 'Server error: ${response.statusCode}',
+      final responseData = json.decode(response.body);
+      if (response.statusCode == 200 && responseData['success'] == 1) {
+        Get.snackbar('Success', 'Address added',
             colorText: Colors.white, backgroundColor: Colors.black);
+        Get.toNamed(Routes.address);
+      } else {
+        Get.snackbar(
+            'Error', responseData['message'] ?? 'Failed to add address',
+            colorText: Colors.white,
+            backgroundColor: const Color.fromARGB(255, 203, 165, 165));
       }
     } catch (e) {
       isLoading.value = false;
       Get.snackbar('Error', 'Failed to add address: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: Colors.white,
+          backgroundColor: const Color.fromARGB(255, 208, 169, 169));
     }
   }
 

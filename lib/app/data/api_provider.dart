@@ -128,10 +128,18 @@ class AuthService {
     return response;
   }
 
-  Future<http.Response> addAddress(Map<String, dynamic> productDetails) async {
+  Future<http.Response> logOut(Map<String, dynamic> authData) async {
+    final response = await http.post(
+      Uri.parse('${ApiConfig.apiUrl}${ApiConstants.logout}'),
+      body: authData,
+    );
+    return response;
+  }
+
+  Future<http.Response> addAddress(Map<String, dynamic> addressDetails) async {
     final response = await http.post(
       Uri.parse('${ApiConfig.apiUrl}${ApiConstants.addAddress}'),
-      body: productDetails,
+      body: addressDetails,
     );
     return response;
   }
@@ -156,13 +164,7 @@ class AuthService {
   }
 
   
-  Future<http.Response> logOut(Map<String, dynamic> authData) async {
-    final response = await http.post(
-      Uri.parse('${ApiConfig.apiUrl}${ApiConstants.logout}'),
-      body: authData,
-    );
-    return response;
-  }
+  
 
   Future<http.Response> getAddress(Map<String, dynamic> authData) async {
   final url = '${ApiConfig.apiUrl}${ApiConstants.customerAddresses}';
