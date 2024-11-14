@@ -43,17 +43,16 @@ class OtpController extends GetxController {
           String token = responseData['token'];
           String custId = responseData['id']; // Save token for future logins
 
-          // Save 'id' and 'token' to local storage (e.g., GetStorage, SharedPreferences)
-          // This ensures the user doesn't need to log in again next time
+
           await saveUserData(custId, token);
 
           // Navigate to home page after successful OTP verification
           Get.snackbar('Success', 'OTP verified successfully',
               colorText: Colors.white, backgroundColor: Colors.black);
-          Get.offAllNamed(Routes.bottombar); // Navigate to home page
+          Get.offAllNamed(Routes.bottombar);
         } else {
           Get.snackbar(
-              'Error', responseData['message'] ?? 'OTP verification failed',
+              'Error', responseData['message'] ?? 'Invalid OTP',
               colorText: Colors.white, backgroundColor: Colors.black);
         }
       } else {
@@ -67,9 +66,7 @@ class OtpController extends GetxController {
     }
   }
 
-  // Function to save user data locally
   Future<void> saveUserData(String custId, String token) async {
-    // Example: Use GetStorage or SharedPreferences to save 'id' and 'token'
     final storage = GetStorage();
     await storage.write('id', custId);
     await storage.write('token', token);

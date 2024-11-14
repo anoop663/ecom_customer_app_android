@@ -5,10 +5,10 @@ import 'package:ecommerce_app/app/widgets/curve_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+
 class ForgotPage extends StatelessWidget {
   ForgotPage({super.key});
 
-  // Initialize OtpController
   final ForgotController forgotController = Get.put(ForgotController());
 
   @override
@@ -62,14 +62,14 @@ class ForgotPage extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        'Please Enter you Email so we can send you an otp.',
+                        'Please enter your email so we can send you an OTP.',
                         style: currentTheme.textTheme.bodyMedium!.copyWith(
                           color: AppColors.accessoriesColor4,
                           fontSize: 13,
                         ),
                       ),
                       TextField(
-                        controller: forgotController.emailController, // Use controller's text field
+                        controller: forgotController.emailController,
                         keyboardType: TextInputType.emailAddress,
                         maxLength: 100,
                         decoration: const InputDecoration(
@@ -80,14 +80,13 @@ class ForgotPage extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      
                       const SizedBox(
                         height: 30,
                       ),
                       Obx(() => CurvedButton(
-                        onClick: () {
-                          forgotController.forgotOtp(); // Call the controller's verify function
-                        },
+                        onClick: forgotController.isLoading.value
+                            ? null
+                            : () => forgotController.forgotOtp(),
                         width: screenSize.width,
                         text: 'Send',
                         isSelected: true,

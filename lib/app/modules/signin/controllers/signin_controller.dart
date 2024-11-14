@@ -10,12 +10,25 @@ class SigninController extends GetxController {
   final AuthService authService = AuthService();
   var isLoading = false.obs;
   var isPasswordVisible = true.obs;
+  var emailError = ''.obs;
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  bool validateEmail(String email) {
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    if (emailRegex.hasMatch(email)) {
+      emailError.value = '';
+      return true;
+    } else {
+      emailError.value = 'Please enter a valid email address';
+      return false;
+    }
+  }
+
   Future<void> loginHelper() async {
     isLoading.value = true;
+    validateEmail(emailController.text);
     LoginModel loginModel = LoginModel(
       email_phone: emailController.text,
       password: passwordController.text,

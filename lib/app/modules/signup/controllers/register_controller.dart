@@ -20,6 +20,10 @@ class SignupController extends GetxController {
   var selectedGender = Gender.male.obs;
   var isLoading = false.obs;
 
+  // Regular expressions for validation
+  final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+  final phoneRegex = RegExp(r'^\d{10}$');
+
   // Toggles for password visibility
   void togglePasswordVisibility() {
     isPasswordVisible.value = !isPasswordVisible.value;
@@ -29,17 +33,43 @@ class SignupController extends GetxController {
     isConfirmPasswordVisible.value = !isConfirmPasswordVisible.value;
   }
 
-  // Function to handle user registration
-  void register() async {
+  // Validate inputs before calling API
+  bool validateInputs() {
+    if (nameController.text.isEmpty) {
+      Get.snackbar('Error', 'Full name is required',
+          colorText: Colors.white, backgroundColor: Colors.black);
+      return false;
+    }
+    if (phoneController.text.isEmpty || !phoneRegex.hasMatch(phoneController.text)) {
+      Get.snackbar('Error', 'Enter a valid phone number',
+          colorText: Colors.white, backgroundColor: Colors.black);
+      return false;
+    }
+    if (emailController.text.isEmpty || !emailRegex.hasMatch(emailController.text)) {
+      Get.snackbar('Error', 'Enter a valid email',
+          colorText: Colors.white, backgroundColor: Colors.black);
+      return false;
+    }
+    if (passwordController.text.isEmpty || passwordController.text.length < 6) {
+      Get.snackbar('Error', 'Password must be at least 6 characters',
+          colorText: Colors.white, backgroundColor: Colors.black);
+      return false;
+    }
     if (passwordController.text != confirmPasswordController.text) {
       Get.snackbar('Error', 'Passwords do not match',
           colorText: Colors.white, backgroundColor: Colors.black);
-      return;
+      return false;
     }
+    return true;
+  }
+
+  // Register Function
+  void register() async {
+    //Checking filed validations
+    if (!validateInputs()) return; 
 
     isLoading.value = true;
-
-    // Construct the user model with input values
+    
     UserModel userModel = UserModel(
       name: nameController.text,
       email: emailController.text,
@@ -58,15 +88,12 @@ class SignupController extends GetxController {
         final responseData = json.decode(response.body);
 
         if (responseData['success'] == 1) {
-          String userId =
-              responseData['customerdata']['id']; // Get user ID from response
+          String userId = responseData['customerdata']['id'];
 
-          // Navigate to OTP page, passing the user ID
           Get.snackbar(
               'Success', responseData['message'] ?? 'Registration successful',
               colorText: Colors.white, backgroundColor: Colors.black);
-          Get.toNamed(Routes.otp,
-              arguments: {'id': userId}); // Pass 'id' to OTP page
+          Get.toNamed(Routes.otp, arguments: {'id': userId});
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Registration failed',

@@ -31,15 +31,15 @@ class ProductPage extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         } else if (controller.productResponse.value?.product != null) {
           final product = controller.productResponse.value!.product!;
-          final selectoption =
-              controller.productResponse.value!.selectedOption!.first;
+        //  final selectoption =
+          //    controller.productResponse.value!.selectedOption!.first;
           //print(selectoption);
           return Column(
             children: [
               buildImageSlider(context, product.images!),
               const SizedBox(height: 8),
               buildIndicator(product.images!.length),
-              buildProductDetailsSection(product, selectoption),
+              buildProductDetailsSection(product),
               buildBottomButtons()
             ],
           );
@@ -168,7 +168,7 @@ class ProductPage extends StatelessWidget {
     );
   }
 
-  Widget buildProductDetailsSection(product, selectedoption) {
+  Widget buildProductDetailsSection(product) {
     return Expanded(
       child: Container(
         padding: const EdgeInsets.all(16.0),

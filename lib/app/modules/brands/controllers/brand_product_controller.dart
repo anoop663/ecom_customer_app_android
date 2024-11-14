@@ -36,8 +36,8 @@ class BrandProductController extends GetxController {
 
         if (responseData['success'] == 1) {
           brandproductResponse.value = BrandReponseModel.fromJson(responseData);
-          Get.snackbar('Success', 'Product Listed',
-              colorText: Colors.white, backgroundColor: Colors.black);
+          //Get.snackbar('Success', 'Product Listed',
+          //    colorText: Colors.white, backgroundColor: Colors.black);
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Failed to retrieve products',

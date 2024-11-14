@@ -45,12 +45,12 @@ class ProductController extends GetxController {
           productResponse.value = ProductDetailsResponse.fromJson(responseData);
 
           // Show a success message
-          Get.snackbar(
-            'Success',
-            'Product Listed',
-            colorText: Colors.white,
-            backgroundColor: Colors.black,
-          );
+          //Get.snackbar(
+          //  'Success',
+          //  'Product Listed',
+          //  colorText: Colors.white,
+          //  backgroundColor: Colors.black,
+          //);
         } else {
           // Show an error message with response message or fallback
           Get.snackbar(

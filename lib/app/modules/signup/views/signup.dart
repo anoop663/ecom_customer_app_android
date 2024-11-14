@@ -96,7 +96,6 @@ class SignupPage extends StatelessWidget {
                     "Password must contain minimum 6 characters, at least one upper case and one lower case",
                     style: currentTheme.textTheme.bodyMedium,
                   ),
-                  // Gender Radio Buttons
                   Obx(() => Row(
                         children: [
                           Expanded(
@@ -126,9 +125,10 @@ class SignupPage extends StatelessWidget {
                             ),
                           ),
                         ],
-                      )),
-                  const SizedBox(height: 30),
-                  Text(
+                      ),
+                      ),
+                      const SizedBox(height: 30),
+                      Text(
                     "By signing up, you agree with our Terms & Conditions and Privacy Policy.",
                     style: currentTheme.textTheme.bodyMedium,
                   ),
@@ -142,15 +142,16 @@ class SignupPage extends StatelessWidget {
                           ),
                   ),
                   const SizedBox(height: 10),
-                InkWell(
-                            onTap: () {
-                              Get.toNamed(Routes.signin);
-                            },
-                            child: Text(
-                              "Already an account? Log In",
-                              style: currentTheme.textTheme.bodyMedium,
-                            ),
-                          ),],
+                  InkWell(
+                    onTap: () {
+                      Get.toNamed(Routes.signin);
+                    },
+                    child: Text(
+                      "Already have an account? Log In",
+                      style: currentTheme.textTheme.bodyMedium,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

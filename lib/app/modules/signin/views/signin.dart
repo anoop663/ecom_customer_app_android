@@ -52,9 +52,14 @@ class SigninPage extends StatelessWidget {
                         controller: signinController.emailController,
                         hint: "Email",
                         prefixIcon: IconStrings.mailIcon,
+                        inputType: TextInputType.emailAddress,
                       ),
                       const SizedBox(height: 10),
-                      // Password Field with Obscure Toggle
+                      Obx(() => Text(
+                            signinController.emailError.value,
+                            style: TextStyle(color: Colors.red, fontSize: 12),
+                          )),
+                      // Password Field with Toggle
                       Obx(() => AppTextField(
                             controller: signinController.passwordController,
                             isObscure: signinController.isPasswordVisible.value,

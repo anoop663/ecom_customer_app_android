@@ -69,7 +69,7 @@ class OtpPage extends StatelessWidget {
                         ),
                       ),
                       TextField(
-                        controller: otpController.otpController, // Use controller's text field
+                        controller: otpController.otpController,
                         keyboardType: TextInputType.number,
                         maxLength: 6,
                         decoration: const InputDecoration(

@@ -34,8 +34,8 @@ class HomeController extends GetxController {
           // Parse the response into HomeResponse
           homeResponse.value = HomeResponse.fromJson(responseData);
 
-          Get.snackbar('Success', 'Home page loaded successfully',
-              colorText: Colors.white, backgroundColor: Colors.black);
+          //Get.snackbar('Success', 'Home page loaded successfully',
+          //    colorText: Colors.white, backgroundColor: Colors.black);
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Home page loading failed',

@@ -87,97 +87,90 @@ class CreateAddressView extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 20),
-                    Obx(() => Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Expanded(
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  controller.addressTypeValue.value = 0;
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      controller.addressTypeValue.value == 0
-                                          ? AppColors.bottomSelectedColor
-                                          : AppColors.bottomNotSelectedColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  padding: EdgeInsets.symmetric(vertical: 8),
-                                  minimumSize: Size(1, 10),
+                    Obx(
+                      () => Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                controller.addressTypeValue.value = 0;
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: controller.addressTypeValue.value == 0
+                                    ? AppColors.bottomSelectedColor
+                                    : AppColors.bottomNotSelectedColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
                                 ),
-                                child: Text(
-                                  'HOME',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color:
-                                        controller.addressTypeValue.value == 1
-                                            ? AppColors.textColor2
-                                            : AppColors.textColor1,
-                                  ),
+                                padding: EdgeInsets.symmetric(vertical: 8),
+                              ),
+                              child: Text(
+                                'HOME',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: controller.addressTypeValue.value == 0
+                                      ? AppColors.textColor1
+                                      : AppColors.textColor2,
                                 ),
                               ),
                             ),
-                            SizedBox(width: 5),
-                            Expanded(
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  controller.addressTypeValue.value = 1;
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      controller.addressTypeValue.value == 1
-                                          ? AppColors.bottomSelectedColor
-                                          : AppColors.bottomNotSelectedColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  padding: EdgeInsets.symmetric(vertical: 8),
-                                  minimumSize: Size(5, 10),
+                          ),
+                          SizedBox(width: 5),
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                controller.addressTypeValue.value = 1;
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: controller.addressTypeValue.value == 1
+                                    ? AppColors.bottomSelectedColor
+                                    : AppColors.bottomNotSelectedColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
                                 ),
-                                child: Text(
-                                  'OFFICE',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color:
-                                        controller.addressTypeValue.value == 1
-                                            ? AppColors.textColor2
-                                            : AppColors.textColor1,
-                                  ),
+                                padding: EdgeInsets.symmetric(vertical: 8),
+                              ),
+                              child: Text(
+                                'OFFICE',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: controller.addressTypeValue.value == 1
+                                      ? AppColors.textColor1
+                                      : AppColors.textColor2,
                                 ),
                               ),
                             ),
-                            SizedBox(width: 5),
-                            Expanded(
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  controller.addressTypeValue.value = 2;
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      controller.addressTypeValue.value == 2
-                                          ? AppColors.bottomSelectedColor
-                                          : AppColors.bottomNotSelectedColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  minimumSize: Size(10, 10),
-                                  padding: EdgeInsets.symmetric(vertical: 8),
+                          ),
+                          SizedBox(width: 5),
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                controller.addressTypeValue.value = 2;
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: controller.addressTypeValue.value == 2
+                                    ? AppColors.bottomSelectedColor
+                                    : AppColors.bottomNotSelectedColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
                                 ),
-                                child: Text(
-                                  'OTHER',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color:
-                                        controller.addressTypeValue.value == 1
-                                            ? AppColors.textColor2
-                                            : AppColors.textColor1,
-                                  ),
+                                padding: EdgeInsets.symmetric(vertical: 8),
+                              ),
+                              child: Text(
+                                'OTHER',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: controller.addressTypeValue.value == 2
+                                      ? AppColors.textColor1
+                                      : AppColors.textColor2,
                                 ),
                               ),
                             ),
-                          ],
-                        )),
+                          ),
+                        ],
+                      ),
+                    ),
                     SizedBox(height: 30),
                     CurvedButton(
                       onClick: () {
@@ -190,7 +183,7 @@ class CreateAddressView extends StatelessWidget {
                           postCode: postCodeController.text,
                           country: countryController
                               .text, 
-                          addressType: '1',
+                          //addressTypeValue: '1',
                         );
                       },
                       borderRadius: 0,

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:ecommerce_app/app/data/api_provider.dart';
 import 'package:ecommerce_app/app/modules/forgot_pass/model/forgot_model.dart';
 import 'package:ecommerce_app/app/routes/routes.dart';
@@ -11,10 +10,24 @@ class ForgotController extends GetxController {
   final TextEditingController emailController = TextEditingController();
   var isLoading = false.obs;
 
+  // Email validation function
+  bool isValidEmail(String email) {
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return emailRegex.hasMatch(email);
+  }
+
   // Function to send OTP
   void forgotOtp() async {
-    if (emailController.text.isEmpty) {
+    final email = emailController.text.trim();
+
+    if (email.isEmpty) {
       Get.snackbar('Error', 'Please enter Email address',
+          colorText: Colors.white, backgroundColor: Colors.black);
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      Get.snackbar('Error', 'Please enter a valid Email address',
           colorText: Colors.white, backgroundColor: Colors.black);
       return;
     }
@@ -22,11 +35,11 @@ class ForgotController extends GetxController {
     isLoading.value = true;
 
     ForgotModel forgotModel = ForgotModel(
-      email: emailController.text,
+      email: email,
     );
 
     try {
-      // Call the API to verify OTP
+      // Calling API
       final response = await authService.resetOtp(forgotModel.toJson());
 
       isLoading.value = false;
@@ -37,7 +50,7 @@ class ForgotController extends GetxController {
         if (responseData['success'] == 1) {
           String userEmail = responseData['email'];
 
-          Get.snackbar('Success', 'OTP send successfully',
+          Get.snackbar('Success', 'OTP sent successfully',
               colorText: Colors.white, backgroundColor: Colors.black);
           Get.toNamed(Routes.setnewpass,
               arguments: {'email': userEmail}); // Navigate to setpassword page

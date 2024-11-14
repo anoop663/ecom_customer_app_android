@@ -32,7 +32,7 @@ class CreateAddressController extends GetxController {
     required String state,
     required String postCode,
     required String country,
-    required String addressType,
+    //required String addressTypeValue,
   }) async {
     // Retrieve stored user ID and token
     final idToken = storageProvider.readLoginDetails();
@@ -49,7 +49,7 @@ class CreateAddressController extends GetxController {
       mobile: phoneNumber,
       area: city,
       zipcode: postCode,
-      addresstype: addressType,
+      addresstype: addressTypeValue.toString(),
     );
 
     try {
@@ -58,8 +58,15 @@ class CreateAddressController extends GetxController {
 
       final responseData = json.decode(response.body);
       if (response.statusCode == 200 && responseData['success'] == 1) {
-        Get.snackbar('Success', 'Address added',
-            colorText: Colors.white, backgroundColor: Colors.black);
+        Get.snackbar(
+          'Success',
+          'Address added',
+          colorText: Colors.white,
+          backgroundColor: Colors.black,
+        );
+
+        // Add a 2-second delay before navigating to the address page
+        await Future.delayed(const Duration(seconds: 2));
         Get.toNamed(Routes.address);
       } else {
         Get.snackbar(
@@ -179,40 +186,6 @@ class CreateAddressController extends GetxController {
     } catch (e) {
       isLoading.value = false;
       Get.snackbar('Error', 'Failed to update address: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
-    }
-  }
-
-  void addressListFunction() async {
-    (String?, String?) idToken = storageProvider.readLoginDetails();
-    isLoading.value = true;
-
-    AddressFunctionModel homeAuth3 = AddressFunctionModel(
-      id: idToken.$1,
-      token: idToken.$2,
-    );
-
-    try {
-      final response = await authService.getAddress(homeAuth3.toJson());
-      isLoading.value = false;
-//Check other status codes
-      if (response.statusCode == 200) {
-        final responseData = json.decode(response.body);
-
-        if (responseData['success'] == 1) {
-          Get.snackbar('Success', 'Item added to Cart',
-              colorText: Colors.white, backgroundColor: Colors.black);
-        } else {
-          Get.snackbar('Error', responseData['message'] ?? 'Item adding failed',
-              colorText: Colors.white, backgroundColor: Colors.black);
-        }
-      } else {
-        Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
-      }
-    } catch (e) {
-      isLoading.value = false;
-      Get.snackbar('Error', 'Failed to add to Cart: $e',
           colorText: Colors.white, backgroundColor: Colors.black);
     }
   }

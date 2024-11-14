@@ -50,61 +50,71 @@ class BrandProducts extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final product =
                           productsData.products.returnData.data[index];
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: MediaQuery.of(context).size.height * 0.3,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
+                      return GestureDetector(
+                        onTap: () {
+                          // Navigate to product details page or perform any action
+                          Get.toNamed('/product-details', arguments: {
+                            'product-slug': product.slug,
+                           
+                          });
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: MediaQuery.of(context).size.height * 0.3,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: product.image.isNotEmpty
+                                    ? Image.network(
+                                        ApiConfig.productImageUrl +
+                                            product.image,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          // Display placeholder image on error
+                                          return Image.asset(
+                                            'assets/images/no_image.png',
+                                            fit: BoxFit.cover,
+                                          );
+                                        },
+                                      )
+                                    : Image.asset(
+                                        'assets/images/no_image.png',
+                                        fit: BoxFit.cover,
+                                      ),
+                              ),
                             ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10.0),
-                              child: product.image.isNotEmpty
-                                  ? Image.network(
-                                      ApiConfig.productImageUrl + product.image,
-                                      fit: BoxFit.cover,
-                                      errorBuilder:
-                                          (context, error, stackTrace) {
-                                        // Display placeholder image on error
-                                        return Image.asset(
-                                          'assets/images/no_image.png',
-                                          fit: BoxFit.cover,
-                                        );
-                                      },
-                                    )
-                                  : Image.asset(
-                                      'assets/images/no_image.png',
-                                      fit: BoxFit.cover,
+                            const SizedBox(height: 5),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 4.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    product.name,
+                                    style: const TextStyle(
+                                      fontSize: 14.0,
+                                      color: Colors.black,
                                     ),
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 4.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  product.name,
-                                  style: const TextStyle(
-                                    fontSize: 14.0,
-                                    color: Colors.black,
                                   ),
-                                ),
-                                Text(
-                                  '₹ ${product.price}',
-                                  style: const TextStyle(
-                                    fontSize: 16.0,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
+                                  Text(
+                                    '₹ ${product.price}',
+                                    style: const TextStyle(
+                                      fontSize: 16.0,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       );
                     },
                   ),
