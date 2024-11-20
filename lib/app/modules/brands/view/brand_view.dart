@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/app/core/values/api_configs.dart';
 import 'package:ecommerce_app/app/modules/home/controllers/home_controller.dart';
 import 'package:ecommerce_app/app/routes/routes.dart';
 import 'package:ecommerce_app/app/widgets/appbar.dart';
@@ -54,7 +55,13 @@ class BrandPage extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
                               image: DecorationImage(
-                                image: NetworkImage(brand.image!),
+                                image: brand.image != null &&
+                                        brand.image!.isNotEmpty
+                                    ? NetworkImage(
+                                        brand.image!,
+                                      )
+                                    : const AssetImage(
+                                        'assets/images/no_image.png'),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -75,13 +82,12 @@ class BrandPage extends StatelessWidget {
                             Expanded(
                               child: Container(
                                 height: 1.0,
-                                color: const Color.fromARGB(
-                                    255, 202, 188, 188),
+                                color: const Color.fromARGB(255, 202, 188, 188),
                               ),
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              brand.name!, 
+                              brand.name!,
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,

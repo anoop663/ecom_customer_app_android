@@ -42,8 +42,8 @@ class CartController extends GetxController {
     final CartModel homeAuth2 = CartModel(
       id: idToken.$1,
       token: idToken.$2,
-      billingaddressId: '12',
-      shippingaddressId: '12',
+      billingaddressId: '10',
+      shippingaddressId: '10',
       forwhat: 'summary',
     );
 

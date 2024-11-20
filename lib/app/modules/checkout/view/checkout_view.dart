@@ -223,7 +223,8 @@ class AddressExpandTile extends StatefulWidget {
 
 class _AddressExpandTileState extends State<AddressExpandTile> {
   bool addressTileOpen = false;
-  MyAddressListController controller = Get.put(MyAddressListController());
+  MyAddressListController controller1 = Get.put(MyAddressListController());
+  //var address1=controller1.addressresponse.value!.addresses;
 
   @override
   Widget build(BuildContext context) {
@@ -246,7 +247,7 @@ class _AddressExpandTileState extends State<AddressExpandTile> {
                   CurvedButton(
                     height: 24,
                     width: 55,
-                    text: controller.address.value!.addressType,
+                    text: controller1.address.value!.addressType,
                     borderRadius: 0.0,
                     textColor: AppColors.textColor2,
                     fontSize: 12,
@@ -256,7 +257,7 @@ class _AddressExpandTileState extends State<AddressExpandTile> {
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    controller.address.value!.name ?? '',
+                    controller1.address.value!.name ?? '',
                     style: Get.theme.textTheme.bodyMedium!.copyWith(
                       color: AppColors.removeButton,
                       fontSize: 14,
@@ -277,7 +278,7 @@ class _AddressExpandTileState extends State<AddressExpandTile> {
             children: [
               ListTile(
                 title: Text(
-                  controller.address.value!.name ?? '',
+                  controller1.address.value!.name ?? '',
                   style: Get.theme.textTheme.bodyMedium!.copyWith(
                     color: AppColors.textColor2,
                     fontSize: 14,
@@ -290,7 +291,7 @@ class _AddressExpandTileState extends State<AddressExpandTile> {
                   children: [
                     const SizedBox(height: 10),
                     Text(
-                      '${controller.address.value!.address ?? ''}\n${controller.address.value!.city ?? ''}\n${controller.address.value!.state ?? ''}\n${controller.address.value!.zipcode ?? ''}',
+                      '${controller1.address.value!.address ?? ''}\n${controller1.address.value!.city ?? ''}\n${controller1.address.value!.state ?? ''}\n${controller1.address.value!.zipcode ?? ''}',
                       style: Get.theme.textTheme.bodyMedium!.copyWith(
                         color: AppColors.textColor2,
                         fontSize: 14,
