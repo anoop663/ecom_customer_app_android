@@ -152,8 +152,6 @@ class AuthService {
     return response;
   }
 
-  
-
   Future<http.Response> updateAddress(
       Map<String, dynamic> productDetails) async {
     final response = await http.post(
@@ -163,25 +161,40 @@ class AuthService {
     return response;
   }
 
-  
-  
-
   Future<http.Response> getAddress(Map<String, dynamic> authData) async {
-  final url = '${ApiConfig.apiUrl}${ApiConstants.customerAddresses}';
+    final url = '${ApiConfig.apiUrl}${ApiConstants.customerAddresses}';
 
-  final response = await http.post(
-    Uri.parse(url),
-    body: authData,
-  );
+    final response = await http.post(
+      Uri.parse(url),
+      body: authData,
+    );
 
-  return response;
-}
+    return response;
+  }
 
-    Future<http.Response> removeAddress(Map<String, dynamic> authData) async {
+  Future<http.Response> removeAddress(Map<String, dynamic> authData) async {
     final response = await http.post(
       Uri.parse('${ApiConfig.apiUrl}${ApiConstants.removeAddress}'),
       body: authData,
     );
     return response;
+  }
+
+  Future<http.Response> searchFunction2(Map<String, dynamic> searchData) async {
+    final response = await http.post(
+      Uri.parse('${ApiConfig.apiUrl}${ApiConstants.searchProducts}'),
+      body: searchData,
+    );
+    return response;
+  }
+
+  Future<http.Response> popsearchFunction1(
+      Map<String, dynamic> authData) async {
+    final url1 = '${ApiConfig.apiUrl}${ApiConstants.popularSearches}';
+    final response1 = await http.post(
+      Uri.parse(url1),
+      body: authData,
+    );
+    return response1;
   }
 }

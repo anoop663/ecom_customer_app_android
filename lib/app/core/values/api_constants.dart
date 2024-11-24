@@ -9,8 +9,8 @@ class ApiConstants {
   static const brandDetails = '/brand-details/';
   static const forgotMailSend = '/send-reset-password-code';
   static const resetPassword = '/reset-password';
-  static const popularSearches = '/popular-search/';
-  static const searchProducts = '/search-products/';
+  static const popularSearches = '/popular-search/en';
+  static const searchProducts = '/search-products/en';
   static const productDetails = '/product-details/en';
   static const addToCart = '/cart/add/en';
   static const addToWishlist = '/wishlist/add/en';

@@ -1,4 +1,3 @@
-import 'package:ecommerce_app/app/core/values/api_configs.dart';
 import 'package:ecommerce_app/app/modules/home/controllers/home_controller.dart';
 import 'package:ecommerce_app/app/routes/routes.dart';
 import 'package:ecommerce_app/app/widgets/appbar.dart';

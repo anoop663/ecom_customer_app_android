@@ -76,7 +76,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                     Hero(
                       tag: 'search',
                       child: InkWell(
-                        onTap: () => Get.toNamed(Routes.signin),
+                        onTap: () => Get.toNamed(Routes.search),
                         child: Image.asset(
                           IconStrings.searchIcon,
                           height: 25,
