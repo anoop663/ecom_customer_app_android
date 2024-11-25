@@ -197,4 +197,14 @@ class AuthService {
     );
     return response1;
   }
+
+  Future<http.Response> filterData(
+      Map<String, dynamic> authData) async {
+    final url1 = '${ApiConfig.apiUrl}${ApiConstants.filter}';
+    final response1 = await http.post(
+      Uri.parse(url1),
+      body: authData,
+    );
+    return response1;
+  }
 }

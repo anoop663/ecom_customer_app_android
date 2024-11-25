@@ -314,3 +314,4 @@ class CommonFailure implements Exception {
     return message;
   }
 }
+

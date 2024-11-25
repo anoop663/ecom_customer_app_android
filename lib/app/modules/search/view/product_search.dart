@@ -207,9 +207,10 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
         tag: 'logo',
         child: InkWell(
           onTap: () {
-            Get.toNamed(
-              Routes.bottombar,
-            );
+            //Get.toNamed(
+            //  Routes.bottombar,
+            //);
+            Get.back();
           },
           child: const Icon(
             Icons.arrow_back_ios_new_rounded,
