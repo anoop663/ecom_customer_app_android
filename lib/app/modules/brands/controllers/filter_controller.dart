@@ -52,6 +52,39 @@ class FilterController extends GetxController {
 
         if (responseData['success'] == 1) {
           fliterResponse.value = FilterResponse.fromJson(responseData);
+
+           if ( fliterResponse.value!.filters!.isNotEmpty) {
+        for (var element in  fliterResponse.value!.filters!) {
+          ///add every filter name to selected List
+
+          selectedFilters.addAll({element.type!: []});
+
+          ///only using price from here
+          switch (element.type) {
+            case 'category':
+              categories.addAll(element.values ?? []);
+              break;
+            case 'size':
+              sizes.addAll(element.values ?? []);
+              break;
+            case 'color':
+              colors.addAll(element.values ?? []);
+              break;
+            case 'price':
+              for (int i = 0; i < element.values!.length; i++) {
+                if (element.values![i].filterValueId == 'min') {
+                  minPrice.value = element.values![i].name!;
+                }
+                if (element.values![i].filterValueId == 'max') {
+                  maxPrice.value = element.values![i].name!;
+                }
+              }
+
+              break;
+            default:
+          }
+        }
+      }
          
         } else {
           Get.snackbar(

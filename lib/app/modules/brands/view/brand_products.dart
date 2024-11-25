@@ -4,6 +4,7 @@ import 'package:ecommerce_app/app/core/values/strings.dart';
 import 'package:ecommerce_app/app/modules/brands/controllers/brand_product_controller.dart';
 import 'package:ecommerce_app/app/modules/brands/controllers/filter_controller.dart';
 import 'package:ecommerce_app/app/modules/brands/view/filter_sheet.dart';
+import 'package:ecommerce_app/app/modules/brands/view/sort_sheet.dart';
 import 'package:ecommerce_app/app/widgets/appbar.dart';
 import 'package:ecommerce_app/app/widgets/product_bottom_button.dart';
 import 'package:flutter/material.dart';
@@ -146,7 +147,7 @@ class BrandProducts extends StatelessWidget {
             child: Container(
               color: Colors.white,
               padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  const EdgeInsets.symmetric(horizontal: 50.0, vertical: 8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -154,7 +155,16 @@ class BrandProducts extends StatelessWidget {
                     icon: IconStrings.sortIcon,
                     title: 'Sort',
                     onTap: () async {
-                      //
+                       if (!Get.isRegistered<FilterController>()) {
+                        Get.put(FilterController());
+                      }
+                      await Get.bottomSheet(
+                        SortSheet(
+                          onTap: (filter) {},
+                        ),
+                        persistent: true,
+                        backgroundColor: currentTheme.primaryColor,
+                      );
                     },
                   ),
                   SizedBox(

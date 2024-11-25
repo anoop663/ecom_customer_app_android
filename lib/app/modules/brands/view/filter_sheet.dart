@@ -474,7 +474,74 @@ class FilterSheet extends StatelessWidget {
     ));
   }
 
+ // ignore: unused_element
+ Widget _buildSize() {
+    return Expanded(
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: controller.sizes.length,
+              itemBuilder: (context, index) {
+                return CheckboxListTile(
+                  contentPadding: const EdgeInsets.only(left: 15),
+                  controlAffinity: ListTileControlAffinity.leading,
+                  title: Text(
+                    controller.sizes[index].name!,
+                    style: Get.theme.textTheme.bodyMedium!.copyWith(
+                      color: AppColors.textColor2,
+                      fontSize: 12,
+                    ),
+                  ),
+                  value: true,
+                  onChanged: (value) {},
+                );
+              },
+            ),
+          ),
+          const Divider(
+            color: AppColors.filterCategoryColor,
+            thickness: 1.5,
+            indent: 10,
+            endIndent: 10,
+          ),
+        ],
+      ),
+    );
+  }
   // ignore: unused_element
-
-  // ignore: unused_element
+  Widget _buildColors() {
+    return Expanded(
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: controller.colors.length,
+              itemBuilder: (context, index) {
+                return CheckboxListTile(
+                  contentPadding: const EdgeInsets.only(left: 15),
+                  controlAffinity: ListTileControlAffinity.leading,
+                  title: Text(
+                    controller.colors[index].name!,
+                    style: Get.theme.textTheme.bodyMedium!.copyWith(
+                      color: AppColors.textColor2,
+                      fontSize: 12,
+                    ),
+                  ),
+                  value: true,
+                  onChanged: (value) {},
+                );
+              },
+            ),
+          ),
+          const Divider(
+            color: AppColors.filterCategoryColor,
+            thickness: 1.5,
+            indent: 10,
+            endIndent: 10,
+          ),
+        ],
+      ),
+    );
+  }
 }
