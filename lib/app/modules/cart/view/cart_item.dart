@@ -31,7 +31,6 @@ class CartItem extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.15 +
                     (20 * product.product!.thisOptions!.length.toDouble()),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
@@ -58,46 +57,37 @@ class CartItem extends StatelessWidget {
                     ),
                     const SizedBox(width: 10),
                     // Product details
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.16 +
-                          (20 * product.product!.thisOptions!.length.toDouble()),
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            child: Text(
-                              product.name!,
-                              style: context.textTheme.bodyMedium!.copyWith(
-                                color: AppColors.cartProductTitle,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
+                          Text(
+                            product.name!,
+                            style: context.textTheme.bodyMedium!.copyWith(
+                              color: AppColors.cartProductTitle,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
                             ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            height: 20 *
-                                product.product!.thisOptions!.length.toDouble(),
-                            child: ListView.separated(
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: product.product!.thisOptions!.length,
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(height: 5),
-                              itemBuilder: (context, index) {
-                                return Text(
-                                  '${product.product!.thisOptions![index].name!} : ${product.product?.thisOptions?[index].thisValues?.text ?? ''}',
-                                  style: const TextStyle(
-                                    color: AppColors.viewAll,
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                );
-                              },
-                            ),
+                          ListView.separated(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: product.product!.thisOptions!.length,
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(height: 5),
+                            itemBuilder: (context, index) {
+                              return Text(
+                                '${product.product!.thisOptions![index].name!} : ${product.product?.thisOptions?[index].thisValues?.text ?? ''}',
+                                style: const TextStyle(
+                                  color: AppColors.viewAll,
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              );
+                            },
                           ),
                           Row(
                             children: [
@@ -133,13 +123,15 @@ class CartItem extends StatelessWidget {
                 children: [
                   Obx(() => CurvedButton(
                         onClick: () async {
-                          await controller.removefromCartFunction(product.slug);
-                          controller.refreshCartView(); // Refresh cart after removal
+                          if (!controller.isRemoving.value) {
+                            await controller.removefromCartFunction(
+                                product.slug.toString());
+                          }
                         },
                         width: MediaQuery.of(context).size.width * 0.29,
                         height: MediaQuery.of(context).size.height * 0.05,
                         text: controller.isRemoving.value
-                            ? "Removing"
+                            ? "Removing..."
                             : "Remove",
                         borderColor: AppColors.cartButtonBorder,
                         borderRadius: 4,
@@ -147,31 +139,33 @@ class CartItem extends StatelessWidget {
                         fontSize: 16,
                         fontweight: FontWeight.w500,
                         child: controller.isRemoving.value
-                            ? LoadingWidget()
+                            ? const LoadingWidget()
                             : null,
                       )),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.015),
                   Obx(() => CurvedButton(
                         onClick: () async {
-                          await controller.movetoWishListFunction(product.slug);
-                          controller.refreshCartView(); // Refresh cart after moving
+                          if (!controller.isMovingToWishlist.value) {
+                            await controller.movetoWishListFunction(
+                                product.slug.toString());
+                          }
                         },
                         width: MediaQuery.of(context).size.width * 0.4,
                         height: MediaQuery.of(context).size.height * 0.05,
                         text: controller.isMovingToWishlist.value
                             ? "Moving..."
-                            : "Move to WishList",
+                            : "Move to Wishlist",
                         borderColor: AppColors.cartButtonBorder,
                         borderRadius: 4,
                         textColor: AppColors.removeButton,
                         fontSize: 16,
                         fontweight: FontWeight.w500,
                         child: controller.isMovingToWishlist.value
-                            ? LoadingWidget()
+                            ? const LoadingWidget()
                             : null,
                       )),
                 ],
-              )
+              ),
             ],
           ),
         ),

@@ -53,4 +53,6 @@ class BrandProductController extends GetxController {
           colorText: Colors.white, backgroundColor: Colors.black);
     }
   }
+
+  
 }
