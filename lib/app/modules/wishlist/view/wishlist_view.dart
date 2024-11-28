@@ -67,14 +67,29 @@ class WishListView extends StatelessWidget {
                                       MediaQuery.of(context).size.height * 0.29,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10.0),
-                                    image: DecorationImage(
-                                      image: NetworkImage(
-                                        '${ApiConfig.productImageUrl}${product.image}',
-                                      ),
-                                      fit: BoxFit.cover,
-                                      onError: (error, stackTrace) {},
-                                    ),
                                   ),
+                                  child: product.image != null &&
+                                          product.image.isNotEmpty
+                                      ? Image.network(
+                                          '${ApiConfig.productImageUrl}${product.image}',
+                                          fit: BoxFit.cover,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return Image.asset(
+                                              'assets/images/no_image.png',
+                                              fit: BoxFit.cover,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                            );
+                                          },
+                                        )
+                                      : Image.asset(
+                                          'assets/images/no_image.png',
+                                          fit: BoxFit.cover,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                        ),
                                 ),
                                 Positioned(
                                   top: 8.0,

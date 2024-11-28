@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:ecommerce_app/app/data/api_provider.dart';
 import 'package:ecommerce_app/app/data/storage_provider.dart';
+import 'package:ecommerce_app/app/modules/brands/controllers/filter_controller.dart';
 import 'package:ecommerce_app/app/modules/brands/model/brand_product_model.dart';
 import 'package:ecommerce_app/app/modules/brands/model/brand_reponse_model.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,6 @@ class BrandProductController extends GetxController {
   final StorageProvider storageProvider = StorageProvider();
 
   var isLoading = false.obs;
-  //var getBrandProducts = BrandProductModel().obs;
   var brandproductResponse = Rxn<BrandReponseModel>();
 
   // Function to fetch brand products
@@ -19,15 +19,35 @@ class BrandProductController extends GetxController {
     var idToken = storageProvider.readLoginDetails();
     isLoading.value = true;
 
+    // Retrieve FilterController instance
+    final FilterController filterController = Get.find<FilterController>();
+
+    // Get the `finalFilter` value
+    // ignore: unused_local_variable
+    Map<String, List<dynamic>>? finalFilters;
+    if (filterController.selectedFilters.isNotEmpty) {
+      finalFilters = {
+        "filters": filterController.selectedFilters.entries.map((entry) {
+          return {
+            "type": entry.key,
+            "values": entry.value.map((e) => e.toString()).toList()
+          };
+        }).toList()
+      };
+    }
+
+    // Create BrandProductModel with or without filters based on availability
     BrandProductModel brandProductModel = BrandProductModel(
       id: idToken.$1,
       token: idToken.$2,
       by: by,
       value: value,
+     // filters: finalFilters,
     );
 
     try {
-      final response = await authService.brandbaseProduct(brandProductModel.toJson());
+      final response =
+          await authService.brandbaseProduct(brandProductModel.toJson());
 
       isLoading.value = false;
 
@@ -36,8 +56,6 @@ class BrandProductController extends GetxController {
 
         if (responseData['success'] == 1) {
           brandproductResponse.value = BrandReponseModel.fromJson(responseData);
-          //Get.snackbar('Success', 'Product Listed',
-          //    colorText: Colors.white, backgroundColor: Colors.black);
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Failed to retrieve products',
@@ -53,6 +71,4 @@ class BrandProductController extends GetxController {
           colorText: Colors.white, backgroundColor: Colors.black);
     }
   }
-
-  
 }

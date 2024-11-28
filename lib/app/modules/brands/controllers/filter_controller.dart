@@ -34,6 +34,7 @@ class FilterController extends GetxController {
 
   final currentSelected = Rxn<Filter>();
 
+
   void getFilters() async {
     var idToken = storageProvider.readLoginDetails();
     isLoading.value = true;

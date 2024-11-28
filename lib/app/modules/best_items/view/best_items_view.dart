@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/app/modules/home/controllers/home_controller.dart';
+import 'package:ecommerce_app/app/modules/products/controllers/add_to_wishlist.dart';
 import 'package:ecommerce_app/app/routes/routes.dart';
 import 'package:ecommerce_app/app/widgets/appbar.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:get/get.dart';
 class BestItems extends StatelessWidget {
   BestItems({super.key});
   final HomeController homeController = Get.put(HomeController());
+  final AddToWishlistController wishListController = Get.put(AddToWishlistController());
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +24,7 @@ class BestItems extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (bestItems?.bestSeller != null &&
-                bestItems!.bestSeller!.isNotEmpty)
+            if (bestItems?.bestSeller != null && bestItems!.bestSeller!.isNotEmpty)
               Expanded(
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -38,61 +39,89 @@ class BestItems extends StatelessWidget {
 
                     return GestureDetector(
                       onTap: () {
-                        // Navigate to product details page with slug
-
                         Get.toNamed(
                           Routes.productdetails,
-                          arguments: {
-                            'product-slug': product.slug,
-                          },
+                          arguments: {'product-slug': product.slug},
                         );
                       },
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Stack(
                         children: [
-                          Container(
-                            height: MediaQuery.of(context).size.height * 0.3,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  product.images?.first ?? '',
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: MediaQuery.of(context).size.height * 0.3,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
                                 ),
-                                fit: BoxFit.cover,
-                                onError: (error, stackTrace) {
-                                  // ignore: avoid_print
-                                  print('Failed to load image: $error');
-                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  child: Image.network(
+                                    product.images?.first ?? '',
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Image.asset(
+                                        'assets/images/no_image.png',
+                                        fit: BoxFit.cover,
+                                      );
+                                    },
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 4.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  product.name ?? 'No Name',
-                                  style: const TextStyle(
-                                    fontSize: 14.0,
-                                    color: Colors.black,
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
+                              const SizedBox(height: 5),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      product.name ?? 'No Name',
+                                      style: const TextStyle(
+                                        fontSize: 14.0,
+                                        color: Colors.black,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Text(
+                                      '₹ ${product.price}',
+                                      style: const TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  '₹ ${product.price}',
-                                  style: const TextStyle(
-                                    fontSize: 16.0,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
+                              ),
+                            ],
+                          ),
+                          // Add Favorite Icon
+                          Obx(() {
+                            final isFavorite = wishListController.favoriteStatus[product.slug] ?? false;
+                            return Positioned(
+                              top: 8.0,
+                              right: 8.0,
+                              child: GestureDetector(
+                                onTap: () {
+                                  wishListController.toggleFavorite(product.slug!);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(6.0),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: isFavorite ? Colors.transparent : Colors.transparent,
+                                  ),
+                                  child: Icon(
+                                    isFavorite
+                                        ? Icons.favorite // Filled heart
+                                        : Icons.favorite_border, // Outline heart
+                                    color: isFavorite ? Colors.red : Colors.black,
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
+                              ),
+                            );
+                          }),
                         ],
                       ),
                     );
