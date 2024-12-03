@@ -15,6 +15,7 @@ class CreateAddressController extends GetxController {
   //final addressTypeValue = AddressType.home.obs;
   var addressTypeValue = 0.obs;
   final addressForm = GlobalKey<FormState>();
+  var isDefaultValue = 1.obs; 
 
   // Address input controllers
   final nameController = TextEditingController();
@@ -32,6 +33,8 @@ class CreateAddressController extends GetxController {
     required String state,
     required String postCode,
     required String country,
+    required String isDefault,
+
     //required String addressTypeValue,
   }) async {
     // Retrieve stored user ID and token
@@ -45,10 +48,11 @@ class CreateAddressController extends GetxController {
       name: fullName,
       city: city,
       buildingnumber: building,
-      country: '190',
+      country: '99',
       mobile: phoneNumber,
       area: city,
       zipcode: postCode,
+      isDefault:isDefault,
       addresstype: addressTypeValue.toString(),
     );
 

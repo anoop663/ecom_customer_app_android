@@ -64,9 +64,9 @@ class CheckoutScreenView extends StatelessWidget {
                         child: Column(
                           children: [
                             const SizedBox(height: 20),
-                            Obx(() => AddressExpandTile(
-                                  address: controller.selectedAddress.value,
-                                )),
+                            //Obx(() => AddressExpandTile(
+                            //     address: controller.selectedAddress.value,
+                            //    )),
                             const SizedBox(height: 20),
                             Obx(() => ItemsExpandTile(
                                   items: controller

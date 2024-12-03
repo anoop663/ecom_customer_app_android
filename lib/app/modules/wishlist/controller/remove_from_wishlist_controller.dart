@@ -41,8 +41,8 @@ class RemoveFromWishlistController extends GetxController {
         if (responseData['success'] == 1) {
           
 
-          Get.snackbar('Success', 'Item removed successfully',
-              colorText: Colors.white, backgroundColor: Colors.black);
+          //Get.snackbar('Success', 'Item removed successfully',
+          //    colorText: Colors.white, backgroundColor: Colors.black);
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Items removing failed',

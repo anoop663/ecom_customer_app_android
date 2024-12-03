@@ -30,356 +30,191 @@ class HomePage extends StatelessWidget {
         } else if (homeController.homeResponse.value != null) {
           final homeResponse = homeController.homeResponse.value;
 
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                if (homeResponse?.banner1 != null &&
-                    homeResponse!.banner1!.isNotEmpty)
+          return RefreshIndicator(
+            onRefresh: () async {
+              homeController.homeLoad();
+            },
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  if (homeResponse?.banner1 != null &&
+                      homeResponse!.banner1!.isNotEmpty)
 
-                  //First Banner Carosal
-                  CarouselSlider(
-                    options: CarouselOptions(
-                      height: MediaQuery.of(context).size.height * 0.3,
-                      autoPlay: false,
-                      enlargeCenterPage: false,
-                      aspectRatio: 16 / 9,
-                      viewportFraction: 1.0,
+                    //First Banner Carosal
+                    CarouselSlider(
+                      options: CarouselOptions(
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        autoPlay: false,
+                        enlargeCenterPage: false,
+                        aspectRatio: 16 / 9,
+                        viewportFraction: 1.0,
+                      ),
+                      items: homeResponse.banner1!.map((banner) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return GestureDetector(
+                              onTap: () {
+                                Get.toNamed(
+                                  Routes.brandproducts,
+                                  arguments: {
+                                    'by': 'brand',
+                                    'value': 'marella',
+                                  },
+                                );
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
+                                child: Image.network(
+                                  '${ApiConfig.bannerImageUrl}${banner.image ?? ''}',
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }).toList(),
                     ),
-                    items: homeResponse.banner1!.map((banner) {
-                      return Builder(
-                        builder: (BuildContext context) {
-                          return GestureDetector(
-                            onTap: () {
-                              Get.toNamed(
-                                Routes.brandproducts,
-                                arguments: {
-                                  'by': 'brand',
-                                  'value': 'marella',
-                                },
-                              );
-                            },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Image.network(
-                                '${ApiConfig.bannerImageUrl}${banner.image ?? ''}',
-                                fit: BoxFit.cover,
-                                width: double.infinity,
+                  Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        /// Brands section
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Our Brands',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
-                          );
-                        },
-                      );
-                    }).toList(),
-                  ),
-                Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      /// Brands section
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Our Brands',
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                      if (homeResponse?.featuredbrands != null &&
-                          homeResponse!.featuredbrands!.isNotEmpty)
-
-                        //Brand Slider
-                        CarouselSlider(
-                          options: CarouselOptions(
-                            height: MediaQuery.of(context).size.height * 0.2,
-                            autoPlay: true,
-                            enlargeCenterPage: false,
-                            viewportFraction: 0.34,
-                          ),
-                          items: homeResponse.featuredbrands!.map((brand) {
-                            return Builder(
-                              builder: (BuildContext context) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    Get.toNamed(
-                                      Routes.brandproducts,
-                                      arguments: {
-                                        'by': 'brand',
-                                        'value': brand.slug,
-                                      },
-                                    );
-                                  },
-                                  child: Container(
-                                    margin: const EdgeInsets.all(7.0),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      image: DecorationImage(
-                                        image: NetworkImage(brand.image!),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          }).toList(),
+                          ],
                         ),
+                        if (homeResponse?.featuredbrands != null &&
+                            homeResponse!.featuredbrands!.isNotEmpty)
 
-                      /// Suggested for you section
-                      SizedBox(height: 16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Suggested for you',
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
+                          //Brand Slider
+                          CarouselSlider(
+                            options: CarouselOptions(
+                              height: MediaQuery.of(context).size.height * 0.2,
+                              autoPlay: true,
+                              enlargeCenterPage: false,
+                              viewportFraction: 0.34,
                             ),
-                          ),
-                        ],
-                      ),
-                      //ProductCarousal(),
-                      if (homeResponse?.suggestedProducts != null &&
-                          homeResponse!.suggestedProducts!.isNotEmpty)
-                        CarouselSlider(
-                          options: CarouselOptions(
-                            height: MediaQuery.of(context).size.height *
-                                0.40, // Adjust height as needed
-                            autoPlay: true,
-                            enlargeCenterPage: false,
-                            viewportFraction: 0.455,
-                          ),
-                          items: homeResponse.suggestedProducts!
-                              .map((sugproducts) {
-                            return Builder(
-                              builder: (BuildContext context) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    Get.toNamed(
-                                      Routes.productdetails,
-                                      arguments: {
-                                        'product-slug': sugproducts.slug,
-                                      },
-                                    );
-                                  },
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Stack(
-                                        children: [
-                                          // Product Image
-                                          Container(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.28,
-                                            margin: const EdgeInsets.all(7.0),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0),
-                                            ),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0),
-                                              child: Image.network(
-                                                '${ApiConfig.productImageUrl}${sugproducts.image}',
-                                                fit: BoxFit.cover,
-                                                errorBuilder: (context, error,
-                                                    stackTrace) {
-                                                  // Display a placeholder image on error
-                                                  return Image.asset(
-                                                    'assets/images/no_image.png',
-                                                    fit: BoxFit.cover,
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                          // Wishlist Icon
-                                          Obx(() {
-                                            final isFavorite =
-                                                wishListController
-                                                            .favoriteStatus[
-                                                        sugproducts.slug] ??
-                                                    false;
-                                            return Positioned(
-                                              top: 10.0,
-                                              right: 10.0,
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  wishListController
-                                                      .toggleFavorite(
-                                                          sugproducts.slug!);
-                                                },
-                                                child: Container(
-                                                  padding:
-                                                      const EdgeInsets.all(6.0),
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: isFavorite
-                                                        ? Colors.transparent
-                                                        : Colors.transparent,
-                                                  ),
-                                                  child: Icon(
-                                                    isFavorite
-                                                        ? Icons
-                                                            .favorite // Filled heart
-                                                        : Icons
-                                                            .favorite_border, // Outline heart
-                                                    color: isFavorite
-                                                        ? Colors.red
-                                                        : Colors.black,
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          }),
-                                        ],
-                                      ),
-                                      // Product Details
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8.0),
-                                        child: Text(
-                                          sugproducts.name!,
-                                          style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                            items: homeResponse.featuredbrands!.map((brand) {
+                              return Builder(
+                                builder: (BuildContext context) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Get.toNamed(
+                                        Routes.brandproducts,
+                                        arguments: {
+                                          'by': 'brand',
+                                          'value': brand.slug,
+                                        },
+                                      );
+                                    },
+                                    child: Container(
+                                      margin: const EdgeInsets.all(7.0),
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        image: DecorationImage(
+                                          image: NetworkImage(brand.image!),
+                                          fit: BoxFit.cover,
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            );
-                          }).toList(),
-                        ),
-                      if (homeResponse?.banner2 != null &&
-                          homeResponse!.banner2!.isNotEmpty)
-
-                        //Second Banner Carosal
-                        CarouselSlider(
-                          options: CarouselOptions(
-                            height: MediaQuery.of(context).size.height * 0.4,
-                            autoPlay: false,
-                            enlargeCenterPage: false,
-                            viewportFraction: 1.0,
-                          ),
-                          items: homeResponse.banner2!.map((bannersecond) {
-                            return Builder(
-                              builder: (BuildContext context) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    Get.toNamed(
-                                      Routes.brandproducts,
-                                      arguments: {
-                                        'by': 'brand',
-                                        'value': 'fural',
-                                      },
-                                    );
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 0.0),
-                                    child: Image.network(
-                                      ApiConfig.bannerImageUrl +
-                                          (bannersecond.image ?? ''),
-                                      fit: BoxFit.cover,
-                                      width: double.infinity,
                                     ),
-                                  ),
-                                );
-                              },
-                            );
-                          }).toList(),
-                        ),
+                                  );
+                                },
+                              );
+                            }).toList(),
+                          ),
 
-                      /// Best Sellers section
-                      SizedBox(height: 16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Best Sellers',
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
+                        /// Suggested for you section
+                        SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Suggested for you',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      if (homeResponse?.bestSeller != null &&
-                          homeResponse!.bestSeller!.isNotEmpty)
-                        CarouselSlider(
-                          options: CarouselOptions(
-                            height: MediaQuery.of(context).size.height * 0.40,
-                            autoPlay: true,
-                            enlargeCenterPage: false,
-                            viewportFraction: 0.455,
-                          ),
-                          items: homeResponse.bestSeller!.map((bestproducts) {
-                            return Builder(
-                              builder: (BuildContext context) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    Get.toNamed(
-                                      Routes.productdetails,
-                                      arguments: {
-                                        'product-slug': bestproducts.slug,
-                                      },
-                                    );
-                                  },
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Stack(
-                                        children: [
-                                          Container(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.28,
-                                            margin: const EdgeInsets.all(7.0),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0),
-                                            ),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0),
-                                              child: Image.network(
-                                                '${ApiConfig.productImageUrl}${bestproducts.image}',
-                                                fit: BoxFit.cover,
-                                                errorBuilder: (context, error,
-                                                    stackTrace) {
-                                                  return Image.asset(
-                                                    'assets/images/no_image.png',
-                                                    fit: BoxFit.cover,
-                                                  );
-                                                },
+                          ],
+                        ),
+                        //ProductCarousal(),
+                        if (homeResponse?.suggestedProducts != null &&
+                            homeResponse!.suggestedProducts!.isNotEmpty)
+                          CarouselSlider(
+                            options: CarouselOptions(
+                              height: MediaQuery.of(context).size.height *
+                                  0.40, // Adjust height as needed
+                              autoPlay: true,
+                              enlargeCenterPage: false,
+                              viewportFraction: 0.455,
+                            ),
+                            items: homeResponse.suggestedProducts!
+                                .map((sugproducts) {
+                              return Builder(
+                                builder: (BuildContext context) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Get.toNamed(
+                                        Routes.productdetails,
+                                        arguments: {
+                                          'product-slug': sugproducts.slug,
+                                        },
+                                      );
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Stack(
+                                          children: [
+                                            // Product Image
+                                            Container(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.28,
+                                              margin: const EdgeInsets.all(7.0),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(12.0),
+                                              ),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(12.0),
+                                                child: Image.network(
+                                                  '${ApiConfig.productImageUrl}${sugproducts.image}',
+                                                  fit: BoxFit.cover,
+                                                  errorBuilder: (context, error,
+                                                      stackTrace) {
+                                                    // Display a placeholder image on error
+                                                    return Image.asset(
+                                                      'assets/images/no_image.png',
+                                                      fit: BoxFit.cover,
+                                                    );
+                                                  },
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          Positioned(
-                                            top: 10,
-                                            right: 10,
-                                            child: Obx(() {
+                                            // Wishlist Icon
+                                            Obx(() {
                                               final isFavorite =
                                                   wishListController
                                                               .favoriteStatus[
-                                                          bestproducts.slug] ??
+                                                          sugproducts.slug] ??
                                                       false;
                                               return Positioned(
                                                 top: 10.0,
@@ -388,7 +223,7 @@ class HomePage extends StatelessWidget {
                                                   onTap: () {
                                                     wishListController
                                                         .toggleFavorite(
-                                                            bestproducts.slug!);
+                                                            sugproducts.slug!);
                                                   },
                                                   child: Container(
                                                     padding:
@@ -414,184 +249,361 @@ class HomePage extends StatelessWidget {
                                                 ),
                                               );
                                             }),
+                                          ],
+                                        ),
+                                        // Product Details
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8.0),
+                                          child: Text(
+                                            sugproducts.name!,
+                                            style: TextStyle(
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
-                                        ],
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            }).toList(),
+                          ),
+                        if (homeResponse?.banner2 != null &&
+                            homeResponse!.banner2!.isNotEmpty)
+
+                          //Second Banner Carosal
+                          CarouselSlider(
+                            options: CarouselOptions(
+                              height: MediaQuery.of(context).size.height * 0.4,
+                              autoPlay: false,
+                              enlargeCenterPage: false,
+                              viewportFraction: 1.0,
+                            ),
+                            items: homeResponse.banner2!.map((bannersecond) {
+                              return Builder(
+                                builder: (BuildContext context) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Get.toNamed(
+                                        Routes.brandproducts,
+                                        arguments: {
+                                          'by': 'brand',
+                                          'value': 'fural',
+                                        },
+                                      );
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 0.0),
+                                      child: Image.network(
+                                        ApiConfig.bannerImageUrl +
+                                            (bannersecond.image ?? ''),
+                                        fit: BoxFit.cover,
+                                        width: double.infinity,
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 10.0, top: 1.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                    ),
+                                  );
+                                },
+                              );
+                            }).toList(),
+                          ),
+
+                        /// Best Sellers section
+                        SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Best Sellers',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                        if (homeResponse?.bestSeller != null &&
+                            homeResponse!.bestSeller!.isNotEmpty)
+                          CarouselSlider(
+                            options: CarouselOptions(
+                              height: MediaQuery.of(context).size.height * 0.40,
+                              autoPlay: true,
+                              enlargeCenterPage: false,
+                              viewportFraction: 0.455,
+                            ),
+                            items: homeResponse.bestSeller!.map((bestproducts) {
+                              return Builder(
+                                builder: (BuildContext context) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Get.toNamed(
+                                        Routes.productdetails,
+                                        arguments: {
+                                          'product-slug': bestproducts.slug,
+                                        },
+                                      );
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Stack(
                                           children: [
-                                            Text(
-                                              bestproducts.name ??
-                                                  'Unknown Product',
-                                              style: const TextStyle(
-                                                fontSize: 12.0,
-                                                color: Colors.black,
+                                            Container(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.28,
+                                              margin: const EdgeInsets.all(7.0),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(12.0),
+                                              ),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(12.0),
+                                                child: Image.network(
+                                                  '${ApiConfig.productImageUrl}${bestproducts.image}',
+                                                  fit: BoxFit.cover,
+                                                  errorBuilder: (context, error,
+                                                      stackTrace) {
+                                                    return Image.asset(
+                                                      'assets/images/no_image.png',
+                                                      fit: BoxFit.cover,
+                                                    );
+                                                  },
+                                                ),
                                               ),
                                             ),
-                                            Text(
-                                              '₹ ${bestproducts.price}',
-                                              style: const TextStyle(
-                                                fontSize: 16.0,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w500,
-                                              ),
+                                            Positioned(
+                                              top: 10,
+                                              right: 10,
+                                              child: Obx(() {
+                                                final isFavorite =
+                                                    wishListController
+                                                                .favoriteStatus[
+                                                            bestproducts
+                                                                .slug] ??
+                                                        false;
+                                                return Positioned(
+                                                  top: 10.0,
+                                                  right: 10.0,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      wishListController
+                                                          .toggleFavorite(
+                                                              bestproducts
+                                                                  .slug!);
+                                                    },
+                                                    child: Container(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              6.0),
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        color: isFavorite
+                                                            ? Colors.transparent
+                                                            : Colors
+                                                                .transparent,
+                                                      ),
+                                                      child: Icon(
+                                                        isFavorite
+                                                            ? Icons
+                                                                .favorite // Filled heart
+                                                            : Icons
+                                                                .favorite_border, // Outline heart
+                                                        color: isFavorite
+                                                            ? Colors.red
+                                                            : Colors.black,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
                                             ),
                                           ],
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            );
-                          }).toList(),
-                        ),
-
-                      /// Trending Categories
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Trending Categories',
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      GridView.builder(
-                        itemCount: homeResponse?.categories?.length ??
-                            0, // Check for null
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 8.0,
-                          mainAxisSpacing: 9.0,
-                          childAspectRatio: 0.75,
-                        ),
-                        itemBuilder: (BuildContext context, int index) {
-                          // Null-safe access to the category and its properties
-                          final category = homeResponse?.categories?[index];
-                          final imageUrl = category?.category?.image ??
-                              ''; // Replace with a placeholder if needed
-                          final categoryTitle =
-                              category?.category?.name ?? 'Unknown Category';
-
-                          return GestureDetector(
-                            onTap: () {
-                              Get.toNamed(
-                                Routes.brandproducts,
-                                arguments: {
-                                  'by': 'category',
-                                  'value': category?.category?.slug,
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 10.0, top: 1.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                bestproducts.name ??
+                                                    'Unknown Product',
+                                                style: const TextStyle(
+                                                  fontSize: 12.0,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              Text(
+                                                '₹ ${bestproducts.price}',
+                                                style: const TextStyle(
+                                                  fontSize: 16.0,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
                                 },
                               );
-                            },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      image: DecorationImage(
-                                        image: NetworkImage(imageUrl),
-                                        fit: BoxFit.cover,
-                                        onError: (error, stackTrace) {
-                                          // ignore: avoid_print
-                                          print('Failed to load image: $error');
-                                        },
+                            }).toList(),
+                          ),
+
+                        /// Trending Categories
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Trending Categories',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        GridView.builder(
+                          itemCount: homeResponse?.categories?.length ??
+                              0, // Check for null
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 8.0,
+                            mainAxisSpacing: 9.0,
+                            childAspectRatio: 0.75,
+                          ),
+                          itemBuilder: (BuildContext context, int index) {
+                            // Null-safe access to the category and its properties
+                            final category = homeResponse?.categories?[index];
+                            final imageUrl = category?.category?.image ??
+                                ''; // Replace with a placeholder if needed
+                            final categoryTitle =
+                                category?.category?.name ?? 'Unknown Category';
+
+                            return GestureDetector(
+                              onTap: () {
+                                Get.toNamed(
+                                  Routes.brandproducts,
+                                  arguments: {
+                                    'by': 'category',
+                                    'value': category?.category?.slug,
+                                  },
+                                );
+                              },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        image: DecorationImage(
+                                          image: NetworkImage(imageUrl),
+                                          fit: BoxFit.cover,
+                                          onError: (error, stackTrace) {
+                                            // ignore: avoid_print
+                                            print(
+                                                'Failed to load image: $error');
+                                          },
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  categoryTitle,
-                                  style: const TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black,
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                      ),
-
-                      SizedBox(height: 20),
-                      Text(
-                        'Shop Exclusive Deals',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-
-                      SizedBox(height: 10),
-                      if (homeResponse!.banner1 != null &&
-                          homeResponse.banner1!.isNotEmpty)
-                        //Last BannerCarosal
-                        CarouselSlider(
-                          options: CarouselOptions(
-                            height: MediaQuery.of(context).size.height * 0.3,
-                            autoPlay: false,
-                            enlargeCenterPage: false,
-                            aspectRatio: 16 / 9,
-                            viewportFraction: 1.0,
-                          ),
-                          items: homeResponse.banner3!.map((banner) {
-                            return Builder(
-                              builder: (BuildContext context) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    Get.toNamed(
-                                      Routes.brandproducts,
-                                      arguments: {
-                                        'by': 'brand',
-                                        'value': 'maxco',
-                                      },
-                                    );
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 0.0),
-                                    child: Image.network(
-                                      ApiConfig.bannerImageUrl +
-                                          (banner.image ?? ''),
-                                      fit: BoxFit.cover,
-                                      width: double.infinity,
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    categoryTitle,
+                                    style: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black,
                                     ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                );
-                              },
+                                ],
+                              ),
                             );
-                          }).toList(),
+                          },
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
                         ),
-                    ],
+
+                        SizedBox(height: 20),
+                        Text(
+                          'Shop Exclusive Deals',
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+
+                        SizedBox(height: 10),
+                        if (homeResponse!.banner1 != null &&
+                            homeResponse.banner1!.isNotEmpty)
+                          //Last BannerCarosal
+                          CarouselSlider(
+                            options: CarouselOptions(
+                              height: MediaQuery.of(context).size.height * 0.3,
+                              autoPlay: false,
+                              enlargeCenterPage: false,
+                              aspectRatio: 16 / 9,
+                              viewportFraction: 1.0,
+                            ),
+                            items: homeResponse.banner3!.map((banner) {
+                              return Builder(
+                                builder: (BuildContext context) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Get.toNamed(
+                                        Routes.brandproducts,
+                                        arguments: {
+                                          'by': 'brand',
+                                          'value': 'maxco',
+                                        },
+                                      );
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 0.0),
+                                      child: Image.network(
+                                        ApiConfig.bannerImageUrl +
+                                            (banner.image ?? ''),
+                                        fit: BoxFit.cover,
+                                        width: double.infinity,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            }).toList(),
+                          ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         } else {
           return Center(
             child: Text(
-              'Failed to load home page data',
+              'Failed to load home page data\n\nCheck your Internet connection',
               style: TextStyle(color: Colors.red),
             ),
           );

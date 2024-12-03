@@ -33,166 +33,218 @@ class CreateAddressView extends StatelessWidget {
       body: Obx(
         () => controller.isLoading.isTrue
             ? const Center(child: LoadingWidget())
-            : Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    AddressTextField(
-                      hint: 'Full Name',
-                      controller: fullNameController,
-                    ),
-                    SizedBox(height: 30),
-                    PhoneNumberField(
-                      controller: phoneNumberController,
-                    ),
-                    SizedBox(height: 30),
-                    AddressTextField(
-                      hint: 'Flat No/Building No, Street Name',
-                      controller: buildingController,
-                    ),
-                    SizedBox(height: 30),
-                    AddressTextField(
-                      hint: 'City',
-                      controller: cityController,
-                    ),
-                    SizedBox(height: 30),
-                    AddressTextField(
-                      hint: 'State',
-                      controller: stateController,
-                    ),
-                    SizedBox(height: 30),
-                    AddressTextField(
-                      hint: 'Post Code',
-                      controller: postCodeController,
-                      keyboardType: TextInputType.number,
-                    ),
-                    SizedBox(height: 30),
-                    AddressTextField(
-                      hint: 'Country',
-                      controller: countryController,
-                      readOnly: true,
-                    ),
-                    SizedBox(height: 30),
+            : SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      AddressTextField(
+                        hint: 'Full Name',
+                        controller: fullNameController,
+                      ),
+                      SizedBox(height: 30),
+                      PhoneNumberField(
+                        controller: phoneNumberController,
+                      ),
+                      SizedBox(height: 30),
+                      AddressTextField(
+                        hint: 'Flat No/Building No, Street Name',
+                        controller: buildingController,
+                      ),
+                      SizedBox(height: 30),
+                      AddressTextField(
+                        hint: 'City',
+                        controller: cityController,
+                      ),
+                      SizedBox(height: 30),
+                      AddressTextField(
+                        hint: 'State',
+                        controller: stateController,
+                      ),
+                      SizedBox(height: 30),
+                      AddressTextField(
+                        hint: 'Post Code',
+                        controller: postCodeController,
+                        keyboardType: TextInputType.number,
+                      ),
+                      SizedBox(height: 30),
+                      AddressTextField(
+                        hint: 'Country',
+                        controller: countryController,
+                        readOnly: true,
+                      ),
+                      SizedBox(height: 30),
 
-                    // Title and Buttons
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Save address as',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.textColor2,
+                      // Dropdown for isDefault
+                      Obx(() {
+                        return DropdownButtonFormField<int>(
+                          value: controller.isDefaultValue.value,
+                          onChanged: (value) {
+                            controller.isDefaultValue.value = value!;
+                          },
+                          items: const [
+                            DropdownMenuItem(
+                              value: 1,
+                              child: Text('Yes'),
+                            ),
+                            DropdownMenuItem(
+                              value: 0,
+                              child: Text('No'),
+                            ),
+                          ],
+                          decoration: InputDecoration(
+                            labelText: 'Is Default?',
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: AppColors.addressTextFieldBorder,
+                              ),
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: AppColors.addressTextFieldBorder,
+                              ),
+                            ),
+                            labelStyle: const TextStyle(
+                              color: AppColors.textColor2,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14,
+                            ),
+                          ),
+                          style: const TextStyle(
+                            color: AppColors.textColor2,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                          ),
+                        );
+                      }),
+                      SizedBox(height: 30),
+
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Save address as',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.textColor2,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 20),
-                    Obx(
-                      () => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Expanded(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                controller.addressTypeValue.value = 0;
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: controller.addressTypeValue.value == 0
-                                    ? AppColors.bottomSelectedColor
-                                    : AppColors.bottomNotSelectedColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
+                      SizedBox(height: 20),
+                      Obx(
+                        () => Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  controller.addressTypeValue.value = 0;
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      controller.addressTypeValue.value == 0
+                                          ? AppColors.bottomSelectedColor
+                                          : AppColors.bottomNotSelectedColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  padding: EdgeInsets.symmetric(vertical: 8),
                                 ),
-                                padding: EdgeInsets.symmetric(vertical: 8),
-                              ),
-                              child: Text(
-                                'HOME',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: controller.addressTypeValue.value == 0
-                                      ? AppColors.textColor1
-                                      : AppColors.textColor2,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 5),
-                          Expanded(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                controller.addressTypeValue.value = 1;
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: controller.addressTypeValue.value == 1
-                                    ? AppColors.bottomSelectedColor
-                                    : AppColors.bottomNotSelectedColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                padding: EdgeInsets.symmetric(vertical: 8),
-                              ),
-                              child: Text(
-                                'OFFICE',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: controller.addressTypeValue.value == 1
-                                      ? AppColors.textColor1
-                                      : AppColors.textColor2,
+                                child: Text(
+                                  'HOME',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color:
+                                        controller.addressTypeValue.value == 0
+                                            ? AppColors.textColor1
+                                            : AppColors.textColor2,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(width: 5),
-                          Expanded(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                controller.addressTypeValue.value = 2;
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: controller.addressTypeValue.value == 2
-                                    ? AppColors.bottomSelectedColor
-                                    : AppColors.bottomNotSelectedColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
+                            SizedBox(width: 5),
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  controller.addressTypeValue.value = 1;
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      controller.addressTypeValue.value == 1
+                                          ? AppColors.bottomSelectedColor
+                                          : AppColors.bottomNotSelectedColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  padding: EdgeInsets.symmetric(vertical: 8),
                                 ),
-                                padding: EdgeInsets.symmetric(vertical: 8),
-                              ),
-                              child: Text(
-                                'OTHER',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: controller.addressTypeValue.value == 2
-                                      ? AppColors.textColor1
-                                      : AppColors.textColor2,
+                                child: Text(
+                                  'OFFICE',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color:
+                                        controller.addressTypeValue.value == 1
+                                            ? AppColors.textColor1
+                                            : AppColors.textColor2,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                            SizedBox(width: 5),
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  controller.addressTypeValue.value = 2;
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      controller.addressTypeValue.value == 2
+                                          ? AppColors.bottomSelectedColor
+                                          : AppColors.bottomNotSelectedColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  padding: EdgeInsets.symmetric(vertical: 8),
+                                ),
+                                child: Text(
+                                  'OTHER',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color:
+                                        controller.addressTypeValue.value == 2
+                                            ? AppColors.textColor1
+                                            : AppColors.textColor2,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 30),
-                    CurvedButton(
-                      onClick: () {
-                        controller.addAddressFunction(
-                          fullName: fullNameController.text,
-                          phoneNumber: phoneNumberController.text,
-                          building: buildingController.text,
-                          city: cityController.text,
-                          state: stateController.text,
-                          postCode: postCodeController.text,
-                          country: countryController
-                              .text, 
-                          //addressTypeValue: '1',
-                        );
-                      },
-                      borderRadius: 0,
-                      width: MediaQuery.of(context).size.width,
-                      textColor: AppColors.primary,
-                      buttonColor: AppColors.bottomSelectedColor,
-                      text: 'SAVE ADDRESS',
-                    ),
-                  ],
+                      SizedBox(height: 30),
+                      CurvedButton(
+                        onClick: () {
+                          controller.addAddressFunction(
+                            fullName: fullNameController.text,
+                            phoneNumber: phoneNumberController.text,
+                            building: buildingController.text,
+                            city: cityController.text,
+                            state: stateController.text,
+                            postCode: postCodeController.text,
+                            country: countryController.text,
+                            isDefault:
+                                controller.isDefaultValue.value.toString(),
+                            //addressTypeValue: '1',
+                          );
+                        },
+                        borderRadius: 0,
+                        width: MediaQuery.of(context).size.width,
+                        textColor: AppColors.primary,
+                        buttonColor: AppColors.bottomSelectedColor,
+                        text: 'SAVE ADDRESS',
+                      ),
+                    ],
+                  ),
                 ),
               ),
       ),

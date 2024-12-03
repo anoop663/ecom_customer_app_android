@@ -6,6 +6,7 @@ import 'package:ecommerce_app/app/modules/wishlist/controller/remove_from_wishli
 import 'package:ecommerce_app/app/modules/wishlist/controller/wislist_controller.dart';
 import 'package:ecommerce_app/app/widgets/appbar.dart';
 import 'package:ecommerce_app/app/widgets/empty_wishlist.dart';
+import 'package:ecommerce_app/app/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,6 +18,7 @@ class WishListView extends StatelessWidget {
       RemoveFromWishlistController();
   final AddToBagFromWishlistController addtobagWishlistController =
       AddToBagFromWishlistController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +35,11 @@ class WishListView extends StatelessWidget {
             const SizedBox(height: 10),
             Obx(() {
               if (wishListController.isLoading.value) {
-                return const Center(child: CircularProgressIndicator());
+                return const Expanded(
+                  child: Center(
+                    child: LoadingWidget(),
+                  ),
+                );
               }
 
               final wishlistItems = wishListController.wishlistResponse.value;
@@ -68,6 +74,7 @@ class WishListView extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
+                                  // ignore: unnecessary_null_comparison
                                   child: product.image != null &&
                                           product.image.isNotEmpty
                                       ? Image.network(
@@ -146,7 +153,15 @@ class WishListView extends StatelessWidget {
                                     onPressed: () {
                                       addtobagWishlistController
                                           .movetoCartWishlist(product.slug);
-                                      wishListController.showWishListFunction();
+
+                                      removeFromWishlistController
+                                          .removeFromWishlist(product.slug);
+
+                                      Future.delayed(const Duration(seconds: 2),
+                                          () {
+                                        wishListController
+                                            .showWishListFunction();
+                                      });
                                     },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.white,

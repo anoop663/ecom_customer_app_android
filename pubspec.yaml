@@ -10,7 +10,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   get: ^4.6.6
   dio: ^5.7.0
-  fpdart: ^1.1.0
+  fpdart: ^1.1.1
   http: ^1.2.2
   get_storage: ^2.1.1
   carousel_slider: ^5.0.0

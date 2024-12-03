@@ -10,6 +10,7 @@ class AddressCreateModel {
   String? area;
   String? zipcode;
   String? addresstype;
+  String? isDefault;
 
   AddressCreateModel({
     this.id,
@@ -22,6 +23,7 @@ class AddressCreateModel {
     this.country,
     this.mobile,
     this.zipcode,
+    this.isDefault,
   });
 
   Map<String, dynamic> toJson() {
@@ -36,6 +38,7 @@ class AddressCreateModel {
       'area_number': area,
       'zipcode': zipcode,
       'address_type': addresstype,
+      'isDefault' : isDefault,
     };
   }
 }

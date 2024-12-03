@@ -17,7 +17,7 @@ class MyAddressListController extends GetxController {
   final tempAddressId = ''.obs;
   //final repository = EcomApiClient();
   final addressresponse = Rxn<AddressListResponse>();
-  final addressresponse1 = Rxn<AddressListResponse>();
+  //final addressresponse1 = Rxn<AddressListResponse>();
   var address = Rxn<Address>();
 
   final removeResponse = Rxn<Success>();

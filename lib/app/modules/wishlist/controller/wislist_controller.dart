@@ -37,8 +37,8 @@ class WishListController extends GetxController {
         if (responseData['success'] == 1) {
           wishlistResponse.value = WishListResponse.fromJson(responseData);
 
-          Get.snackbar('Success', 'WishList showing successfully',
-              colorText: Colors.white, backgroundColor: Colors.black);
+          //Get.snackbar('Success', 'WishList showing successfully',
+          //    colorText: Colors.white, backgroundColor: Colors.black);
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Items showing failed',
