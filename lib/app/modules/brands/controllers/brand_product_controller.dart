@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:ecommerce_app/app/data/api_provider.dart';
 import 'package:ecommerce_app/app/data/storage_provider.dart';
 import 'package:ecommerce_app/app/modules/brands/controllers/filter_controller.dart';
-import 'package:ecommerce_app/app/modules/brands/model/brand_product_model.dart';
+import 'package:ecommerce_app/app/modules/brands/model/brand_filter_model.dart';
 import 'package:ecommerce_app/app/modules/brands/model/brand_reponse_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,12 +37,12 @@ class BrandProductController extends GetxController {
     }
 
     // Create BrandProductModel with or without filters based on availability
-    BrandProductModel brandProductModel = BrandProductModel(
+    BrandProductModel2 brandProductModel = BrandProductModel2(
       id: idToken.$1,
       token: idToken.$2,
       by: by,
       value: value,
-     // filters: finalFilters,
+     // filters: filter.,
     );
 
     try {

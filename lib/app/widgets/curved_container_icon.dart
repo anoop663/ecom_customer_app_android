@@ -1,14 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/app/core/extensions/custom_page_scroll.dart';
-import 'package:ecommerce_app/app/core/extensions/image_cache_size.dart';
+import 'package:ecommerce_app/app/core/values/api_configs.dart';
 import 'package:ecommerce_app/app/core/values/colors.dart';
 import 'package:ecommerce_app/app/core/values/strings.dart';
 import 'package:ecommerce_app/app/widgets/curve_button.dart';
 import 'package:flutter/material.dart';
 
-
-
-class CurvedContainerWithImage extends StatefulWidget {
+class CurvedContainerWithImage extends StatelessWidget {
   const CurvedContainerWithImage({
     super.key,
     this.containerImage,
@@ -16,29 +13,10 @@ class CurvedContainerWithImage extends StatefulWidget {
     this.width,
     this.isSoldOut = false,
   });
-  final String? containerImage;
 
+  final String? containerImage;
   final double? height, width;
   final bool isSoldOut;
-
-  @override
-  State<CurvedContainerWithImage> createState() =>
-      _CurvedContainerWithImageState();
-}
-
-class _CurvedContainerWithImageState extends State<CurvedContainerWithImage> {
-  late final PageController? pageController;
-
-  @override
-  void initState() {
-    super.initState();
-    pageController = PageController();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +25,8 @@ class _CurvedContainerWithImageState extends State<CurvedContainerWithImage> {
       borderRadius: BorderRadius.circular(10.0),
       child: Container(
         clipBehavior: Clip.antiAliasWithSaveLayer,
-        height: widget.height ?? screenSize.height * 0.2,
-        width: widget.width ?? screenSize.width * 0.32,
+        height: height ?? screenSize.height * 0.2,
+        width: width ?? screenSize.width * 0.32,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
         ),
@@ -56,34 +34,31 @@ class _CurvedContainerWithImageState extends State<CurvedContainerWithImage> {
           children: [
             PageView.builder(
               physics: const CustomPageViewScrollPhysics(),
-              controller: pageController,
-              itemCount: widget.containerImage!.length,
+              itemCount: 1,
               itemBuilder: (context, index) {
+                final imageUrl = '${ApiConfig.productImageUrl}$containerImage';
 
-                return !widget.containerImage![index].contains('asset')
-                    ? CachedNetworkImage(
-                        memCacheWidth: widget.width == null
-                            ? (screenSize.width * 0.32).cacheSize(context)
-                            : widget.width!.cacheSize(context),
-                        memCacheHeight: widget.height == null
-                            ? (screenSize.height * 0.18).cacheSize(context)
-                            : widget.height!.cacheSize(context),
-                        imageUrl: widget.containerImage![index],
-                        width: widget.width,
-                        height: widget.height,
+                // ignore: unnecessary_null_comparison
+                return imageUrl != null && imageUrl.isNotEmpty
+                    ? Image.network(
+                        imageUrl,
+                        width: width,
+                        height: height,
                         fit: BoxFit.cover,
-                        alignment: Alignment.center,
-                        errorWidget: (context, url, error) {
+                        errorBuilder: (context, error, stackTrace) {
                           return Image.asset(
                             ImageStrings.noImage,
                             fit: BoxFit.cover,
                           );
                         },
                       )
-                    : Image.asset(widget.containerImage![index]);
+                    : Image.asset(
+                        ImageStrings.noImage,
+                        fit: BoxFit.cover,
+                      );
               },
             ),
-            if (widget.isSoldOut)
+            if (isSoldOut)
               Container(
                 color: AppColors.noFocusColor,
                 child: Align(
@@ -99,35 +74,6 @@ class _CurvedContainerWithImageState extends State<CurvedContainerWithImage> {
                     fontSize: 14,
                     fontweight: FontWeight.w500,
                     isSelected: true,
-                  ),
-                ),
-              ),
-            if (widget.containerImage!.length > 1)
-              Positioned(
-                bottom: 5,
-                left: 5,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: List.generate(
-                    widget.containerImage!.length,
-                    (index) => ListenableBuilder(
-                        listenable: pageController!,
-                        builder: (context, child) {
-                          return AnimatedContainer(
-                            duration: const Duration(
-                              microseconds: 1,
-                            ),
-                            height: 4,
-                            width: 4,
-                            margin: const EdgeInsets.all(3),
-                            decoration: BoxDecoration(
-                              color: pageController!.page == index
-                                  ? AppColors.textColor1
-                                  : AppColors.noFocusColor,
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                          );
-                        }),
                   ),
                 ),
               ),

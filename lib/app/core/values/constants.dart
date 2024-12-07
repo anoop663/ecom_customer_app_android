@@ -18,3 +18,10 @@ void appToast(String title, String message) {
         milliseconds: 800,
       ));
 }
+String getAddressType(String type) {
+  return type == '0'
+      ? 'Home'
+      : type == '1'
+          ? 'Office'
+          : 'Other';
+}

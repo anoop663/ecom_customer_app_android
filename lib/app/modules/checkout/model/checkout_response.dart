@@ -377,7 +377,7 @@ class Item {
   final int? giftWrap;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final Product? product;
+  final Product1? product;
 
   Item({
     this.id,
@@ -475,7 +475,7 @@ class Item {
             ? null
             : DateTime.parse(json["updated_at"]),
         product:
-            json["product"] == null ? null : Product.fromJson(json["product"]),
+            json["product"] == null ? null : Product1.fromJson(json["product"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -526,7 +526,7 @@ class Item {
       };
 }
 
-class Product {
+class Product1 {
   final String? code;
   final int? userId;
   final int? status;
@@ -562,7 +562,7 @@ class Product {
   final int? isGender;
   final List<dynamic>? thisOptions;
 
-  Product({
+  Product1({
     this.code,
     this.userId,
     this.status,
@@ -599,7 +599,7 @@ class Product {
     this.thisOptions,
   });
 
-  factory Product.fromJson(Map<String, dynamic> json) => Product(
+  factory Product1.fromJson(Map<String, dynamic> json) => Product1(
         code: json["code"],
         userId: json["user_id"],
         status: json["status"],

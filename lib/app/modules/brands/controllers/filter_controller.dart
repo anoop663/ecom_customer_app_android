@@ -5,6 +5,7 @@ import 'package:ecommerce_app/app/data/storage_provider.dart';
 import 'package:ecommerce_app/app/modules/brands/model/brand_filter_model.dart';
 import 'package:ecommerce_app/app/modules/brands/model/brand_reponse_model.dart';
 import 'package:ecommerce_app/app/modules/brands/model/filter_response_model.dart';
+import 'package:ecommerce_app/app/modules/brands/model/newfilter_model.dart';
 import 'package:ecommerce_app/app/modules/home/models/home_product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,7 @@ class FilterController extends GetxController {
   final AuthService authService = AuthService();
   final StorageProvider storageProvider = StorageProvider();
   var brandproductResponse1 = Rxn<BrandReponseModel>();
+  final filters = Rxn<Filters>();
 
   @override
   void onInit() {
@@ -34,7 +36,6 @@ class FilterController extends GetxController {
 
   final currentSelected = Rxn<Filter>();
 
-
   void getFilters() async {
     var idToken = storageProvider.readLoginDetails();
     isLoading.value = true;
@@ -42,12 +43,10 @@ class FilterController extends GetxController {
     HomeAuth homeAuth = HomeAuth(
       id: idToken.$1,
       token: idToken.$2,
-
     );
 
     try {
-      final response =
-          await authService.filterData(homeAuth.toJson());
+      final response = await authService.filterData(homeAuth.toJson());
 
       isLoading.value = false;
 
@@ -57,39 +56,38 @@ class FilterController extends GetxController {
         if (responseData['success'] == 1) {
           fliterResponse.value = FilterResponse.fromJson(responseData);
 
-           if ( fliterResponse.value!.filters!.isNotEmpty) {
-        for (var element in  fliterResponse.value!.filters!) {
-          ///add every filter name to selected List
+          if (fliterResponse.value!.filters!.isNotEmpty) {
+            for (var element in fliterResponse.value!.filters!) {
+              ///add every filter name to selected List
 
-          selectedFilters.addAll({element.type!: []});
+              selectedFilters.addAll({element.type!: []});
 
-          ///only using price from here
-          switch (element.type) {
-            case 'category':
-              categories.addAll(element.values ?? []);
-              break;
-            case 'size':
-              sizes.addAll(element.values ?? []);
-              break;
-            case 'color':
-              colors.addAll(element.values ?? []);
-              break;
-            case 'price':
-              for (int i = 0; i < element.values!.length; i++) {
-                if (element.values![i].filterValueId == 'min') {
-                  minPrice.value = element.values![i].name!;
-                }
-                if (element.values![i].filterValueId == 'max') {
-                  maxPrice.value = element.values![i].name!;
-                }
+              ///only using price from here
+              switch (element.type) {
+                case 'category':
+                  categories.addAll(element.values ?? []);
+                  break;
+                case 'size':
+                  sizes.addAll(element.values ?? []);
+                  break;
+                case 'color':
+                  colors.addAll(element.values ?? []);
+                  break;
+                case 'price':
+                  for (int i = 0; i < element.values!.length; i++) {
+                    if (element.values![i].filterValueId == 'min') {
+                      minPrice.value = element.values![i].name!;
+                    }
+                    if (element.values![i].filterValueId == 'max') {
+                      maxPrice.value = element.values![i].name!;
+                    }
+                  }
+
+                  break;
+                default:
               }
-
-              break;
-            default:
+            }
           }
-        }
-      }
-         
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Failed to retrieve products',
@@ -105,7 +103,7 @@ class FilterController extends GetxController {
           colorText: Colors.white, backgroundColor: Colors.black);
     }
   }
-  
+
   void getBrandProducts2(String by, String value) async {
     var idToken = storageProvider.readLoginDetails();
     isLoading.value = true;
@@ -115,12 +113,12 @@ class FilterController extends GetxController {
       token: idToken.$2,
       by: by,
       value: value,
-    //  filters: filters,
-
+      filters: filters.value,
     );
 
     try {
-      final response = await authService.brandbaseProduct(brandProductModel2.toJson());
+      final response =
+          await authService.brandbaseProduct(brandProductModel2.toJson());
 
       isLoading.value = false;
 
@@ -128,7 +126,8 @@ class FilterController extends GetxController {
         final responseData = json.decode(response.body);
 
         if (responseData['success'] == 1) {
-          brandproductResponse1.value = BrandReponseModel.fromJson(responseData);
+          brandproductResponse1.value =
+              BrandReponseModel.fromJson(responseData);
           //Get.snackbar('Success', 'Product Listed',
           //    colorText: Colors.white, backgroundColor: Colors.black);
         } else {

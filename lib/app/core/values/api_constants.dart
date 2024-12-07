@@ -32,7 +32,7 @@ class ApiConstants {
   static const deleteAccount = '/delete-account/';
   static const updateProfile = '/update-profile/';
   static const countries = '/countries/';
-  static const checkout = '/checkout/';
+  static const checkout = '/checkout/en';
   static const filter = '/filters/en';
   static const track = '/tracking/';
   static const cancelOrder = '/cancel-order/';

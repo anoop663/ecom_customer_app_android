@@ -11,6 +11,7 @@ import 'package:ecommerce_app/app/modules/checkout/view/checkout_view.dart';
 import 'package:ecommerce_app/app/modules/forgot_pass/view/forgot_pass.dart';
 import 'package:ecommerce_app/app/modules/forgot_pass/view/setnew_pass.dart';
 import 'package:ecommerce_app/app/modules/home/views/home.dart';
+import 'package:ecommerce_app/app/modules/order_confirm/view/order_confirm.dart';
 import 'package:ecommerce_app/app/modules/otp/views/otpverify.dart';
 import 'package:ecommerce_app/app/modules/products/view/product_view.dart';
 import 'package:ecommerce_app/app/modules/search/view/product_search.dart';
@@ -44,6 +45,7 @@ class Routes {
   static const String address = '/address';
   static const String noconnection = '/noconnection';
   static const String search = '/search';
+  static const String orderconfirm = '/order-confirm';
 
 
   static final List<GetPage> pages = [
@@ -67,7 +69,8 @@ class Routes {
     GetPage(name: account, page: () => AccountView()),
     GetPage(name: address, page: () => MyAddressListView()),
     GetPage(name: noconnection, page: () => NoConnection()),
-    GetPage(name: search, page: () => SearchView(),
+    GetPage(name: search, page: () => SearchView()),
+    GetPage(name: orderconfirm, page: () => OrderConfirmScreenView(),
     ),
   ];
 }

@@ -1,5 +1,5 @@
+import 'package:ecommerce_app/app/core/values/api_configs.dart';
 import 'package:ecommerce_app/app/core/values/strings.dart';
-import 'package:ecommerce_app/app/modules/address_manage/controller/address_list_controller.dart';
 import 'package:ecommerce_app/app/modules/address_manage/model/address_response_model.dart';
 import 'package:ecommerce_app/app/modules/cart/controller/cart_controller.dart';
 import 'package:ecommerce_app/app/modules/cart/model/cart_response_model.dart';
@@ -41,173 +41,189 @@ class CheckoutScreenView extends StatelessWidget {
         showWishList: false,
       ),
       body: Obx(
-        () => cartController.cartResponse.value == null
-            ? Center(
-                child: Text(
-                  'Check Cart response',
-                  style: Get.theme.textTheme.bodyMedium!.copyWith(
-                    color: AppColors.textColor2,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              )
-            : SizedBox(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.8,
-                      width: MediaQuery.of(context).size.width,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 20),
-                            //Obx(() => AddressExpandTile(
-                            //     address: controller.selectedAddress.value,
-                            //    )),
-                            const SizedBox(height: 20),
-                            Obx(() => ItemsExpandTile(
-                                  items: controller
-                                          .cartResponse1.value?.products ??
-                                      [],
-                                )),
-                            const SizedBox(height: 20),
-                            ColoredBox(
-                              color: AppColors.primary,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    Row(
+        () => controller.initialLoading.isTrue
+            ? const Center(child: LoadingWidget())
+            : cartController.cartResponse.value == null
+                ? Center(
+                    child: Text(
+                      'Check Cart response',
+                      style: Get.theme.textTheme.bodyMedium!.copyWith(
+                        color: AppColors.textColor2,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  )
+                : SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.8,
+                          width: MediaQuery.of(context).size.width,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                const SizedBox(height: 20),
+                                Obx(
+                                  () => AddressExpandTile(
+                                      address:
+                                          controller.selectedAddress.value),
+                                ),
+                                const SizedBox(height: 20),
+                                Obx(() => ItemsExpandTile(
+                                      items: cartController
+                                              .cartResponse.value?.products ??
+                                          [],
+                                    )),
+                                const SizedBox(height: 20),
+                                ColoredBox(
+                                  color: AppColors.primary,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
                                       children: [
-                                        Text(
-                                          'Payment Methods',
-                                          style: Get.theme.textTheme.bodyMedium!
-                                              .copyWith(
-                                            color: AppColors.textColor2,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'Payment Methods',
+                                              style: Get
+                                                  .theme.textTheme.bodyMedium!
+                                                  .copyWith(
+                                                color: AppColors.textColor2,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 10),
-                                    CurvedBox(
-                                      child: Column(
-                                        children: [
-                                          Obx(() => CheckboxExpansionTile(
-                                                onChanged: (value) {
-                                                  controller.paymentMode.value =
-                                                      value;
-                                                },
-                                                modes: controller.cartResponse1
-                                                    .value?.paymentModes,
-                                              )),
-                                        ],
-                                      ),
-                                    ),
-                                    const SizedBox(height: 20),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'Order Information',
-                                          style: Get.theme.textTheme.bodyMedium!
-                                              .copyWith(
-                                            color: AppColors.textColor2,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 10),
-                                    CurvedBox(
-                                      child: Obx(() => PriceExpandTile(
-                                            netTotal: controller.cartResponse1
-                                                    .value?.netTotal
-                                                    ?.toString() ??
-                                                '0',
-                                            wallet: '0',
-                                            tax: controller
-                                                    .cartResponse1.value?.tax ??
-                                                '0',
-                                            deliveryCharge: controller
+                                        const SizedBox(height: 10),
+                                        CurvedBox(
+                                          child: Column(
+                                            children: [
+                                              Obx(() => CheckboxExpansionTile(
+                                                    onChanged: (value) {
+                                                      controller.paymentMode
+                                                          .value = value;
+                                                    },
+                                                    modes: controller
                                                         .cartResponse1
                                                         .value
-                                                        ?.deliveryCharge ==
-                                                    '0'
-                                                ? 'FREE'
-                                                : controller.cartResponse1.value
-                                                        ?.deliveryCharge
+                                                        ?.paymentModes,
+                                                  )),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(height: 20),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'Order Information',
+                                              style: Get
+                                                  .theme.textTheme.bodyMedium!
+                                                  .copyWith(
+                                                color: AppColors.textColor2,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 10),
+                                        CurvedBox(
+                                          child: Obx(() => PriceExpandTile(
+                                                netTotal: controller
+                                                        .cartResponse1
+                                                        .value
+                                                        ?.netTotal
                                                         ?.toString() ??
                                                     '0',
-                                            grandTotal: controller.cartResponse1
-                                                    .value?.grandTotal
-                                                    ?.toString() ??
-                                                '0',
-                                          )),
+                                                wallet: '0',
+                                                tax: controller.cartResponse1
+                                                        .value?.tax ??
+                                                    '0',
+                                                deliveryCharge: controller
+                                                            .cartResponse1
+                                                            .value
+                                                            ?.deliveryCharge ==
+                                                        '0'
+                                                    ? 'FREE'
+                                                    : controller
+                                                            .cartResponse1
+                                                            .value
+                                                            ?.deliveryCharge
+                                                            ?.toString() ??
+                                                        '0',
+                                                grandTotal: controller
+                                                        .cartResponse1
+                                                        .value
+                                                        ?.grandTotal
+                                                        ?.toString() ??
+                                                    '0',
+                                              )),
+                                        ),
+                                        const SizedBox(height: 20),
+                                      ],
                                     ),
-                                    const SizedBox(height: 20),
+                                  ),
+                                ),
+                                CustomPaint(
+                                  painter: PointedDecorationPainter(),
+                                  size: Size(
+                                      MediaQuery.of(context).size.width, 20),
+                                ),
+                                const SizedBox(height: 30),
+                                const Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    SupportIcon(
+                                      icon: IconStrings.cartExtra1,
+                                      title: '100% SECURE\nPAYMENTS',
+                                      backgroundColor: AppColors.transparent,
+                                      fontColor: AppColors.cartExtraText,
+                                      imageSize: 45,
+                                    ),
+                                    SupportIcon(
+                                      icon: IconStrings.cartExtra2,
+                                      title: 'EASY RETURNS & QUICK\nREFUNDS',
+                                      backgroundColor: AppColors.transparent,
+                                      fontColor: AppColors.cartExtraText,
+                                      imageSize: 45,
+                                    ),
+                                    SupportIcon(
+                                      icon: IconStrings.cartExtra3,
+                                      title: 'QUALITY\nASSURANCE',
+                                      backgroundColor: AppColors.transparent,
+                                      fontColor: AppColors.cartExtraText,
+                                      imageSize: 45,
+                                    ),
                                   ],
-                                ),
-                              ),
-                            ),
-                            CustomPaint(
-                              painter: PointedDecorationPainter(),
-                              size: Size(MediaQuery.of(context).size.width, 20),
-                            ),
-                            const SizedBox(height: 30),
-                            const Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                SupportIcon(
-                                  icon: IconStrings.cartExtra1,
-                                  title: '100% SECURE\nPAYMENTS',
-                                  backgroundColor: AppColors.transparent,
-                                  fontColor: AppColors.cartExtraText,
-                                  imageSize: 45,
-                                ),
-                                SupportIcon(
-                                  icon: IconStrings.cartExtra2,
-                                  title: 'EASY RETURNS & QUICK\nREFUNDS',
-                                  backgroundColor: AppColors.transparent,
-                                  fontColor: AppColors.cartExtraText,
-                                  imageSize: 45,
-                                ),
-                                SupportIcon(
-                                  icon: IconStrings.cartExtra3,
-                                  title: 'QUALITY\nASSURANCE',
-                                  backgroundColor: AppColors.transparent,
-                                  fontColor: AppColors.cartExtraText,
-                                  imageSize: 45,
                                 ),
                               ],
                             ),
-                          ],
+                          ),
                         ),
-                      ),
+                        Obx(() => controller.loading.isTrue
+                            ? const LoadingWidget()
+                            : CurvedButton(
+                                onClick: () {
+                                  controller.checkOut();
+                                },
+                                height: 45,
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                text: 'CONFIRM ORDER',
+                                textColor: AppColors.textColor1,
+                                borderColor: AppColors.bottomSelectedColor,
+                                buttonColor: AppColors.bottomSelectedColor,
+                                borderRadius: 4.0,
+                                fontSize: 16,
+                                fontweight: FontWeight.w500,
+                              )),
+                      ],
                     ),
-                    Obx(() => controller.loading.isTrue
-                        ? const LoadingWidget()
-                        : CurvedButton(
-                            onClick: () {
-                              controller.checkout();
-                            },
-                            height: 45,
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            text: 'CONFIRM ORDER',
-                            textColor: AppColors.textColor1,
-                            borderColor: AppColors.bottomSelectedColor,
-                            buttonColor: AppColors.bottomSelectedColor,
-                            borderRadius: 4.0,
-                            fontSize: 16,
-                            fontweight: FontWeight.w500,
-                          )),
-                  ],
-                ),
-              ),
+                  ),
       ),
     );
   }
@@ -223,8 +239,7 @@ class AddressExpandTile extends StatefulWidget {
 
 class _AddressExpandTileState extends State<AddressExpandTile> {
   bool addressTileOpen = false;
-  MyAddressListController controller1 = Get.put(MyAddressListController());
-  //var address1=controller1.addressresponse.value!.addresses;
+  //MyAddressListController controller1 = Get.put(MyAddressListController());
 
   @override
   Widget build(BuildContext context) {
@@ -247,7 +262,11 @@ class _AddressExpandTileState extends State<AddressExpandTile> {
                   CurvedButton(
                     height: 24,
                     width: 55,
-                    text: controller1.address.value!.addressType,
+                    text: widget.address.addressType == '0'
+                        ? 'Home'
+                        : widget.address.addressType == '1'
+                            ? 'Office'
+                            : 'Other',
                     borderRadius: 0.0,
                     textColor: AppColors.textColor2,
                     fontSize: 12,
@@ -257,7 +276,7 @@ class _AddressExpandTileState extends State<AddressExpandTile> {
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    controller1.address.value!.name ?? '',
+                    widget.address.name ?? '',
                     style: Get.theme.textTheme.bodyMedium!.copyWith(
                       color: AppColors.removeButton,
                       fontSize: 14,
@@ -278,7 +297,7 @@ class _AddressExpandTileState extends State<AddressExpandTile> {
             children: [
               ListTile(
                 title: Text(
-                  controller1.address.value!.name ?? '',
+                  widget.address.mobile ?? '',
                   style: Get.theme.textTheme.bodyMedium!.copyWith(
                     color: AppColors.textColor2,
                     fontSize: 14,
@@ -291,7 +310,7 @@ class _AddressExpandTileState extends State<AddressExpandTile> {
                   children: [
                     const SizedBox(height: 10),
                     Text(
-                      '${controller1.address.value!.address ?? ''}\n${controller1.address.value!.city ?? ''}\n${controller1.address.value!.state ?? ''}\n${controller1.address.value!.zipcode ?? ''}',
+                      '${widget.address.city ?? ''}\n${widget.address.state ?? ''}\n${widget.address.country!.name ?? ''}\n${widget.address.zipcode ?? ''}',
                       style: Get.theme.textTheme.bodyMedium!.copyWith(
                         color: AppColors.textColor2,
                         fontSize: 14,
@@ -462,10 +481,6 @@ class ItemsExpandTile extends StatefulWidget {
 
 class _ItemsExpandTileState extends State<ItemsExpandTile> {
   bool addressTileOpen = false;
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -475,13 +490,13 @@ class _ItemsExpandTileState extends State<ItemsExpandTile> {
       disabledColor: AppColors.textColor2,
       expansionCallback: (panelIndex, isExpanded) {
         setState(() {
-          addressTileOpen = !addressTileOpen;
+          addressTileOpen = !isExpanded;
         });
       },
       animationDuration: const Duration(milliseconds: 700),
       children: [
         CustomExpansionPanel(
-          headerBuilder: (BuildContext context, bool isExpanded) {
+          headerBuilder: (context, isExpanded) {
             return ListTile(
               title: Text(
                 'ITEMS (${widget.items.length})',
@@ -501,138 +516,118 @@ class _ItemsExpandTileState extends State<ItemsExpandTile> {
           canTapOnHeader: true,
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              children: [
-                CurvedBox(
-                  borderRadius: 8.0,
-                  child: ListView.separated(
-                    physics: const ClampingScrollPhysics(),
-                    itemCount: widget.items.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Stack(
-                              children: [
-                                CurvedContainerWithImage(
-                                  height: 100,
-                                  width: 80,
-                                  containerImage: widget.items.single.image,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.64,
-                                  height: 15,
-                                  child: Text(
-                                    widget.items[index].name!,
-                                    style: Get.theme.textTheme.bodyMedium!
-                                        .copyWith(
-                                      color: AppColors.textColor2,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    textAlign: TextAlign.start,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  widget.items[index].manufacturer ?? '',
-                                  style:
-                                      Get.theme.textTheme.bodyMedium!.copyWith(
-                                    color: AppColors.textColor2,
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '${widget.items[index].symbolLeft} ${widget.items[index].price!} ${widget.items[index].symbolRight!}',
-                                      style: Get.theme.textTheme.bodyMedium!
-                                          .copyWith(
-                                        color: AppColors.textColor2,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    if (widget.items[index].price !=
-                                        widget.items[index].oldprice)
-                                      Text(
-                                        '${widget.items[index].symbolLeft} ${widget.items[index].oldprice!} ${widget.items[index].symbolRight!}',
-                                        style: Get.theme.textTheme.bodyMedium!
-                                            .copyWith(
-                                          color: AppColors.textColor2,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400,
-                                          decoration:
-                                              TextDecoration.lineThrough,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  widget.items[index].purchaseReward ?? '',
-                                  style:
-                                      Get.theme.textTheme.bodyMedium!.copyWith(
-                                    color: AppColors.orderDetailStatus,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            )
-                          ],
+            child: widget.items.isEmpty
+                ? Center(
+                    child: Text(
+                      'No items available',
+                      style: Get.theme.textTheme.bodyMedium,
+                    ),
+                  )
+                : Column(
+                    children: [
+                      CurvedBox(
+                        borderRadius: 8.0,
+                        child: ListView.separated(
+                          physics: const ClampingScrollPhysics(),
+                          itemCount: widget.items.length,
+                          shrinkWrap: true,
+                          itemBuilder: buildItemTile,
+                          separatorBuilder: (context, index) => const Divider(
+                            height: 1,
+                            indent: 10,
+                            endIndent: 10,
+                          ),
                         ),
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return const Divider(
-                        height: 1,
-                        indent: 10,
-                        endIndent: 10,
-                      );
-                    },
+                      ),
+                      const SizedBox(height: 15),
+                    ],
                   ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-              ],
-            ),
           ),
           isExpanded: addressTileOpen,
         ),
       ],
+    );
+  }
+
+  Widget buildItemTile(BuildContext context, int index) {
+    print('${ApiConfig.productImageUrl}${widget.items[index].image}');
+    final item = widget.items[index];
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Stack(
+            children: [
+              CurvedContainerWithImage(
+                height: 100,
+                width: 80,
+                containerImage: widget.items[index].image,
+              ),
+            ],
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  item.name ?? 'No Name',
+                  style: Get.theme.textTheme.bodyMedium!.copyWith(
+                    color: AppColors.textColor2,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  item.manufacturer ?? '',
+                  style: Get.theme.textTheme.bodyMedium!.copyWith(
+                    color: AppColors.textColor2,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Text(
+                      '₹ ${item.price ?? 0}',
+                      style: Get.theme.textTheme.bodyMedium!.copyWith(
+                        color: AppColors.textColor2,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    if (item.oldprice != null && item.oldprice != item.price)
+                      const SizedBox(width: 10),
+                    if (item.oldprice != null && item.oldprice != item.price)
+                      Text(
+                        '₹ ${item.oldprice!}',
+                        style: Get.theme.textTheme.bodyMedium!.copyWith(
+                          color: AppColors.textColor2,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          decoration: TextDecoration.lineThrough,
+                        ),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  item.purchaseReward ?? '',
+                  style: Get.theme.textTheme.bodyMedium!.copyWith(
+                    color: AppColors.orderDetailStatus,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -736,7 +731,7 @@ class _PriceExpandTileState extends State<PriceExpandTile> {
                   const SizedBox(height: 10),
                   PriceSummaryItem(
                     title: 'Grand Total',
-                    subTitle: '₹ $grandTotal ₹',
+                    subTitle: '₹ $grandTotal',
                   ),
                   const SizedBox(height: 10),
                   PriceSummaryItem(
