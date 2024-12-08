@@ -211,12 +211,32 @@ class AuthService {
     final url1 = '${ApiConfig.apiUrl}${ApiConstants.checkout}';
 
     // Wait for 4 seconds before making the request
-   // await Future.delayed(const Duration(seconds: 1));
+    // await Future.delayed(const Duration(seconds: 1));
 
     final response2 = await http.post(
       Uri.parse(url1),
       body: authData,
     );
     return response2;
+  }
+
+  Future<http.Response> getAccountDetails(Map<String, dynamic> authData) async {
+    final url1 = '${ApiConfig.apiUrl}${ApiConstants.accountDetails}';
+
+    final response3 = await http.post(
+      Uri.parse(url1),
+      body: authData,
+    );
+    return response3;
+  }
+
+  Future<http.Response> getProfile(Map<String, dynamic> authData) async {
+    final url1 = '${ApiConfig.apiUrl}${ApiConstants.profile}';
+
+    final response4 = await http.post(
+      Uri.parse(url1),
+      body: authData,
+    );
+    return response4;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/app/core/values/api_configs.dart';
 import 'package:ecommerce_app/app/core/values/colors.dart';
+import 'package:ecommerce_app/app/core/values/constants.dart';
 import 'package:ecommerce_app/app/core/values/strings.dart';
 import 'package:ecommerce_app/app/modules/account/controller/account_controller.dart';
 import 'package:ecommerce_app/app/routes/routes.dart';
@@ -23,7 +24,7 @@ class AccountView extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Obx(
-            () => controller.loading.isTrue
+            () => controller.isLoading.isTrue
                 ? const LoadingWidget()
                 : Column(
                     children: [
@@ -63,7 +64,7 @@ class AccountView extends StatelessWidget {
                       const Divider(color: AppColors.brandSeperator),
                       const SizedBox(height: 15),
                       AccountListItem(
-                        onTap: () => Get.toNamed(Routes.address),
+                        onTap: () => Get.toNamed(Routes.profile),
                         text: 'My Profile',
                         subTitle: 'View my profile related details',
                         icon: IconStrings.deleteAccount,
@@ -87,7 +88,14 @@ class AccountView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           SupportIcon(
-                            onTap: () {},
+                            onTap: () async {
+                              if (controller.response.value != null) {
+                                await launchPhone(
+                                  controller
+                                      .response.value!.support![0].fieldValue!,
+                                );
+                              }
+                            },
                             icon: IconStrings.callIcon,
                             title: 'Call Us',
                           ),

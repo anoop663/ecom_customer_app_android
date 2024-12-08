@@ -1,4 +1,3 @@
-import 'package:ecommerce_app/app/core/values/api_configs.dart';
 import 'package:ecommerce_app/app/core/values/strings.dart';
 import 'package:ecommerce_app/app/modules/address_manage/model/address_response_model.dart';
 import 'package:ecommerce_app/app/modules/cart/controller/cart_controller.dart';
@@ -550,7 +549,6 @@ class _ItemsExpandTileState extends State<ItemsExpandTile> {
   }
 
   Widget buildItemTile(BuildContext context, int index) {
-    print('${ApiConfig.productImageUrl}${widget.items[index].image}');
     final item = widget.items[index];
     return Padding(
       padding: const EdgeInsets.all(8.0),

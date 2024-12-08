@@ -4,7 +4,8 @@ class ApiConstants {
   static const home = '/home';
   static const signup = '/register';
   static const verifyOtp = '/verify-otp';
-  static const accountDetails = '/account-details/';
+  static const accountDetails = '/account-details/en';
+  static const accountDetails2 = '/accountdetails-profile/en';
   static const brandlist = '/brands/en';
   static const brandDetails = '/brand-details/';
   static const forgotMailSend = '/send-reset-password-code';
@@ -28,7 +29,7 @@ class ApiConstants {
   static const products = '/products/en';
   static const orders = '/my-orders/';
   static const orderDetails = '/order-details/';
-  static const profile = '/my-profile/';
+  static const profile = '/my-profile/en';
   static const deleteAccount = '/delete-account/';
   static const updateProfile = '/update-profile/';
   static const countries = '/countries/';

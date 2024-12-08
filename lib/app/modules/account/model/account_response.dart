@@ -1,5 +1,11 @@
 import 'dart:convert';
 
+AccountResponse accountResponseFromJson(String str) =>
+    AccountResponse.fromJson(json.decode(str));
+
+String accountResponseToJson(AccountResponse data) =>
+    json.encode(data.toJson());
+
 class AccountResponse {
   final int? success;
   final String? message;
