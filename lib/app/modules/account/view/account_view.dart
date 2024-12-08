@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/app/core/values/api_configs.dart';
+import 'package:ecommerce_app/app/core/values/api_constants.dart';
 import 'package:ecommerce_app/app/core/values/colors.dart';
 import 'package:ecommerce_app/app/core/values/constants.dart';
 import 'package:ecommerce_app/app/core/values/strings.dart';
@@ -100,17 +101,33 @@ class AccountView extends StatelessWidget {
                             title: 'Call Us',
                           ),
                           SupportIcon(
-                            onTap: () {},
+                            onTap: ()  async {
+                              if (controller.response.value != null) {
+                                await launchWhatsapp(
+                                  controller
+                                      .response.value!.support![1].fieldValue!,
+                                );
+                              }
+                            },
                             icon: IconStrings.whatsappIcon,
                             title: 'Whatsapp',
                           ),
                           SupportIcon(
-                            onTap: () {},
+                            onTap: ()  async {
+                              if (controller.response.value != null) {
+                                await launchMail(
+                                  controller
+                                      .response.value!.support![2].fieldValue!,
+                                );
+                              }
+                            },
                             icon: IconStrings.mailOutlined,
                             title: 'Email Us',
                           ),
                           SupportIcon(
-                            onTap: () {},
+                            onTap: () async {
+                                       //Delete account function
+                                      },
                             icon: IconStrings.deleteAccount,
                             title: 'Delete account',
                           ),
@@ -118,21 +135,51 @@ class AccountView extends StatelessWidget {
                       ),
                       const SizedBox(height: 15),
                       AccountListItem(
-                        onTap: () {},
+                        onTap: () async {
+                            await Future.delayed(
+                                const Duration(milliseconds: 10));
+                            await Get.toNamed(
+                              Routes.webview,
+                              arguments: {
+                                'title': 'Privacy Policy',
+                                'link': ApiConstants.privacyPolicy,
+                              },
+                            );
+                          },
                         text: 'Privacy Policy',
                         subTitle: '',
                         icon: IconStrings.privacyIcon,
                       ),
                       const Divider(color: AppColors.brandSeperator),
                       AccountListItem(
-                        onTap: () {},
+                        onTap: ()async {
+                            await Future.delayed(
+                                const Duration(milliseconds: 10));
+                            await Get.toNamed(
+                              Routes.webview,
+                              arguments: {
+                                'title': 'Return Refund Policy',
+                                'link': ApiConstants.returnRefundPolicy,
+                              },
+                            );
+                          },
                         text: 'Return Refund Policy',
                         subTitle: '',
                         icon: IconStrings.returnPolicyIcon,
                       ),
                       const Divider(color: AppColors.brandSeperator),
                       AccountListItem(
-                        onTap: () {},
+                        onTap: () async {
+                            await Future.delayed(
+                                const Duration(milliseconds: 10));
+                            await Get.toNamed(
+                              Routes.webview,
+                              arguments: {
+                                'title': 'Terms and Conditions',
+                                'link': ApiConstants.termsAndConditions,
+                              },
+                            );
+                          },
                         text: 'Terms and Conditions',
                         subTitle: '',
                         icon: IconStrings.termsIcon,

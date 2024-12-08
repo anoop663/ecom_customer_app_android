@@ -19,6 +19,7 @@ import 'package:ecommerce_app/app/modules/search/view/product_search.dart';
 import 'package:ecommerce_app/app/modules/signin/views/signin.dart';
 import 'package:ecommerce_app/app/modules/signup/views/signup.dart';
 import 'package:ecommerce_app/app/modules/splash_screen/view/splash_view.dart';
+import 'package:ecommerce_app/app/modules/web_view_pages/view/web_view.dart';
 import 'package:ecommerce_app/app/modules/wishlist/view/wishlist_view.dart';
 import 'package:ecommerce_app/app/widgets/app_bottom_bar.dart';
 import 'package:ecommerce_app/app/widgets/no_connection.dart';
@@ -48,6 +49,7 @@ class Routes {
   static const String search = '/search';
   static const String orderconfirm = '/order-confirm';
   static const String profile = '/profile';
+  static const String webview = '/web-view';
 
   static final List<GetPage> pages = [
     GetPage(name: home, page: () => HomePage()),
@@ -78,6 +80,10 @@ class Routes {
     GetPage(
       name: profile,
       page: () => ProfileView(),
+    ),
+    GetPage(
+      name: webview,
+      page: () => WebViewView(),
     ),
   ];
 }

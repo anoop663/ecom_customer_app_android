@@ -70,6 +70,7 @@ Future<void> launchInstagram(String username) async {
   try {
     await launchUrlString(nativeUrl, mode: LaunchMode.externalApplication);
   } catch (e) {
+    // ignore: avoid_print
     print(e);
     await launchUrlString(webUrl, mode: LaunchMode.platformDefault);
   }
@@ -86,6 +87,7 @@ Future<void> launchFaceBook(String username) async {
   try {
     await launchUrlString(nativeUrl, mode: LaunchMode.externalApplication);
   } catch (e) {
+    // ignore: avoid_print
     print(e);
     await launchUrlString(webUrl, mode: LaunchMode.platformDefault);
   }

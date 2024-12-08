@@ -239,4 +239,15 @@ class AuthService {
     );
     return response4;
   }
+
+  Future<http.Response> getPageContents(link) async {
+    // ignore: unnecessary_brace_in_string_interps
+    final url1 = '${ApiConfig.apiUrl}${link}';
+
+    final response5 = await http.get(
+      Uri.parse(url1),
+      // body: authData,
+    );
+    return response5;
+  }
 }
