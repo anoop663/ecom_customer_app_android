@@ -104,45 +104,45 @@ class FilterController extends GetxController {
     }
   }
 
-  void getBrandProducts2(String by, String value) async {
-    var idToken = storageProvider.readLoginDetails();
-    isLoading.value = true;
+  // void getBrandProducts2(String by, String value) async {
+  //   var idToken = storageProvider.readLoginDetails();
+  //   isLoading.value = true;
 
-    BrandProductModel2 brandProductModel2 = BrandProductModel2(
-      id: idToken.$1,
-      token: idToken.$2,
-      by: by,
-      value: value,
-      filters: filters.value,
-    );
+  //   BrandProductModel2 brandProductModel2 = BrandProductModel2(
+  //     id: idToken.$1,
+  //     token: idToken.$2,
+  //     by: by,
+  //     value: value,
+  //     filters: filters.value,
+  //   );
 
-    try {
-      final response =
-          await authService.brandbaseProduct(brandProductModel2.toJson());
+  //   try {
+  //     final response =
+  //         await authService.brandbaseProduct(brandProductModel2.toJson());
 
-      isLoading.value = false;
+  //     isLoading.value = false;
 
-      if (response.statusCode == 200) {
-        final responseData = json.decode(response.body);
+  //     if (response.statusCode == 200) {
+  //       final responseData = json.decode(response.body);
 
-        if (responseData['success'] == 1) {
-          brandproductResponse1.value =
-              BrandReponseModel.fromJson(responseData);
-          //Get.snackbar('Success', 'Product Listed',
-          //    colorText: Colors.white, backgroundColor: Colors.black);
-        } else {
-          Get.snackbar(
-              'Error', responseData['message'] ?? 'Failed to retrieve products',
-              colorText: Colors.white, backgroundColor: Colors.black);
-        }
-      } else {
-        Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
-      }
-    } catch (e) {
-      isLoading.value = false;
-      Get.snackbar('Error', 'Failed to load products: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
-    }
-  }
+  //       if (responseData['success'] == 1) {
+  //         brandproductResponse1.value =
+  //             BrandReponseModel.fromJson(responseData);
+  //         //Get.snackbar('Success', 'Product Listed',
+  //         //    colorText: Colors.white, backgroundColor: Colors.black);
+  //       } else {
+  //         Get.snackbar(
+  //             'Error', responseData['message'] ?? 'Failed to retrieve products',
+  //             colorText: Colors.white, backgroundColor: Colors.black);
+  //       }
+  //     } else {
+  //       Get.snackbar('Error', 'Server error: ${response.statusCode}',
+  //           colorText: Colors.white, backgroundColor: Colors.black);
+  //     }
+  //   } catch (e) {
+  //     isLoading.value = false;
+  //     Get.snackbar('Error', 'Failed to load products: $e',
+  //         colorText: Colors.white, backgroundColor: Colors.black);
+  //   }
+  // }
 }

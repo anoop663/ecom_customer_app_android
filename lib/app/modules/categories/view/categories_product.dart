@@ -10,7 +10,7 @@ class CategoriesProduct extends StatelessWidget {
       Get.put(CategoriesProductController());
 
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
     // Retrieve passed arguments
     final String by = Get.arguments['by'];
     final String value = Get.arguments['value'];
@@ -42,7 +42,8 @@ class CategoriesProduct extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               if (productsData?.products != null &&
-                  productsData!.products.returnData.data.isNotEmpty)
+                  productsData!.products.returnData != null &&
+                  productsData.products.returnData!.data.isNotEmpty)
                 Expanded(
                   child: GridView.builder(
                     gridDelegate:
@@ -52,10 +53,10 @@ class CategoriesProduct extends StatelessWidget {
                       crossAxisSpacing: 8.0,
                       childAspectRatio: 0.6,
                     ),
-                    itemCount: productsData.products.returnData.data.length,
+                    itemCount: productsData.products.returnData!.data.length,
                     itemBuilder: (context, index) {
                       final product =
-                          productsData.products.returnData.data[index];
+                          productsData.products.returnData!.data[index];
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

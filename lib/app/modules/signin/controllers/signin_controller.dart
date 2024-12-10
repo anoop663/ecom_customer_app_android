@@ -12,8 +12,10 @@ class SigninController extends GetxController {
   var isPasswordVisible = true.obs;
   var emailError = ''.obs;
 
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController =
+      TextEditingController(text: '8547541134');
+  final TextEditingController passwordController =
+      TextEditingController(text: '12345678');
 
   bool validateEmail(String email) {
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');

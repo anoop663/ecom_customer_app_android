@@ -1,12 +1,11 @@
 // models/user_model.dart
-import 'package:ecommerce_app/app/modules/brands/model/newfilter_model.dart';
 
 class BrandProductModel2 {
   String? id;
   String? token;
   String? by;
   String? value;
-  Filters? filters;
+  String? filters;
 
   BrandProductModel2({this.id, this.token, this.by, this.value, this.filters});
 
@@ -16,8 +15,7 @@ class BrandProductModel2 {
       'token': token,
       'by': by,
       'value': value,
-      if(filters !=null)
-      'filters': filters
+      if (filters != null) 'filters': filters
     };
   }
 }

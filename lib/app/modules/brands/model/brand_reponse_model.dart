@@ -1,5 +1,3 @@
-
-
 class BrandReponseModel {
   final int success;
   final String message;
@@ -11,7 +9,8 @@ class BrandReponseModel {
     required this.products,
   });
 
-  factory BrandReponseModel.fromJson(Map<String, dynamic> json) => BrandReponseModel(
+  factory BrandReponseModel.fromJson(Map<String, dynamic> json) =>
+      BrandReponseModel(
         success: json["success"],
         message: json["message"],
         products: Products.fromJson(json["products"]),
@@ -19,9 +18,9 @@ class BrandReponseModel {
 }
 
 class Products {
-  final Return returnData;
-  final List<Category> categories;
-  final List<Product> newProducts;
+  final Return? returnData;
+  final List<Category>? categories;
+  final List<Product>? newProducts;
 
   Products({
     required this.returnData,
@@ -30,9 +29,16 @@ class Products {
   });
 
   factory Products.fromJson(Map<String, dynamic> json) => Products(
-        returnData: Return.fromJson(json["return"]),
-        categories: List<Category>.from(json["categories"].map((x) => Category.fromJson(x))),
-        newProducts: List<Product>.from(json["new_products"].map((x) => Product.fromJson(x))),
+        returnData:
+            json["return"] == null ? null : Return.fromJson(json["return"]),
+        categories: json["categories"] == null
+            ? []
+            : List<Category>.from(
+                json["categories"]!.map((x) => Category.fromJson(x))),
+        newProducts: json["new_products"] == null
+            ? []
+            : List<Product>.from(
+                json["new_products"]!.map((x) => Product.fromJson(x))),
       );
 }
 
@@ -74,7 +80,8 @@ class Return {
         from: json["from"],
         lastPage: json["last_page"],
         lastPageUrl: json["last_page_url"],
-        links: List<PageLink>.from(json["links"].map((x) => PageLink.fromJson(x))),
+        links:
+            List<PageLink>.from(json["links"].map((x) => PageLink.fromJson(x))),
         nextPageUrl: json["next_page_url"],
         path: json["path"],
         perPage: json["per_page"],

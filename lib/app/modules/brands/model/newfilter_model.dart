@@ -1,19 +1,17 @@
 class Filters {
-    List<Filter1> filters;
+  List<Filter1> filters;
 
-    Filters({
-        required this.filters,
-    });
-
+  Filters({
+    required this.filters,
+  });
 }
 
 class Filter1 {
-    String type;
-    List<String> values;
+  String type;
+  List<String> values;
 
-    Filter1({
-        required this.type,
-        required this.values,
-    });
-
+  Filter1({
+    required this.type,
+    required this.values,
+  });
 }

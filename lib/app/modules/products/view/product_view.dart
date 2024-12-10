@@ -31,7 +31,7 @@ class ProductPage extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         } else if (controller.productResponse.value?.product != null) {
           final product = controller.productResponse.value!.product!;
-        //  final selectoption =
+          //  final selectoption =
           //    controller.productResponse.value!.selectedOption!.first;
           //print(selectoption);
           return Column(
@@ -133,7 +133,7 @@ class ProductPage extends StatelessWidget {
                         child: CircleAvatar(
                           radius: 8,
                           backgroundColor: AppColors.accessoriesColor5,
-                          child:  Text(
+                          child: Text(
                             '${cartcontroller.cartResponse.value?.cartcount ?? 0}',
                             style: TextStyle(
                               fontSize: 11,
@@ -200,7 +200,6 @@ class ProductPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            
             const Divider(color: Color.fromARGB(255, 231, 222, 222)),
             buildProductDescription(product.description),
           ],

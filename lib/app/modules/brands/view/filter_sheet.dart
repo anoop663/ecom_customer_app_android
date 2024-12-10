@@ -474,8 +474,8 @@ class FilterSheet extends StatelessWidget {
     ));
   }
 
- // ignore: unused_element
- Widget _buildSize() {
+  // ignore: unused_element
+  Widget _buildSize() {
     return Expanded(
       child: Column(
         children: [
@@ -509,6 +509,7 @@ class FilterSheet extends StatelessWidget {
       ),
     );
   }
+
   // ignore: unused_element
   Widget _buildColors() {
     return Expanded(

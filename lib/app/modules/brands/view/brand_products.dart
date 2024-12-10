@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:ecommerce_app/app/core/values/api_configs.dart';
 import 'package:ecommerce_app/app/core/values/colors.dart';
 import 'package:ecommerce_app/app/core/values/strings.dart';
@@ -11,25 +13,33 @@ import 'package:ecommerce_app/app/widgets/product_bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class BrandProducts extends StatelessWidget {
-  BrandProducts({super.key});
+class BrandProducts extends StatefulWidget {
+  const BrandProducts({super.key});
+
+  @override
+  State<BrandProducts> createState() => _BrandProductsState();
+}
+
+class _BrandProductsState extends State<BrandProducts> {
   final BrandProductController brandProductController =
       Get.put(BrandProductController());
+
   final currentTheme = Get.theme;
 
-  final FilterController controller = Get.put(FilterController());
+  // final FilterController controller = Get.put(FilterController());
+
   final AddToWishlistController wishListController =
       Get.put(AddToWishlistController());
 
   @override
-  Widget build(BuildContext context) {
-    // Retrieve passed arguments
-    final String by = Get.arguments['by'];
-    final String value = Get.arguments['value'];
-
+  void initState() {
     // Fetch products based on 'by' and 'value'
-    brandProductController.getBrandProducts1(by, value);
+    brandProductController.getBrandProducts1();
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: CommonAppBar(
         showLogo: false,
@@ -51,7 +61,8 @@ class BrandProducts extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (productsData?.products != null &&
-                      productsData!.products.returnData.data.isNotEmpty)
+                      productsData!.products.returnData != null &&
+                      productsData.products.returnData!.data.isNotEmpty)
                     Expanded(
                       child: GridView.builder(
                         gridDelegate:
@@ -61,10 +72,11 @@ class BrandProducts extends StatelessWidget {
                           crossAxisSpacing: 8.0,
                           childAspectRatio: 0.6,
                         ),
-                        itemCount: productsData.products.returnData.data.length,
+                        itemCount:
+                            productsData.products.returnData!.data.length,
                         itemBuilder: (context, index) {
                           final product =
-                              productsData.products.returnData.data[index];
+                              productsData.products.returnData!.data[index];
                           return GestureDetector(
                             onTap: () {
                               Get.toNamed('/product-details', arguments: {
@@ -176,8 +188,15 @@ class BrandProducts extends StatelessWidget {
                       ),
                     )
                   else
-                    const Center(
-                      child: Text('No Products available'),
+                    SizedBox(
+                      height: MediaQuery.sizeOf(context).height * .7,
+                      width: double.infinity,
+                      child: const Center(
+                        child: Text(
+                          'No Products available',
+                          style: TextStyle(color: Colors.black, fontSize: 15),
+                        ),
+                      ),
                     ),
                 ],
               );
@@ -203,7 +222,9 @@ class BrandProducts extends StatelessWidget {
                       }
                       await Get.bottomSheet(
                         SortSheet(
-                          onTap: (filter) {},
+                          onTap: (filter) {
+                            print(filter);
+                          },
                         ),
                         persistent: true,
                         backgroundColor: currentTheme.primaryColor,
@@ -227,7 +248,22 @@ class BrandProducts extends StatelessWidget {
                       }
                       await Get.bottomSheet(
                         FilterSheet(
-                          onApply: (filter) {},
+                          onApply: (filter) {
+                            if (filter == null) return;
+
+                            List<Map<String, dynamic>> list = filter.entries
+                                .map((entry) => {
+                                      'type': entry.key,
+                                      'values': entry.value,
+                                    })
+                                .toList();
+
+                            final filterData = {"filters": list};
+
+                            brandProductController.getBrandProducts1(
+                                filter: json.encode(filterData));
+                            Get.back();
+                          },
                         ),
                         persistent: true,
                         backgroundColor: currentTheme.primaryColor,

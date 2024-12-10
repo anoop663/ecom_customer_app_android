@@ -8,6 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BrandProductController extends GetxController {
+  // Retrieve passed arguments
+  final String by = Get.arguments['by'];
+  final String value = Get.arguments['value'];
   final AuthService authService = AuthService();
   final StorageProvider storageProvider = StorageProvider();
 
@@ -15,35 +18,34 @@ class BrandProductController extends GetxController {
   var brandproductResponse = Rxn<BrandReponseModel>();
 
   // Function to fetch brand products
-  void getBrandProducts1(String by, String value) async {
+  void getBrandProducts1({String? filter}) async {
     var idToken = storageProvider.readLoginDetails();
     isLoading.value = true;
 
     // Retrieve FilterController instance
-    final FilterController filterController = Get.find<FilterController>();
+    // final FilterController filterController = Get.find<FilterController>();
 
     // Get the `finalFilter` value
     // ignore: unused_local_variable
-    Map<String, List<dynamic>>? finalFilters;
-    if (filterController.selectedFilters.isNotEmpty) {
-      finalFilters = {
-        "filters": filterController.selectedFilters.entries.map((entry) {
-          return {
-            "type": entry.key,
-            "values": entry.value.map((e) => e.toString()).toList()
-          };
-        }).toList()
-      };
-    }
+    // Map<String, List<dynamic>>? finalFilters;
+    // if (filterController.selectedFilters.isNotEmpty) {
+    //   finalFilters = {
+    //     "filters": filterController.selectedFilters.entries.map((entry) {
+    //       return {
+    //         "type": entry.key,
+    //         "values": entry.value.map((e) => e.toString()).toList()
+    //       };
+    //     }).toList()
+    //   };
+    // }
 
     // Create BrandProductModel with or without filters based on availability
     BrandProductModel2 brandProductModel = BrandProductModel2(
-      id: idToken.$1,
-      token: idToken.$2,
-      by: by,
-      value: value,
-     // filters: filter.,
-    );
+        id: idToken.$1,
+        token: idToken.$2,
+        by: by,
+        value: value,
+        filters: filter);
 
     try {
       final response =
@@ -56,6 +58,8 @@ class BrandProductController extends GetxController {
 
         if (responseData['success'] == 1) {
           brandproductResponse.value = BrandReponseModel.fromJson(responseData);
+
+          print(brandproductResponse.value);
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Failed to retrieve products',
