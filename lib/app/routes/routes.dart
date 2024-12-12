@@ -11,6 +11,7 @@ import 'package:ecommerce_app/app/modules/checkout/view/checkout_view.dart';
 import 'package:ecommerce_app/app/modules/forgot_pass/view/forgot_pass.dart';
 import 'package:ecommerce_app/app/modules/forgot_pass/view/setnew_pass.dart';
 import 'package:ecommerce_app/app/modules/home/views/home.dart';
+import 'package:ecommerce_app/app/modules/my_orders/view/my_orders.dart';
 import 'package:ecommerce_app/app/modules/my_profile/view/my_profile.view.dart';
 import 'package:ecommerce_app/app/modules/order_confirm/view/order_confirm.dart';
 import 'package:ecommerce_app/app/modules/otp/views/otpverify.dart';
@@ -50,6 +51,7 @@ class Routes {
   static const String orderconfirm = '/order-confirm';
   static const String profile = '/profile';
   static const String webview = '/web-view';
+  static const String myorders = '/my-orders';
 
   static final List<GetPage> pages = [
     GetPage(name: home, page: () => HomePage()),
@@ -84,6 +86,10 @@ class Routes {
     GetPage(
       name: webview,
       page: () => WebViewView(),
+    ),
+    GetPage(
+      name: myorders,
+      page: () => MyOrdersView(),
     ),
   ];
 }

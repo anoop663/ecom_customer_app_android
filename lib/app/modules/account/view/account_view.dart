@@ -50,7 +50,7 @@ class AccountView extends StatelessWidget {
                       ),
                       const Divider(color: AppColors.brandSeperator),
                       AccountListItem(
-                        onTap: () => Get.toNamed(Routes.home),
+                        onTap: () => Get.toNamed(Routes.myorders),
                         text: 'My Orders',
                         subTitle: 'View, modify and track orders',
                         icon: IconStrings.orderIcon,
