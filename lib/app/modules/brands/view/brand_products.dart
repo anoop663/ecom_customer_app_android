@@ -223,6 +223,7 @@ class _BrandProductsState extends State<BrandProducts> {
                       await Get.bottomSheet(
                         SortSheet(
                           onTap: (filter) {
+                            // ignore: avoid_print
                             print(filter);
                           },
                         ),

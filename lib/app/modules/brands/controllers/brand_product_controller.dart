@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:ecommerce_app/app/data/api_provider.dart';
 import 'package:ecommerce_app/app/data/storage_provider.dart';
-import 'package:ecommerce_app/app/modules/brands/controllers/filter_controller.dart';
 import 'package:ecommerce_app/app/modules/brands/model/brand_filter_model.dart';
 import 'package:ecommerce_app/app/modules/brands/model/brand_reponse_model.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +58,7 @@ class BrandProductController extends GetxController {
         if (responseData['success'] == 1) {
           brandproductResponse.value = BrandReponseModel.fromJson(responseData);
 
+          // ignore: avoid_print
           print(brandproductResponse.value);
         } else {
           Get.snackbar(

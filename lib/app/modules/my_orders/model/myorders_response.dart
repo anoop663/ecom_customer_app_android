@@ -850,6 +850,7 @@ class ThisOption {
       };
 }
 
+// ignore: constant_identifier_names
 enum Name { COLOR, SIZE }
 
 final nameValues = EnumValues({"Color": Name.COLOR, "Size": Name.SIZE});
@@ -886,6 +887,7 @@ class ThisValues {
       };
 }
 
+// ignore: constant_identifier_names
 enum Type { TEXT }
 
 final typeValues = EnumValues({"text": Type.TEXT});
