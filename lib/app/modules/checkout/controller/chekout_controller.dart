@@ -126,7 +126,6 @@ class CheckoutScreenController extends GetxController {
   Future getCheckOut() async {
     final (String?, String?) idToken = storageProvider.readLoginDetails();
     loading.value = true;
-
     final CartModel homeAuth2 = CartModel(
       id: idToken.$1,
       token: idToken.$2,
@@ -175,7 +174,11 @@ class CheckoutScreenController extends GetxController {
       appToast('', 'Select a payment mode to continue');
     } else {
       if (paymentMode.value == 2) {
-        print('online paymnet');
+        // loading.value = true;
+        // print('online paymnet');
+        // final response = await authService.chekOut(authData5.toJson());
+        // print('onlione pay resionce is---${response.body}');
+        // loading.value = false;
         razorpay.open(options);
       } else {
         loading.value = true;
@@ -267,9 +270,10 @@ class CheckoutScreenController extends GetxController {
 
   var options = {
     'key': 'rzp_test_IhUrseCqiLJofF',
-    'amount': 100,
-    'name': 'test',
-    'description': 'T-Shirt',
-    'prefill': {'contact': '8888888888', 'email': 'anoop@alisonsgroup.com'}
+    'amount': 62584,
+    'name': 'jishnu',
+    'description': 'test 2',
+
+    'prefill': {'contact': '8888888888', 'email': 'test@gmail.com', 'orderId':'1233',}
   };
 }
