@@ -12,6 +12,9 @@ import 'package:ecommerce_app/app/widgets/support_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../controllers/base_controller.dart';
+import '../../address_manage/controller/address_list_controller.dart';
+
 class CartView extends StatelessWidget {
   const CartView({super.key});
 
@@ -235,7 +238,29 @@ class CartView extends StatelessWidget {
                                 Expanded(
                                   child: CurvedButton(
                                     onClick: () {
+                                      // if (!Get.isRegistered<
+                                      //     MyAddressListController>()) {
+                                      //   Get.put(MyAddressListController());
+                                      //   Get.find<MyAddressListController>()
+                                      //       .getAddressFunction();
+                                      // }else{
+                                      //   Get.find<MyAddressListController>()
+                                      //       .getAddressFunction();
+                                      // }
+                                      //
+                                      // if (!Get.isRegistered<
+                                      //     BaseController>()) {
+                                      //   Get.put(BaseController());
+                                      //   Get.find<BaseController>()
+                                      //       .openAddressListBottomSheet();
+                                      // }else{
+                                      //   Get.find<BaseController>()
+                                      //       .openAddressListBottomSheet();
+                                      // }
+
+
                                       Get.toNamed(Routes.checkout);
+
                                     },
                                     text: 'PROCEED',
                                     textColor: Colors.white,

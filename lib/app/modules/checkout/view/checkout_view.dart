@@ -204,22 +204,21 @@ class CheckoutScreenView extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Obx(() => controller.loading.isTrue
-                            ? const LoadingWidget()
-                            : CurvedButton(
-                                onClick: () {
-                                  controller.checkOut();
-                                },
-                                height: 45,
-                                width: MediaQuery.of(context).size.width * 0.9,
-                                text: 'CONFIRM ORDER',
-                                textColor: AppColors.textColor1,
-                                borderColor: AppColors.bottomSelectedColor,
-                                buttonColor: AppColors.bottomSelectedColor,
-                                borderRadius: 4.0,
-                                fontSize: 16,
-                                fontweight: FontWeight.w500,
-                              )),
+                        Obx(() => CurvedButton(
+                          isLoading: controller.loading.isTrue,
+                          onClick: () {
+                            controller.checkOut();
+                          },
+                          height: 45,
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          text: 'CONFIRM ORDER',
+                          textColor: AppColors.textColor1,
+                          borderColor: AppColors.bottomSelectedColor,
+                          buttonColor: AppColors.bottomSelectedColor,
+                          borderRadius: 4.0,
+                          fontSize: 16,
+                          fontweight: FontWeight.w500,
+                        )),
                       ],
                     ),
                   ),
@@ -309,7 +308,7 @@ class _AddressExpandTileState extends State<AddressExpandTile> {
                   children: [
                     const SizedBox(height: 10),
                     Text(
-                      '${widget.address.city ?? ''}\n${widget.address.state ?? ''}\n${widget.address.country!.name ?? ''}\n${widget.address.zipcode ?? ''}',
+                      '${widget.address.city ?? ''}\n${widget.address.state ?? ''}\n${widget.address.country?.name ?? ''}\n${widget.address.zipcode ?? ''}',
                       style: Get.theme.textTheme.bodyMedium!.copyWith(
                         color: AppColors.textColor2,
                         fontSize: 14,

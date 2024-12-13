@@ -35,12 +35,9 @@ class MyAddressListController extends GetxController {
       id: idToken.$1,
       token: idToken.$2,
     );
-
     try {
       final response = await authService.getAddress(authData5.toJson());
-
       loading.value = false;
-
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
 

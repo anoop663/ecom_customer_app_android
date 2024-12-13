@@ -28,8 +28,9 @@ class CartController extends GetxController {
     viewCart();
   }
 
+
   /// View cart details
-  void viewCart() async {
+  Future viewCart() async {
     final (String?, String?) idToken = storageProvider.readLoginDetails();
     loading.value = true;
 

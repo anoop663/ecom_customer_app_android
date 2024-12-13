@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:ecommerce_app/app/data/api_provider.dart';
 import 'package:ecommerce_app/app/data/storage_provider.dart';
@@ -11,6 +12,10 @@ import 'package:ecommerce_app/app/modules/home/models/home_product_model.dart';
 import 'package:ecommerce_app/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
+
+import '../../../core/values/constants.dart';
+import '../../cart/controller/cart_controller.dart';
 
 class CheckoutScreenController extends GetxController {
   final addressTileOpen = false.obs;
@@ -33,12 +38,15 @@ class CheckoutScreenController extends GetxController {
   var cartModel = Rx<CartModel?>(null);
   var initialLoading = true.obs;
   var cartItems1 = <Product>[].obs;
-
+  late Razorpay razorpay;
   @override
   @override
   void onInit() {
     super.onInit();
-    getAddressFunction1();
+    razorpay = Razorpay();
+    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     _startInitialLoading();
     // getDefaultAddress();
     if (Get.arguments != null) {
@@ -57,39 +65,39 @@ class CheckoutScreenController extends GetxController {
     //  }
   }
 
-  void _startInitialLoading() {
-    Future.delayed(const Duration(seconds: 5), () {
+  Future _startInitialLoading() async {
+    await getAddressFunction1();
+    getCheckOut();
+    Future.delayed(const Duration(seconds: 2), () {
       initialLoading.value = false;
     });
   }
 
-  void getAddressFunction1() async {
+  Future getAddressFunction1() async {
     var idToken = storageProvider.readLoginDetails();
     loading.value = true;
-
     HomeAuth authData5 = HomeAuth(
       id: idToken.$1,
       token: idToken.$2,
     );
-
     try {
       final response = await authService
           .getAddress(authData5.toJson())
           .timeout(const Duration(seconds: 5));
-
       loading.value = false;
-
       if (response.statusCode == 200) {
+        log('responce iss---${json.decode(response.body)}');
         final responseData = json.decode(response.body);
-
         if (responseData['success'] == 1) {
           addressResponse2.value = AddressListResponse.fromJson(responseData);
           final defaultAddress = addressResponse2.value?.addresses?.firstWhere(
             (address1) => address1.isDefault == 1,
-            // orElse: () => null,
+            orElse: () => Address(),
           );
           if (defaultAddress != null) {
-            selectedAddress.value = defaultAddress;
+            selectedAddress.value = (defaultAddress.id == null
+                ? addressResponse2.value?.addresses?.first
+                : defaultAddress)!;
           }
         } else {
           Get.snackbar(
@@ -109,42 +117,35 @@ class CheckoutScreenController extends GetxController {
 
   @override
   void onReady() {
-    checkOut();
-    //   getCheckOut();
+    // checkOut();
+    // getCheckOut();
   }
 
 //  void getCheckOut() async {}
 
-  void checkOut() async {
-    var idToken = storageProvider.readLoginDetails();
+  Future getCheckOut() async {
+    final (String?, String?) idToken = storageProvider.readLoginDetails();
     loading.value = true;
 
-    CheckoutModel authData5 = CheckoutModel(
+    final CartModel homeAuth2 = CartModel(
       id: idToken.$1,
       token: idToken.$2,
-      billingaddressId: selectedAddress.value.id!.toString(),
-      shippingaddressId: selectedAddress.value.id!.toString(),
-      paymentMode: '-1',
+      billingaddressId: selectedAddress.value.id.toString(),
+      shippingaddressId: selectedAddress.value.id.toString(),
+      forwhat: 'checkout',
     );
-
     try {
-      final response = await authService.chekOut(authData5.toJson());
-
+      final response = await authService.viewtheCart(homeAuth2.toJson());
       loading.value = false;
 
       if (response.statusCode == 200) {
-        final responseData1 = json.decode(response.body);
+        final responseData = json.decode(response.body);
 
-        if (responseData1['success'] == 1) {
-          checkOutResponse.value = CheckoutResponse.fromJson(responseData1);
-
-          Get.offNamed(Routes.orderconfirm, arguments: {
-            'order': checkOutResponse.value!.orderId,
-          });
-          clearCart();
+        if (responseData['success'] == 1) {
+          cartResponse1.value = CartResponse.fromJson(responseData);
         } else {
           Get.snackbar(
-              'Error', responseData1['message'] ?? 'Failed to list address',
+              'Error', responseData['message'] ?? 'Items viewing failed',
               colorText: Colors.white, backgroundColor: Colors.black);
         }
       } else {
@@ -153,8 +154,57 @@ class CheckoutScreenController extends GetxController {
       }
     } catch (e) {
       loading.value = false;
-      Get.snackbar('Error', 'Failed to load address: $e',
+      Get.snackbar('Error', 'Failed to view cart: $e',
           colorText: Colors.white, backgroundColor: Colors.black);
+    }
+  }
+
+  void checkOut() async {
+    print('payment mode --${paymentMode.value}');
+    var idToken = storageProvider.readLoginDetails();
+    CheckoutModel authData5 = CheckoutModel(
+      id: idToken.$1,
+      token: idToken.$2,
+      billingaddressId: selectedAddress.value.id?.toString(),
+      shippingaddressId: selectedAddress.value.id?.toString(),
+      paymentMode: paymentMode.value.toString(),
+    );
+
+    print('checkOutResponse.value===${authData5.toJson()}');
+    if (paymentMode.value == -1) {
+      appToast('', 'Select a payment mode to continue');
+    } else {
+      if (paymentMode.value == 2) {
+        print('online paymnet');
+        razorpay.open(options);
+      } else {
+        loading.value = true;
+        try {
+          final response = await authService.chekOut(authData5.toJson());
+          loading.value = false;
+          if (response.statusCode == 200) {
+            final responseData1 = json.decode(response.body);
+            if (responseData1['success'] == 1) {
+              checkOutResponse.value = CheckoutResponse.fromJson(responseData1);
+              Get.offNamed(Routes.orderconfirm, arguments: {
+                'order': checkOutResponse.value!.orderId,
+              });
+              clearCart();
+            } else {
+              Get.snackbar(
+                  'Error', responseData1['message'] ?? 'Failed to list address',
+                  colorText: Colors.white, backgroundColor: Colors.black);
+            }
+          } else {
+            Get.snackbar('Error', 'Server error: ${response.statusCode}',
+                colorText: Colors.white, backgroundColor: Colors.black);
+          }
+        } catch (e) {
+          loading.value = false;
+          Get.snackbar('Error', 'Failed to load address: $e',
+              colorText: Colors.white, backgroundColor: Colors.black);
+        }
+      }
     }
   }
 
@@ -173,10 +223,8 @@ class CheckoutScreenController extends GetxController {
     try {
       final response = await authService.viewtheCart(homeAuth2.toJson());
       loading.value = false;
-
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
-
         if (responseData['success'] == 1) {
           cartResponse1.value = CartResponse.fromJson(responseData);
           cartItems1.value = cartResponse1.value!.products!;
@@ -195,4 +243,33 @@ class CheckoutScreenController extends GetxController {
           colorText: Colors.white, backgroundColor: Colors.black);
     }
   }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    // Do something when payment succeeds
+    print('PaymentSuccessResponse---${response.data}');
+    print('PaymentSuccessResponse---${response.orderId}');
+    print('PaymentSuccessResponse---${response.paymentId}');
+    print('PaymentSuccessResponse---${response.signature}');
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    // Do something when payment fails
+
+    print(' PaymentFailureResponse---${response.message}');
+    print(' PaymentFailureResponse---${response.code}');
+    print(' PaymentFailureResponse---${response.error}');
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    // Do something when an external wallet was selected
+    print(' ExternalWalletResponse---${response.walletName}');
+  }
+
+  var options = {
+    'key': 'rzp_test_IhUrseCqiLJofF',
+    'amount': 100,
+    'name': 'test',
+    'description': 'T-Shirt',
+    'prefill': {'contact': '8888888888', 'email': 'anoop@alisonsgroup.com'}
+  };
 }
