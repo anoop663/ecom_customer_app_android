@@ -269,11 +269,10 @@ class CheckoutScreenController extends GetxController {
   }
 
   var options = {
-    'key': 'rzp_test_IhUrseCqiLJofF',
+    'key': 'rzp_test_x2sOPOigQG6JQb',
     'amount': 62584,
     'name': 'jishnu',
     'description': 'test 2',
-
     'prefill': {'contact': '8888888888', 'email': 'test@gmail.com', 'orderId':'1233',}
   };
 }
