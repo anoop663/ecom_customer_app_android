@@ -16,7 +16,6 @@ import 'package:get/get.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../../../core/values/constants.dart';
-import '../../cart/controller/cart_controller.dart';
 
 class CheckoutScreenController extends GetxController {
   final addressTileOpen = false.obs;
@@ -170,6 +169,8 @@ class CheckoutScreenController extends GetxController {
       shippingaddressId: selectedAddress.value.id?.toString(),
       paymentMode: paymentMode.value.toString(),
     );
+
+    // ignore: avoid_print
     print('checkOutResponse.value===${authData5.toJson()}');
     if (paymentMode.value == -1) {
       appToast('', 'Select a payment mode to continue');
@@ -291,9 +292,13 @@ class CheckoutScreenController extends GetxController {
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     // Do something when payment succeeds
     var data = jsonDecode(onlinePaymentResponse.body);
+    // ignore: avoid_print
     print('PaymentSuccessResponse---${response.data}');
+    // ignore: avoid_print
     print('PaymentSuccessResponse---${response.orderId}');
+    // ignore: avoid_print
     print('PaymentSuccessResponse---${response.paymentId}');
+    // ignore: avoid_print
     print('PaymentSuccessResponse---${response.signature}');
 
     Map<String, dynamic> body = {
@@ -304,18 +309,25 @@ class CheckoutScreenController extends GetxController {
     };
 
     print('body is---${body}');
-    // finalCheckOut(body: body, status: 'success');
+    finalCheckOut(body: body, status: 'success');
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
     var data = jsonDecode(onlinePaymentResponse.body);
+    // Do something when payment fails
+
+    // ignore: avoid_print
     print(' PaymentFailureResponse---${response.message}');
+    // ignore: avoid_print
     print(' PaymentFailureResponse---${response.code}');
+    // ignore: avoid_print
     print(' PaymentFailureResponse---${response.error}');
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
     var data = jsonDecode(onlinePaymentResponse.body);
+    // Do something when an external wallet was selected
+    // ignore: avoid_print
     print(' ExternalWalletResponse---${response.walletName}');
   }
 

@@ -12,8 +12,6 @@ import 'package:ecommerce_app/app/widgets/support_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../controllers/base_controller.dart';
-import '../../address_manage/controller/address_list_controller.dart';
 
 class CartView extends StatelessWidget {
   const CartView({super.key});
