@@ -158,6 +158,7 @@ class CheckoutScreenController extends GetxController {
   }
 
   void checkOut() async {
+    // ignore: avoid_print
     print('payment mode --${paymentMode.value}');
     var idToken = storageProvider.readLoginDetails();
     CheckoutModel authData5 = CheckoutModel(
@@ -168,6 +169,7 @@ class CheckoutScreenController extends GetxController {
       paymentMode: paymentMode.value.toString(),
     );
 
+    // ignore: avoid_print
     print('checkOutResponse.value===${authData5.toJson()}');
     if (paymentMode.value == -1) {
       appToast('', 'Select a payment mode to continue');
@@ -248,22 +250,30 @@ class CheckoutScreenController extends GetxController {
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     // Do something when payment succeeds
+    // ignore: avoid_print
     print('PaymentSuccessResponse---${response.data}');
+    // ignore: avoid_print
     print('PaymentSuccessResponse---${response.orderId}');
+    // ignore: avoid_print
     print('PaymentSuccessResponse---${response.paymentId}');
+    // ignore: avoid_print
     print('PaymentSuccessResponse---${response.signature}');
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
     // Do something when payment fails
 
+    // ignore: avoid_print
     print(' PaymentFailureResponse---${response.message}');
+    // ignore: avoid_print
     print(' PaymentFailureResponse---${response.code}');
+    // ignore: avoid_print
     print(' PaymentFailureResponse---${response.error}');
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
     // Do something when an external wallet was selected
+    // ignore: avoid_print
     print(' ExternalWalletResponse---${response.walletName}');
   }
 
