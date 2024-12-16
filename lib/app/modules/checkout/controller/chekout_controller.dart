@@ -223,31 +223,35 @@ class CheckoutScreenController extends GetxController {
     }
   }
 
-  bool isLoadng = false;
+  final isLoading = false.obs;
   Future finalCheckOut({Map<String, dynamic>? body, String? status}) async {
-    isLoadng = true;
+    isLoading.value = true;
     try {
       final response = await authService.finalCheckOut(body: body);
-      isLoadng = false;
       if (response.statusCode == 200) {
         final responseData1 = json.decode(response.body);
         if (responseData1['success'] == 1) {
           if (status == 'success') {
             Get.offNamed(Routes.orderconfirm, arguments: {
-              'order': checkOutResponse.value!.orderId,
+              'order': body!['order_id'],
             });
+          } else {
+            Get.back();
           }
+          isLoading.value = false;
         } else {
+          isLoading.value = false;
           Get.snackbar(
               'Error', responseData1['message'] ?? 'Failed to list address',
               colorText: Colors.white, backgroundColor: Colors.black);
         }
       } else {
+        isLoading.value = false;
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
             colorText: Colors.white, backgroundColor: Colors.black);
       }
     } catch (e) {
-      isLoadng = false;
+      isLoading.value = false;
       Get.snackbar('Error', 'Failed to load address: $e',
           colorText: Colors.white, backgroundColor: Colors.black);
     }
@@ -307,8 +311,6 @@ class CheckoutScreenController extends GetxController {
       'invoiceNumber': data['order_id']['invoice_number'],
       'razorPayResponce': response.data,
     };
-
-    print('body is---${body}');
     finalCheckOut(body: body, status: 'success');
   }
 
@@ -322,6 +324,13 @@ class CheckoutScreenController extends GetxController {
     print(' PaymentFailureResponse---${response.code}');
     // ignore: avoid_print
     print(' PaymentFailureResponse---${response.error}');
+    Map<String, dynamic> body = {
+      'order_id': data['order_id']['id'],
+      'status': 'failure',
+      'invoiceNumber': data['order_id']['invoice_number'],
+      'razorPayResponce': response.error,
+    };
+    finalCheckOut(body: body, status: 'failure');
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
@@ -329,6 +338,13 @@ class CheckoutScreenController extends GetxController {
     // Do something when an external wallet was selected
     // ignore: avoid_print
     print(' ExternalWalletResponse---${response.walletName}');
+    Map<String, dynamic> body = {
+      'order_id': data['order_id']['id'],
+      'status': 'failure',
+      'invoiceNumber': data['order_id']['invoice_number'],
+      'razorPayResponce': response.walletName,
+    };
+    finalCheckOut(body: body, status: 'failure');
   }
 
   razorpayCheckOut(

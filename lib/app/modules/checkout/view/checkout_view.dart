@@ -20,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/values/colors.dart';
+import '../../../widgets/loader.dart';
 
 class CheckoutScreenView extends StatelessWidget {
   const CheckoutScreenView({super.key});
@@ -53,175 +54,180 @@ class CheckoutScreenView extends StatelessWidget {
                       ),
                     ),
                   )
-                : SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.8,
-                          width: MediaQuery.of(context).size.width,
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                const SizedBox(height: 20),
-                                Obx(
-                                  () => AddressExpandTile(
-                                      address:
-                                          controller.selectedAddress.value),
-                                ),
-                                const SizedBox(height: 20),
-                                Obx(() => ItemsExpandTile(
-                                      items: cartController
-                                              .cartResponse.value?.products ??
-                                          [],
-                                    )),
-                                const SizedBox(height: 20),
-                                ColoredBox(
-                                  color: AppColors.primary,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Row(
+                : Stack(
+                  children: [
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.8,
+                              width: MediaQuery.of(context).size.width,
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    const SizedBox(height: 20),
+                                    Obx(
+                                      () => AddressExpandTile(
+                                          address:
+                                              controller.selectedAddress.value),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Obx(() => ItemsExpandTile(
+                                          items: cartController
+                                                  .cartResponse.value?.products ??
+                                              [],
+                                        )),
+                                    const SizedBox(height: 20),
+                                    ColoredBox(
+                                      color: AppColors.primary,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
                                           children: [
-                                            Text(
-                                              'Payment Methods',
-                                              style: Get
-                                                  .theme.textTheme.bodyMedium!
-                                                  .copyWith(
-                                                color: AppColors.textColor2,
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w500,
-                                              ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  'Payment Methods',
+                                                  style: Get
+                                                      .theme.textTheme.bodyMedium!
+                                                      .copyWith(
+                                                    color: AppColors.textColor2,
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 10),
-                                        CurvedBox(
-                                          child: Column(
-                                            children: [
-                                              Obx(() => CheckboxExpansionTile(
-                                                    onChanged: (value) {
-                                                      controller.paymentMode
-                                                          .value = value;
-                                                    },
-                                                    modes: controller
-                                                        .cartResponse1
-                                                        .value
-                                                        ?.paymentModes,
-                                                  )),
-                                            ],
-                                          ),
-                                        ),
-                                        const SizedBox(height: 20),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'Order Information',
-                                              style: Get
-                                                  .theme.textTheme.bodyMedium!
-                                                  .copyWith(
-                                                color: AppColors.textColor2,
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 10),
-                                        CurvedBox(
-                                          child: Obx(() => PriceExpandTile(
-                                                netTotal: controller
-                                                        .cartResponse1
-                                                        .value
-                                                        ?.netTotal
-                                                        ?.toString() ??
-                                                    '0',
-                                                wallet: '0',
-                                                tax: controller.cartResponse1
-                                                        .value?.tax ??
-                                                    '0',
-                                                deliveryCharge: controller
+                                            const SizedBox(height: 10),
+                                            CurvedBox(
+                                              child: Column(
+                                                children: [
+                                                  Obx(() => CheckboxExpansionTile(
+                                                        onChanged: (value) {
+                                                          controller.paymentMode
+                                                              .value = value;
+                                                        },
+                                                        modes: controller
                                                             .cartResponse1
                                                             .value
-                                                            ?.deliveryCharge ==
-                                                        '0'
-                                                    ? 'FREE'
-                                                    : controller
+                                                            ?.paymentModes,
+                                                      )),
+                                                ],
+                                              ),
+                                            ),
+                                            const SizedBox(height: 20),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  'Order Information',
+                                                  style: Get
+                                                      .theme.textTheme.bodyMedium!
+                                                      .copyWith(
+                                                    color: AppColors.textColor2,
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 10),
+                                            CurvedBox(
+                                              child: Obx(() => PriceExpandTile(
+                                                    netTotal: controller
                                                             .cartResponse1
                                                             .value
-                                                            ?.deliveryCharge
+                                                            ?.netTotal
                                                             ?.toString() ??
                                                         '0',
-                                                grandTotal: controller
-                                                        .cartResponse1
-                                                        .value
-                                                        ?.grandTotal
-                                                        ?.toString() ??
-                                                    '0',
-                                              )),
+                                                    wallet: '0',
+                                                    tax: controller.cartResponse1
+                                                            .value?.tax ??
+                                                        '0',
+                                                    deliveryCharge: controller
+                                                                .cartResponse1
+                                                                .value
+                                                                ?.deliveryCharge ==
+                                                            '0'
+                                                        ? 'FREE'
+                                                        : controller
+                                                                .cartResponse1
+                                                                .value
+                                                                ?.deliveryCharge
+                                                                ?.toString() ??
+                                                            '0',
+                                                    grandTotal: controller
+                                                            .cartResponse1
+                                                            .value
+                                                            ?.grandTotal
+                                                            ?.toString() ??
+                                                        '0',
+                                                  )),
+                                            ),
+                                            const SizedBox(height: 20),
+                                          ],
                                         ),
-                                        const SizedBox(height: 20),
+                                      ),
+                                    ),
+                                    CustomPaint(
+                                      painter: PointedDecorationPainter(),
+                                      size: Size(
+                                          MediaQuery.of(context).size.width, 20),
+                                    ),
+                                    const SizedBox(height: 30),
+                                    const Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        SupportIcon(
+                                          icon: IconStrings.cartExtra1,
+                                          title: '100% SECURE\nPAYMENTS',
+                                          backgroundColor: AppColors.transparent,
+                                          fontColor: AppColors.cartExtraText,
+                                          imageSize: 45,
+                                        ),
+                                        SupportIcon(
+                                          icon: IconStrings.cartExtra2,
+                                          title: 'EASY RETURNS & QUICK\nREFUNDS',
+                                          backgroundColor: AppColors.transparent,
+                                          fontColor: AppColors.cartExtraText,
+                                          imageSize: 45,
+                                        ),
+                                        SupportIcon(
+                                          icon: IconStrings.cartExtra3,
+                                          title: 'QUALITY\nASSURANCE',
+                                          backgroundColor: AppColors.transparent,
+                                          fontColor: AppColors.cartExtraText,
+                                          imageSize: 45,
+                                        ),
                                       ],
-                                    ),
-                                  ),
-                                ),
-                                CustomPaint(
-                                  painter: PointedDecorationPainter(),
-                                  size: Size(
-                                      MediaQuery.of(context).size.width, 20),
-                                ),
-                                const SizedBox(height: 30),
-                                const Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    SupportIcon(
-                                      icon: IconStrings.cartExtra1,
-                                      title: '100% SECURE\nPAYMENTS',
-                                      backgroundColor: AppColors.transparent,
-                                      fontColor: AppColors.cartExtraText,
-                                      imageSize: 45,
-                                    ),
-                                    SupportIcon(
-                                      icon: IconStrings.cartExtra2,
-                                      title: 'EASY RETURNS & QUICK\nREFUNDS',
-                                      backgroundColor: AppColors.transparent,
-                                      fontColor: AppColors.cartExtraText,
-                                      imageSize: 45,
-                                    ),
-                                    SupportIcon(
-                                      icon: IconStrings.cartExtra3,
-                                      title: 'QUALITY\nASSURANCE',
-                                      backgroundColor: AppColors.transparent,
-                                      fontColor: AppColors.cartExtraText,
-                                      imageSize: 45,
                                     ),
                                   ],
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
+                            Obx(() => CurvedButton(
+                              isLoading: controller.loading.isTrue,
+                              onClick: () {
+                                controller.checkOut();
+                              },
+                              height: 45,
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              text: 'CONFIRM ORDER',
+                              textColor: AppColors.textColor1,
+                              borderColor: AppColors.bottomSelectedColor,
+                              buttonColor: AppColors.bottomSelectedColor,
+                              borderRadius: 4.0,
+                              fontSize: 16,
+                              fontweight: FontWeight.w500,
+                            )),
+                          ],
                         ),
-                        Obx(() => CurvedButton(
-                          isLoading: controller.loading.isTrue,
-                          onClick: () {
-                            controller.checkOut();
-                          },
-                          height: 45,
-                          width: MediaQuery.of(context).size.width * 0.9,
-                          text: 'CONFIRM ORDER',
-                          textColor: AppColors.textColor1,
-                          borderColor: AppColors.bottomSelectedColor,
-                          buttonColor: AppColors.bottomSelectedColor,
-                          borderRadius: 4.0,
-                          fontSize: 16,
-                          fontweight: FontWeight.w500,
-                        )),
-                      ],
-                    ),
-                  ),
+                      ),
+                   controller.isLoading.value? Loading():SizedBox()
+                  ],
+                ),
       ),
     );
   }
