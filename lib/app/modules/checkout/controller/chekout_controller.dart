@@ -15,7 +15,6 @@ import 'package:get/get.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../../../core/values/constants.dart';
-import '../../cart/controller/cart_controller.dart';
 
 class CheckoutScreenController extends GetxController {
   final addressTileOpen = false.obs;
