@@ -220,6 +220,17 @@ class AuthService {
     return response2;
   }
 
+  Future<http.Response> finalCheckOut({Map<String, dynamic>? body}) async {
+    final url1 = '${ApiConfig.apiUrl}${ApiConstants.checkout}';
+    final response2 = await http.post(
+      Uri.parse(url1),
+      body: body,
+    );
+    return response2;
+  }
+
+
+
   Future<http.Response> getAccountDetails(Map<String, dynamic> authData) async {
     final url1 = '${ApiConfig.apiUrl}${ApiConstants.accountDetails}';
 

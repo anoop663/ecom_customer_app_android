@@ -34,7 +34,7 @@ class CheckoutScreenView extends StatelessWidget {
     return Scaffold(
       appBar: CommonAppBar(
         toolBarTitle:
-            'Payment: ₹ ${cartController.cartResponse.value?.grandTotal ?? '0'}',
+            'Payment: ₹ ${cartController.cartResponse.value?.netTotal ?? '0'}',
         showCart: false,
         showSearch: false,
         showWishList: false,

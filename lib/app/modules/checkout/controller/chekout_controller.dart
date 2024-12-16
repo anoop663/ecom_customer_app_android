@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
-
+import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'package:ecommerce_app/app/data/api_provider.dart';
 import 'package:ecommerce_app/app/data/storage_provider.dart';
 import 'package:ecommerce_app/app/modules/address_manage/model/address_response_model.dart';
@@ -158,6 +159,7 @@ class CheckoutScreenController extends GetxController {
     }
   }
 
+  var onlinePaymentResponse;
   void checkOut() async {
     print('payment mode --${paymentMode.value}');
     var idToken = storageProvider.readLoginDetails();
@@ -168,18 +170,27 @@ class CheckoutScreenController extends GetxController {
       shippingaddressId: selectedAddress.value.id?.toString(),
       paymentMode: paymentMode.value.toString(),
     );
-
     print('checkOutResponse.value===${authData5.toJson()}');
     if (paymentMode.value == -1) {
       appToast('', 'Select a payment mode to continue');
     } else {
       if (paymentMode.value == 2) {
-        // loading.value = true;
-        // print('online paymnet');
-        // final response = await authService.chekOut(authData5.toJson());
-        // print('onlione pay resionce is---${response.body}');
-        // loading.value = false;
-        razorpay.open(options);
+        loading.value = true;
+        print('online paymnet');
+        onlinePaymentResponse = await authService.chekOut(authData5.toJson());
+        log('onlione pay resionce is---${onlinePaymentResponse.body}');
+        var data = jsonDecode(onlinePaymentResponse.body);
+        createOrderId(
+          amount: (double.parse(data['order_id']['order_net_total_amount']))
+              .toInt(),
+          id: data['order_id']['id'],
+          description: data['order_id']['invoice_number'],
+          userId: data['order_id']['customer_id'],
+          email: data['order_id']['billing_email'],
+          contact: data['order_id']['billing_phone'],
+          name: data['order_id']['billing_name'],
+        );
+        loading.value = false;
       } else {
         loading.value = true;
         try {
@@ -208,6 +219,36 @@ class CheckoutScreenController extends GetxController {
               colorText: Colors.white, backgroundColor: Colors.black);
         }
       }
+    }
+  }
+
+  bool isLoadng = false;
+  Future finalCheckOut({Map<String, dynamic>? body, String? status}) async {
+    isLoadng = true;
+    try {
+      final response = await authService.finalCheckOut(body: body);
+      isLoadng = false;
+      if (response.statusCode == 200) {
+        final responseData1 = json.decode(response.body);
+        if (responseData1['success'] == 1) {
+          if (status == 'success') {
+            Get.offNamed(Routes.orderconfirm, arguments: {
+              'order': checkOutResponse.value!.orderId,
+            });
+          }
+        } else {
+          Get.snackbar(
+              'Error', responseData1['message'] ?? 'Failed to list address',
+              colorText: Colors.white, backgroundColor: Colors.black);
+        }
+      } else {
+        Get.snackbar('Error', 'Server error: ${response.statusCode}',
+            colorText: Colors.white, backgroundColor: Colors.black);
+      }
+    } catch (e) {
+      isLoadng = false;
+      Get.snackbar('Error', 'Failed to load address: $e',
+          colorText: Colors.white, backgroundColor: Colors.black);
     }
   }
 
@@ -249,30 +290,93 @@ class CheckoutScreenController extends GetxController {
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     // Do something when payment succeeds
+    var data = jsonDecode(onlinePaymentResponse.body);
     print('PaymentSuccessResponse---${response.data}');
     print('PaymentSuccessResponse---${response.orderId}');
     print('PaymentSuccessResponse---${response.paymentId}');
     print('PaymentSuccessResponse---${response.signature}');
+
+    Map<String, dynamic> body = {
+      'order_id': data['order_id']['id'],
+      'status': 'success',
+      'invoiceNumber': data['order_id']['invoice_number'],
+      'razorPayResponce': response.data,
+    };
+
+    print('body is---${body}');
+    // finalCheckOut(body: body, status: 'success');
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
-    // Do something when payment fails
-
+    var data = jsonDecode(onlinePaymentResponse.body);
     print(' PaymentFailureResponse---${response.message}');
     print(' PaymentFailureResponse---${response.code}');
     print(' PaymentFailureResponse---${response.error}');
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
-    // Do something when an external wallet was selected
+    var data = jsonDecode(onlinePaymentResponse.body);
     print(' ExternalWalletResponse---${response.walletName}');
   }
 
-  var options = {
-    'key': 'rzp_test_x2sOPOigQG6JQb',
-    'amount': 62584,
-    'name': 'jishnu',
-    'description': 'test 2',
-    'prefill': {'contact': '8888888888', 'email': 'test@gmail.com', 'orderId':'1233',}
-  };
+  razorpayCheckOut(
+      {num? amount,
+      String? name,
+      String? description,
+      String? contact,
+      String? email,
+      String? orderId}) {
+    var options = {
+      'key': 'rzp_test_x2sOPOigQG6JQb',
+      'amount': amount,
+      'name': name,
+      'description': description,
+      'order_id': orderId,
+      'prefill': {
+        'contact': contact,
+        'email': email,
+      }
+    };
+    print('options ius----${options}');
+    razorpay.open(options);
+  }
+
+  createOrderId({
+    amount,
+    description,
+    id,
+    userId,
+    String? name,
+    String? contact,
+    String? email,
+  }) async {
+    final int Amount = ((amount ?? 0) * 100);
+    http.Response response = await http.post(
+        Uri.parse(
+          "https://api.razorpay.com/v1/orders",
+        ),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization":
+              "Basic ${base64Encode(utf8.encode('rzp_test_x2sOPOigQG6JQb:x0xZaWBazUZgCc1bkl2QbyJQ'))} "
+        },
+        body: json.encode({
+          "amount": Amount,
+          "currency": "INR",
+          "receipt": "rcptid_$id",
+          "notes": {"userId": "$userId", "packageId": "$id"},
+        }));
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      razorpayCheckOut(
+        amount: data['amount'],
+        description: description,
+        name: name,
+        contact: contact,
+        email: email,
+        orderId: data['id'],
+      );
+    }
+    print('responce is---${response.body}');
+  }
 }
