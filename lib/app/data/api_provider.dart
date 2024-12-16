@@ -221,9 +221,9 @@ class AuthService {
   }
 
   Future<http.Response> finalCheckOut({Map<String, dynamic>? body}) async {
-    final url1 = '${ApiConfig.apiUrl}${ApiConstants.checkout}';
+    // final url1 = '${ApiConfig.apiUrl}${ApiConstants.checkout}';
     final response2 = await http.post(
-      Uri.parse(url1),
+      Uri.parse(''),
       body: body,
     );
     return response2;
