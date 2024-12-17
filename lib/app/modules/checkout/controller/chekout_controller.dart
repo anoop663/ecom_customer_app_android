@@ -237,13 +237,21 @@ class CheckoutScreenController extends GetxController {
   }
 
   final isLoading = false.obs;
-  Future finalCheckOut({String? status, var razorPayResponce}) async {
+  Future finalCheckOut(
+      {String? status,
+      PaymentFailureResponse? failureResponse,
+      ExternalWalletResponse? walletResponse,
+      PaymentSuccessResponse? successResponse}) async {
+    var idToken = storageProvider.readLoginDetails();
     isLoading.value = true;
     Map<String, dynamic> body = {
-      'order_id': checkOutResponse.value?.orderId?.id,
+      'id': idToken.$1,
+      'token': idToken.$2,
       'status': status,
       'invoiceNumber': checkOutResponse.value?.orderId?.invoiceNumber,
-      'razorPayResponce': razorPayResponce,
+      'razorpay_payment_id': successResponse != null
+          ? successResponse.data!['razorpay_payment_id']
+          : failureResponse?.error!['metadata']['payment_id'],
     };
     try {
       final response = await authService.finalCheckOut(body: body);
@@ -322,7 +330,7 @@ class CheckoutScreenController extends GetxController {
     print('PaymentSuccessResponse---${response.paymentId}');
     // ignore: avoid_print
     print('PaymentSuccessResponse---${response.signature}');
-    finalCheckOut(razorPayResponce: response.data, status: 'success');
+    finalCheckOut(successResponse: response, status: 'success');
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
@@ -334,14 +342,14 @@ class CheckoutScreenController extends GetxController {
     // ignore: avoid_print
     print(' PaymentFailureResponse---${response.error}');
 
-    finalCheckOut(razorPayResponce: response.error, status: 'failure');
+    finalCheckOut(failureResponse: response, status: 'failure');
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
     // Do something when an external wallet was selected
     // ignore: avoid_print
     print(' ExternalWalletResponse---${response.walletName}');
-    finalCheckOut(razorPayResponce: response.walletName, status: 'failure');
+    // finalCheckOut(razorPayResponce: response.walletName, status: 'failure');
   }
 
   razorpayCheckOut(

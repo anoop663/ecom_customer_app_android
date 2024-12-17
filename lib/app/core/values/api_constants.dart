@@ -34,6 +34,7 @@ class ApiConstants {
   static const updateProfile = '/update-profile/';
   static const countries = '/countries/';
   static const checkout = '/checkout/en';
+  static const finalCheckout = '/payment_callback';
   static const filter = '/filters/en';
   static const track = '/tracking/';
   static const cancelOrder = '/cancel-order/';

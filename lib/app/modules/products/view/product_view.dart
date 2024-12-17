@@ -283,6 +283,7 @@ class ProductPage extends StatelessWidget {
           // Add to Cart Button on the right
           Expanded(
               child: CurvedButton(
+            isLoading: addToCartController.isLoading.value,
             onClick: () async {
               addToCartController.addtoCartFunction(productSlug);
             },

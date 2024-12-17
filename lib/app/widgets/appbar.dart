@@ -3,6 +3,7 @@ import 'package:ecommerce_app/app/core/values/strings.dart';
 import 'package:ecommerce_app/app/modules/cart/controller/cart_controller.dart';
 import 'package:ecommerce_app/app/routes/routes.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // ignore: must_be_immutable
@@ -38,15 +39,18 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
           leading: !showLogo
               ? Hero(
                   tag: 'logo',
-                  child: InkWell(
-                    onTap: () {
-                      if (!Navigator.canPop(context)) {
-                        Get.offAllNamed(Routes.bottombar);
-                      } else {
-                        Get.back();
-                      }
-                    },
-                    child: const Icon(Icons.arrow_back_ios_new_rounded),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () {
+                        if (!Navigator.canPop(context)) {
+                          Get.offAllNamed(Routes.bottombar);
+                        } else {
+                          Get.back();
+                        }
+                      },
+                      child: const Icon(Icons.arrow_back_ios_new_rounded),
+                    ),
                   ),
                 )
               : Hero(
@@ -75,11 +79,14 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                   if (showSearch)
                     Hero(
                       tag: 'search',
-                      child: InkWell(
-                        onTap: () => Get.toNamed(Routes.search),
-                        child: Image.asset(
-                          IconStrings.searchIcon,
-                          height: 25,
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () => Get.toNamed(Routes.search),
+                          child: Image.asset(
+                            IconStrings.searchIcon,
+                            height: 25,
+                          ),
                         ),
                       ),
                     ),
