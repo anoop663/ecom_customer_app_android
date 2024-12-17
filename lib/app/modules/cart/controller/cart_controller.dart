@@ -47,7 +47,7 @@ class CartController extends GetxController {
 
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
-        print('reds--$responseData');
+       // print('reds--$responseData');
         if (responseData['success'] == 1) {
           cartResponse.value = CartResponse.fromJson(responseData);
           cartItems.value = cartResponse.value!.products!;

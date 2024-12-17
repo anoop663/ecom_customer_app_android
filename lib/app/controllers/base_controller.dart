@@ -10,7 +10,6 @@ import 'package:get/get.dart';
 import '../core/values/colors.dart';
 import '../core/values/constants.dart';
 import '../data/api_provider.dart';
-import '../modules/cart/controller/cart_controller.dart';
 import '../modules/checkout/controller/chekout_controller.dart';
 import '../modules/home/models/home_product_model.dart';
 import '../routes/routes.dart';

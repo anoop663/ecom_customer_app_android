@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:ecommerce_app/app/data/api_provider.dart';
 import 'package:ecommerce_app/app/data/storage_provider.dart';
@@ -162,7 +161,7 @@ class CheckoutScreenController extends GetxController {
 
   // var onlinePaymentResponse;
   void checkOut() async {
-    print('payment mode --${paymentMode.value}');
+   // print('payment mode --${paymentMode.value}');
     var idToken = storageProvider.readLoginDetails();
     CheckoutModel authData5 = CheckoutModel(
       id: idToken.$1,
@@ -258,7 +257,7 @@ class CheckoutScreenController extends GetxController {
           ? successResponse.data!['razorpay_payment_id']
           : failureResponse?.error!['metadata']['payment_id'],
     );
-    print(finalCheckoutModel.toJson());
+   // print(finalCheckoutModel.toJson());
     try {
       final response =
           await authService.finalCheckOut(body: finalCheckoutModel.toJson());
@@ -390,6 +389,7 @@ class CheckoutScreenController extends GetxController {
     String? contact,
     String? email,
   }) async {
+    // ignore: non_constant_identifier_names
     final int Amount = ((amount ?? 0) * 100);
     http.Response response = await http.post(
         Uri.parse(
@@ -417,6 +417,7 @@ class CheckoutScreenController extends GetxController {
         orderId: data['id'],
       );
     }
+    // ignore: avoid_print
     print('responce is---${response.body}');
   }
 }

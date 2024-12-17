@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
-import 'order_details_view.dart';
 
 class MyOrdersView extends StatelessWidget {
   const MyOrdersView({super.key});

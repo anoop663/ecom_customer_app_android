@@ -3,6 +3,7 @@ class FinalCheckoutModel {
   String? token;
   String? status;
   String? invoiceNumber;
+  // ignore: non_constant_identifier_names
   String? razorpay_payment_id;
 
   FinalCheckoutModel({
@@ -10,6 +11,7 @@ class FinalCheckoutModel {
     this.token,
     this.invoiceNumber,
     this.status,
+    // ignore: non_constant_identifier_names
     this.razorpay_payment_id,
   });
 

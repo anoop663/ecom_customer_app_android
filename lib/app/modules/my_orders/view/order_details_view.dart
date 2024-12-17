@@ -7,7 +7,6 @@ import '../../../core/values/colors.dart';
 import '../../../core/values/strings.dart';
 import '../../../widgets/appbar.dart';
 import '../../../widgets/curve_button.dart';
-import '../controller/my_order_controller.dart';
 import '../model/myorders_response.dart';
 
 class OrderDetailsView extends GetView {
