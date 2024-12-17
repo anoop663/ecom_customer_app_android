@@ -26,6 +26,8 @@ import 'package:ecommerce_app/app/widgets/app_bottom_bar.dart';
 import 'package:ecommerce_app/app/widgets/no_connection.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
+import '../modules/my_orders/view/order_details_view.dart';
+
 class Routes {
   static const String home = '/home';
   static const String signin = '/signin';
@@ -52,6 +54,7 @@ class Routes {
   static const String profile = '/profile';
   static const String webview = '/web-view';
   static const String myorders = '/my-orders';
+  static const String ordersDetails = '/orders_details';
 
   static final List<GetPage> pages = [
     GetPage(name: home, page: () => HomePage()),
@@ -75,6 +78,7 @@ class Routes {
     GetPage(name: address, page: () => MyAddressListView()),
     GetPage(name: noconnection, page: () => NoConnection()),
     GetPage(name: search, page: () => SearchView()),
+    GetPage(name: ordersDetails, page: () => OrderDetailsView()),
     GetPage(
       name: orderconfirm,
       page: () => OrderConfirmScreenView(),

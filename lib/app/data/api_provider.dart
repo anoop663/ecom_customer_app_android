@@ -18,7 +18,6 @@ class AuthService {
     try {
       response = await http.post(Uri.parse(uri), body: body);
       debugPrint("$uri------$body----->${response.body}--------");
-
       if (response.statusCode == 200) {
         return response;
       } else {

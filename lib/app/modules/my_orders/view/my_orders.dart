@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
+import 'order_details_view.dart';
+
 class MyOrdersView extends StatelessWidget {
   const MyOrdersView({super.key});
   @override
@@ -93,11 +95,15 @@ class MyOrdersView extends StatelessWidget {
                                             ),
                                             CurvedButton(
                                               onClick: () async {
-                                                await Future.delayed(
-                                                    const Duration(
-                                                        milliseconds: 10));
+                                                // Navigator.push(
+                                                //   context,
+                                                //   MaterialPageRoute(builder: (context) => OrderDetailsView()),
+                                                // );
+                                                // await Future.delayed(
+                                                //     const Duration(
+                                                //         milliseconds: 10));
                                                 await Get.toNamed(
-                                                  Routes.home,
+                                                  Routes.ordersDetails,
                                                   arguments: {
                                                     'order': controller
                                                         .response
