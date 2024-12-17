@@ -378,52 +378,52 @@ class HomePage extends StatelessWidget {
                                                 ),
                                               ),
                                             ),
-                                            Positioned(
-                                              top: 10,
-                                              right: 10,
-                                              child: Obx(() {
-                                                final isFavorite =
-                                                    wishListController
-                                                                .favoriteStatus[
-                                                            bestproducts
-                                                                .slug] ??
-                                                        false;
-                                                return Positioned(
-                                                  top: 10.0,
-                                                  right: 10.0,
-                                                  child: GestureDetector(
-                                                    onTap: () {
-                                                      wishListController
-                                                          .toggleFavorite(
-                                                              bestproducts
-                                                                  .slug!);
-                                                    },
-                                                    child: Container(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              6.0),
-                                                      decoration: BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                        color: isFavorite
-                                                            ? Colors.transparent
-                                                            : Colors
-                                                                .transparent,
-                                                      ),
-                                                      child: Icon(
-                                                        isFavorite
-                                                            ? Icons
-                                                                .favorite // Filled heart
-                                                            : Icons
-                                                                .favorite_border, // Outline heart
-                                                        color: isFavorite
-                                                            ? Colors.red
-                                                            : Colors.black,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              }),
-                                            ),
+                                            // Positioned(
+                                            //   top: 10,
+                                            //   right: 10,
+                                            //   child: Obx(() {
+                                            //     final isFavorite =
+                                            //         wishListController
+                                            //                     .favoriteStatus[
+                                            //                 bestproducts
+                                            //                     .slug] ??
+                                            //             false;
+                                            //     return Positioned(
+                                            //       top: 10.0,
+                                            //       right: 10.0,
+                                            //       child: GestureDetector(
+                                            //         onTap: () {
+                                            //           wishListController
+                                            //               .toggleFavorite(
+                                            //                   bestproducts
+                                            //                       .slug!);
+                                            //         },
+                                            //         child: Container(
+                                            //           padding:
+                                            //               const EdgeInsets.all(
+                                            //                   6.0),
+                                            //           decoration: BoxDecoration(
+                                            //             shape: BoxShape.circle,
+                                            //             color: isFavorite
+                                            //                 ? Colors.transparent
+                                            //                 : Colors
+                                            //                     .transparent,
+                                            //           ),
+                                            //           child: Icon(
+                                            //             isFavorite
+                                            //                 ? Icons
+                                            //                     .favorite // Filled heart
+                                            //                 : Icons
+                                            //                     .favorite_border, // Outline heart
+                                            //             color: isFavorite
+                                            //                 ? Colors.red
+                                            //                 : Colors.black,
+                                            //           ),
+                                            //         ),
+                                            //       ),
+                                            //     );
+                                            //   }),
+                                            // ),
                                           ],
                                         ),
                                         Padding(

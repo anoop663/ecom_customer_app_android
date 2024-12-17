@@ -206,7 +206,7 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: Hero(
         tag: 'logo',
         child: Material(
-          color: Colors.transparent,
+          color: Colors.white,
           child: InkWell(
             onTap: () {
               //Get.toNamed(
