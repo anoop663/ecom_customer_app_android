@@ -19,6 +19,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../../controllers/base_controller.dart';
 import '../../../core/values/colors.dart';
 import '../../../widgets/loader.dart';
 
@@ -55,8 +56,8 @@ class CheckoutScreenView extends StatelessWidget {
                     ),
                   )
                 : Stack(
-                  children: [
-                    SizedBox(
+                    children: [
+                      SizedBox(
                         height: MediaQuery.of(context).size.height,
                         width: MediaQuery.of(context).size.width,
                         child: Column(
@@ -75,8 +76,8 @@ class CheckoutScreenView extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 20),
                                     Obx(() => ItemsExpandTile(
-                                          items: cartController
-                                                  .cartResponse.value?.products ??
+                                          items: cartController.cartResponse
+                                                  .value?.products ??
                                               [],
                                         )),
                                     const SizedBox(height: 20),
@@ -90,8 +91,8 @@ class CheckoutScreenView extends StatelessWidget {
                                               children: [
                                                 Text(
                                                   'Payment Methods',
-                                                  style: Get
-                                                      .theme.textTheme.bodyMedium!
+                                                  style: Get.theme.textTheme
+                                                      .bodyMedium!
                                                       .copyWith(
                                                     color: AppColors.textColor2,
                                                     fontSize: 18,
@@ -104,7 +105,8 @@ class CheckoutScreenView extends StatelessWidget {
                                             CurvedBox(
                                               child: Column(
                                                 children: [
-                                                  Obx(() => CheckboxExpansionTile(
+                                                  Obx(() =>
+                                                      CheckboxExpansionTile(
                                                         onChanged: (value) {
                                                           controller.paymentMode
                                                               .value = value;
@@ -122,8 +124,8 @@ class CheckoutScreenView extends StatelessWidget {
                                               children: [
                                                 Text(
                                                   'Order Information',
-                                                  style: Get
-                                                      .theme.textTheme.bodyMedium!
+                                                  style: Get.theme.textTheme
+                                                      .bodyMedium!
                                                       .copyWith(
                                                     color: AppColors.textColor2,
                                                     fontSize: 18,
@@ -142,8 +144,10 @@ class CheckoutScreenView extends StatelessWidget {
                                                             ?.toString() ??
                                                         '0',
                                                     wallet: '0',
-                                                    tax: controller.cartResponse1
-                                                            .value?.tax ??
+                                                    tax: controller
+                                                            .cartResponse1
+                                                            .value
+                                                            ?.tax ??
                                                         '0',
                                                     deliveryCharge: controller
                                                                 .cartResponse1
@@ -173,7 +177,8 @@ class CheckoutScreenView extends StatelessWidget {
                                     CustomPaint(
                                       painter: PointedDecorationPainter(),
                                       size: Size(
-                                          MediaQuery.of(context).size.width, 20),
+                                          MediaQuery.of(context).size.width,
+                                          20),
                                     ),
                                     const SizedBox(height: 30),
                                     const Row(
@@ -183,21 +188,25 @@ class CheckoutScreenView extends StatelessWidget {
                                         SupportIcon(
                                           icon: IconStrings.cartExtra1,
                                           title: '100% SECURE\nPAYMENTS',
-                                          backgroundColor: AppColors.transparent,
+                                          backgroundColor:
+                                              AppColors.transparent,
                                           fontColor: AppColors.cartExtraText,
                                           imageSize: 45,
                                         ),
                                         SupportIcon(
                                           icon: IconStrings.cartExtra2,
-                                          title: 'EASY RETURNS & QUICK\nREFUNDS',
-                                          backgroundColor: AppColors.transparent,
+                                          title:
+                                              'EASY RETURNS & QUICK\nREFUNDS',
+                                          backgroundColor:
+                                              AppColors.transparent,
                                           fontColor: AppColors.cartExtraText,
                                           imageSize: 45,
                                         ),
                                         SupportIcon(
                                           icon: IconStrings.cartExtra3,
                                           title: 'QUALITY\nASSURANCE',
-                                          backgroundColor: AppColors.transparent,
+                                          backgroundColor:
+                                              AppColors.transparent,
                                           fontColor: AppColors.cartExtraText,
                                           imageSize: 45,
                                         ),
@@ -208,26 +217,27 @@ class CheckoutScreenView extends StatelessWidget {
                               ),
                             ),
                             Obx(() => CurvedButton(
-                              isLoading: controller.loading.isTrue,
-                              onClick: () {
-                                controller.checkOut();
-                              },
-                              height: 45,
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              text: 'CONFIRM ORDER',
-                              textColor: AppColors.textColor1,
-                              borderColor: AppColors.bottomSelectedColor,
-                              buttonColor: AppColors.bottomSelectedColor,
-                              borderRadius: 4.0,
-                              fontSize: 16,
-                              fontweight: FontWeight.w500,
-                            )),
+                                  isLoading: controller.loading.isTrue,
+                                  onClick: () {
+                                    controller.checkOut();
+                                  },
+                                  height: 45,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.9,
+                                  text: 'CONFIRM ORDER',
+                                  textColor: AppColors.textColor1,
+                                  borderColor: AppColors.bottomSelectedColor,
+                                  buttonColor: AppColors.bottomSelectedColor,
+                                  borderRadius: 4.0,
+                                  fontSize: 16,
+                                  fontweight: FontWeight.w500,
+                                )),
                           ],
                         ),
                       ),
-                   controller.isLoading.value? Loading():SizedBox()
-                  ],
-                ),
+                      controller.isLoading.value ? Loading() : SizedBox()
+                    ],
+                  ),
       ),
     );
   }
@@ -343,7 +353,15 @@ class _AddressExpandTileState extends State<AddressExpandTile> {
               ),
               InkWell(
                 onTap: () {
-                  // Optional functionality for changing address
+
+                  if (!Get.isRegistered<BaseController>()) {
+                    Get.put(BaseController());
+                    Get.put(BaseController())
+                        .openAddressListBottomSheet(context: context);
+                  } else {
+                    Get.put(BaseController())
+                        .openAddressListBottomSheet(context: context);
+                  }
                 },
                 child: Text(
                   'CHANGE ADDRESS',

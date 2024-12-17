@@ -175,6 +175,7 @@ class CheckoutScreenController extends GetxController {
     // ignore: avoid_print
     print('checkOutResponse.value===${authData5.toJson()}');
     if (paymentMode.value == -1) {
+      appToast('', 'Select a payment mode to continue');
     } else {
       if (paymentMode.value == 2) {
         loading.value = true;
@@ -257,6 +258,7 @@ class CheckoutScreenController extends GetxController {
           ? successResponse.data!['razorpay_payment_id']
           : failureResponse?.error!['metadata']['payment_id'],
     );
+    print(finalCheckoutModel.toJson());
     try {
       final response =
           await authService.finalCheckOut(body: finalCheckoutModel.toJson());
