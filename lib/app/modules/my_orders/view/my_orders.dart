@@ -28,151 +28,152 @@ class MyOrdersView extends StatelessWidget {
                 ? const LoadingWidget()
                 : controller.response.value == null
                     ? const EmptyOrders()
-                    : controller.response.value!.result!.data!.isEmpty
+                    : (controller.response.value?.result?.data?.length ?? 0) < 0
                         ? const EmptyOrders()
-                        : ListView.builder(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 10,
-                            ),
-                            itemCount:
-                                controller.response.value!.result!.data!.length,
+                        : ListView.separated(
+                            padding: EdgeInsets.symmetric(vertical: 16),
+                            separatorBuilder: (context, index) => SizedBox(
+                                  height: 10,
+                                ),
+                            itemCount: controller
+                                    .response.value?.result?.data?.length ??
+                                0,
                             itemBuilder: (context, index) {
-                              return Container(
-                                height: 230,
-                                color: AppColors.primary,
-                                margin: const EdgeInsets.only(bottom: 10.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Column(
+                                        Row(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            RichText(
-                                              text: TextSpan(
-                                                children: [
-                                                  TextSpan(
-                                                    text: 'Order ID : ',
-                                                    style: Get.theme.textTheme
-                                                        .bodyMedium!
-                                                        .copyWith(
-                                                      color: AppColors.orderNo,
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w400,
+                                            Expanded(
+                                              child: RichText(
+                                                text: TextSpan(
+                                                  children: [
+                                                    TextSpan(
+                                                      text:
+                                                          'Order ${index + 1} # ',
+                                                      style: Get.theme.textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                        color:
+                                                            AppColors.orderNo,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                      ),
                                                     ),
-                                                  ),
-                                                  TextSpan(
-                                                    text: controller
-                                                        .response
-                                                        .value!
-                                                        .result!
-                                                        .data![index]
-                                                        .invoiceNumber!,
-                                                    style: Get.theme.textTheme
-                                                        .bodyMedium!
-                                                        .copyWith(
-                                                      color:
-                                                          AppColors.textColor2,
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 5,
-                                            ),
-                                            Text(
-                                              controller.response.value!.result!
-                                                  .data![index].orderStatus!,
-                                              style: Get
-                                                  .theme.textTheme.bodyMedium!
-                                                  .copyWith(
-                                                color: AppColors.orderStatus,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        CurvedButton(
-                                          onClick: () async {
-                                            await Future.delayed(const Duration(
-                                                milliseconds: 10));
-                                            await Get.toNamed(
-                                              Routes.home,
-                                              arguments: {
-                                                'order': controller
-                                                    .response
-                                                    .value!
-                                                    .result!
-                                                    .data![index],
-                                              },
-                                            );
-                                          },
-                                          text: 'Order Details',
-                                          textColor: AppColors.textColor2,
-                                          borderColor: AppColors.orderNo,
-                                          height: 40,
-                                          width: 150,
-                                          borderRadius: 4,
-                                        )
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    Container(
-                                      height: 150,
-                                      width: MediaQuery.of(context).size.width,
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 20),
-                                      child: ListView.builder(
-                                          padding: EdgeInsets.zero,
-                                          scrollDirection: Axis.horizontal,
-                                          itemCount: controller
-                                              .response
-                                              .value!
-                                              .result!
-                                              .data![index]
-                                              .itemsNew!
-                                              .length,
-                                          itemBuilder: (context, index1) {
-                                            return Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: SizedBox(
-                                                width: 100,
-                                                child: Image.network(
-                                                  ApiConfig.productImageUrl +
-                                                      controller
+                                                    TextSpan(
+                                                      text: controller
                                                           .response
                                                           .value!
                                                           .result!
                                                           .data![index]
-                                                          .itemsNew![index1]
-                                                          .image!,
-                                                  errorBuilder: (context, error,
-                                                      stackTrace) {
-                                                    return Image.asset(
-                                                      ImageStrings.noImage,
-                                                      fit: BoxFit.cover,
-                                                    );
-                                                  },
+                                                          .invoiceNumber!,
+                                                      style: Get.theme.textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                        color: AppColors
+                                                            .textColor2,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                            );
-                                          }),
-                                    )
-                                  ],
-                                ),
+                                            ),
+                                            CurvedButton(
+                                              onClick: () async {
+                                                await Future.delayed(
+                                                    const Duration(
+                                                        milliseconds: 10));
+                                                await Get.toNamed(
+                                                  Routes.home,
+                                                  arguments: {
+                                                    'order': controller
+                                                        .response
+                                                        .value!
+                                                        .result!
+                                                        .data![index],
+                                                  },
+                                                );
+                                              },
+                                              text: 'Order Details',
+                                              textColor: AppColors.textColor2,
+                                              borderColor: AppColors.orderNo,
+                                              height: 34,
+                                              width: 110,
+                                              borderRadius: 4,
+                                            )
+                                          ],
+                                        ),
+                                        Text(
+                                          controller.response.value!.result!
+                                              .data![index].orderStatus!,
+                                          style: Get.theme.textTheme.bodyMedium!
+                                              .copyWith(
+                                            color: AppColors.orderStatus,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 150,
+                                    child: ListView.separated(
+                                        separatorBuilder: (context, index) =>
+                                            SizedBox(
+                                              width: 20,
+                                            ),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 16, vertical: 10),
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: controller
+                                            .response
+                                            .value!
+                                            .result!
+                                            .data![index]
+                                            .itemsNew!
+                                            .length,
+                                        itemBuilder: (context, index1) {
+                                          return ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: Image.network(
+                                              // height: 95,
+                                              width: 80,
+                                              ApiConfig.productImageUrl +
+                                                  controller
+                                                      .response
+                                                      .value!
+                                                      .result!
+                                                      .data![index]
+                                                      .itemsNew![index1]
+                                                      .image!,
+                                              fit: BoxFit.cover,
+                                              errorBuilder:
+                                                  (context, error, stackTrace) {
+                                                return Image.asset(
+                                                  ImageStrings.noImage,
+                                                  fit: BoxFit.cover,
+                                                );
+                                              },
+                                            ),
+                                          );
+                                        }),
+                                  )
+                                ],
                               );
                             }),
           ),

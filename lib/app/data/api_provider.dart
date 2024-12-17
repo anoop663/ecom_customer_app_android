@@ -1,10 +1,40 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:ecommerce_app/app/core/values/api_configs.dart';
 import 'package:ecommerce_app/app/core/values/api_constants.dart';
+import 'package:ecommerce_app/app/core/values/constants.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
+  Future<http.Response?> postRequest(
+      {required String url, required dynamic body}) async {
+    String uri = '${ApiConfig.apiUrl}$url';
+    late http.Response response;
+    try {
+      response = await http.post(Uri.parse(uri), body: body);
+      debugPrint("$uri------$body----->${response.body}--------");
+
+      if (response.statusCode == 200) {
+        return response;
+      } else {
+        Get.snackbar(
+          'Error',
+          'Server error: ${response.statusCode}',
+          colorText: Colors.white,
+          backgroundColor: Colors.black,
+        );
+      }
+    } on SocketException {
+      appToast('', 'No Internet connection');
+    }
+    return null;
+  }
+
   Future<http.Response> registerUser(Map<String, dynamic> userData) async {
     final response = await http.post(
       Uri.parse('${ApiConfig.apiUrl}${ApiConstants.signup}'),
@@ -221,7 +251,9 @@ class AuthService {
     return response2;
   }
 
-  Future<http.Response> finalCheckOut({Map<String, dynamic>? body,}) async {
+  Future<http.Response> finalCheckOut({
+    Map<String, dynamic>? body,
+  }) async {
     final url1 = '${ApiConfig.apiUrl}${ApiConstants.finalCheckout}';
     final response2 = await http.post(
       Uri.parse(url1),
@@ -229,8 +261,6 @@ class AuthService {
     );
     return response2;
   }
-
-
 
   Future<http.Response> getAccountDetails(Map<String, dynamic> authData) async {
     final url1 = '${ApiConfig.apiUrl}${ApiConstants.accountDetails}';

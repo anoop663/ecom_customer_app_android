@@ -27,7 +27,7 @@ class ApiConstants {
   static const areas = '/areas/';
   static const categories = '/categories/';
   static const products = '/products/en';
-  static const orders = '/my-orders/';
+  static const orders = '/my-orders/en';
   static const orderDetails = '/order-details/';
   static const profile = '/my-profile/en';
   static const deleteAccount = '/delete-account/';
