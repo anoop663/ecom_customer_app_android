@@ -28,7 +28,6 @@ class CartController extends GetxController {
     viewCart();
   }
 
-
   /// View cart details
   Future viewCart() async {
     final (String?, String?) idToken = storageProvider.readLoginDetails();
@@ -48,7 +47,7 @@ class CartController extends GetxController {
 
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
-
+        print('reds--$responseData');
         if (responseData['success'] == 1) {
           cartResponse.value = CartResponse.fromJson(responseData);
           cartItems.value = cartResponse.value!.products!;
@@ -57,9 +56,10 @@ class CartController extends GetxController {
             itemLoadingStates[product.slug!] = false.obs;
           }
         } else {
-          Get.snackbar(
-              'Error', responseData['message'] ?? 'Items viewing failed',
-              colorText: Colors.white, backgroundColor: Colors.black);
+          cartResponse.value = null;
+          // Get.snackbar(
+          //     'Error', responseData['message'] ?? 'Items viewing failed',
+          //     colorText: Colors.white, backgroundColor: Colors.black);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',

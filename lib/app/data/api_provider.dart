@@ -112,6 +112,7 @@ class AuthService {
   }
 
   Future<http.Response> viewtheCart(Map<String, dynamic> cartView) async {
+    print('cart--$cartView');
     final response = await http.post(
       Uri.parse('${ApiConfig.apiUrl}${ApiConstants.cart}'),
       body: cartView,

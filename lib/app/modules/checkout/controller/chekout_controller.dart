@@ -16,6 +16,8 @@ import 'package:get/get.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../../../core/values/constants.dart';
+import '../../cart/controller/cart_controller.dart';
+import '../model/payment_callback_model.dart';
 
 class CheckoutScreenController extends GetxController {
   final addressTileOpen = false.obs;
@@ -173,7 +175,6 @@ class CheckoutScreenController extends GetxController {
     // ignore: avoid_print
     print('checkOutResponse.value===${authData5.toJson()}');
     if (paymentMode.value == -1) {
-      appToast('', 'Select a payment mode to continue');
     } else {
       if (paymentMode.value == 2) {
         loading.value = true;
@@ -200,10 +201,12 @@ class CheckoutScreenController extends GetxController {
             Get.snackbar(
                 'Error', responseData1['message'] ?? 'Failed to list address',
                 colorText: Colors.white, backgroundColor: Colors.black);
+            loading.value = false;
           }
         } else {
           Get.snackbar('Error', 'Server error: ${response.statusCode}',
               colorText: Colors.white, backgroundColor: Colors.black);
+          loading.value = false;
         }
       } else {
         loading.value = true;
@@ -217,7 +220,9 @@ class CheckoutScreenController extends GetxController {
               Get.offNamed(Routes.orderconfirm, arguments: {
                 'order': checkOutResponse.value!.orderId,
               });
-              clearCart();
+              // clearCart();
+              Get.find<CartController>().viewCart();
+              // Get.find<CartController>().update();
             } else {
               Get.snackbar(
                   'Error', responseData1['message'] ?? 'Failed to list address',
@@ -243,25 +248,27 @@ class CheckoutScreenController extends GetxController {
       ExternalWalletResponse? walletResponse,
       PaymentSuccessResponse? successResponse}) async {
     var idToken = storageProvider.readLoginDetails();
-    isLoading.value = true;
-    Map<String, dynamic> body = {
-      'id': idToken.$1,
-      'token': idToken.$2,
-      'status': status,
-      'invoiceNumber': checkOutResponse.value?.orderId?.invoiceNumber,
-      'razorpay_payment_id': successResponse != null
+     isLoading.value = true;
+    FinalCheckoutModel finalCheckoutModel = FinalCheckoutModel(
+      id: idToken.$1,
+      token: idToken.$2,
+      status: status,
+      invoiceNumber: checkOutResponse.value?.orderId?.invoiceNumber,
+      razorpay_payment_id: successResponse != null
           ? successResponse.data!['razorpay_payment_id']
           : failureResponse?.error!['metadata']['payment_id'],
-    };
+    );
     try {
-      final response = await authService.finalCheckOut(body: body);
+      final response =
+          await authService.finalCheckOut(body: finalCheckoutModel.toJson());
       if (response.statusCode == 200) {
         final responseData1 = json.decode(response.body);
         if (responseData1['success'] == 1) {
           if (status == 'success') {
             Get.offNamed(Routes.orderconfirm, arguments: {
-              'order': checkOutResponse.value?.orderId?.id,
+              'order': checkOutResponse.value?.orderId,
             });
+            Get.find<CartController>().viewCart();
           } else {
             Get.back();
           }
@@ -271,16 +278,19 @@ class CheckoutScreenController extends GetxController {
           Get.snackbar(
               'Error', responseData1['message'] ?? 'Failed to list address',
               colorText: Colors.white, backgroundColor: Colors.black);
+          print(responseData1['message'] ?? 'Failed to list address');
         }
       } else {
         isLoading.value = false;
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
             colorText: Colors.white, backgroundColor: Colors.black);
+        print('Server error: ${response.statusCode}');
       }
     } catch (e) {
       isLoading.value = false;
       Get.snackbar('Error', 'Failed to load address: $e',
           colorText: Colors.white, backgroundColor: Colors.black);
+      print('Failed to load address: $e');
     }
   }
 
