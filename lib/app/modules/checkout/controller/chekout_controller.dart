@@ -222,7 +222,6 @@ class CheckoutScreenController extends GetxController {
               });
               // clearCart();
               Get.find<CartController>().viewCart();
-              // Get.find<CartController>().update();
             } else {
               Get.snackbar(
                   'Error', responseData1['message'] ?? 'Failed to list address',
@@ -278,19 +277,16 @@ class CheckoutScreenController extends GetxController {
           Get.snackbar(
               'Error', responseData1['message'] ?? 'Failed to list address',
               colorText: Colors.white, backgroundColor: Colors.black);
-          print(responseData1['message'] ?? 'Failed to list address');
         }
       } else {
         isLoading.value = false;
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
             colorText: Colors.white, backgroundColor: Colors.black);
-        print('Server error: ${response.statusCode}');
       }
     } catch (e) {
       isLoading.value = false;
       Get.snackbar('Error', 'Failed to load address: $e',
           colorText: Colors.white, backgroundColor: Colors.black);
-      print('Failed to load address: $e');
     }
   }
 
