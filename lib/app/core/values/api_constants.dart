@@ -37,7 +37,6 @@ class ApiConstants {
   static const finalCheckout = '/payment_callback';
   static const filter = '/filters/en';
   static const track = '/tracking/en';
-  static const cancelOrder = '/cancel-order/';
   static const faq = '/page_contents/faq';
   static const privacyPolicy = '/page_contents/pp_app';
   static const returnRefundPolicy = '/page_contents/rrp_app';
@@ -45,4 +44,6 @@ class ApiConstants {
   static const termsAndConditions = '/page_contents/tnc_app';
   static const aboutUs = '/page_contents/ourstory';
   static const logout = '/logout/en';
+  static const cancelOrder = '/cancel-order/en';
+  static const returnItem = '/return-item/en';
 }

@@ -4,6 +4,7 @@ import '../../../core/values/api_configs.dart';
 import '../../../core/values/colors.dart';
 import '../../../core/values/constants.dart';
 import '../../../core/values/strings.dart';
+import '../../../routes/routes.dart';
 import '../../../widgets/appbar.dart';
 import '../../../widgets/curve_button.dart';
 import '../../../widgets/loading_widget.dart';
@@ -568,22 +569,22 @@ class SingleOrderDetailsView extends GetView<SingleOrderDetailsController> {
                                             await Future.delayed(const Duration(
                                                 milliseconds: 10));
 
-                                            // await Get.toNamed(
-                                            //   // controller.item.value!.possibleAction==1?
-                                            //   // possible action  = 0 -> no action possible
-                                            //   // possible action  = 1 -> cancel action possible
-                                            //   // possible action  = 2 -> return action possible
-                                            //   Routes.CANCEL_ORDER,
-                                            //   arguments: {
-                                            //     'order': controller.order.value,
-                                            //     'item': controller.item.value,
-                                            //     'isReturn': controller
-                                            //             .item
-                                            //             .value!
-                                            //             .possibleAction ==
-                                            //         2,
-                                            //   },
-                                            // );
+                                            await Get.toNamed(
+                                              // controller.item.value!.possibleAction==1?
+                                              // possible action  = 0 -> no action possible
+                                              // possible action  = 1 -> cancel action possible
+                                              // possible action  = 2 -> return action possible
+                                              Routes.cancelOrderView,
+                                              arguments: {
+                                                'order': controller.order.value,
+                                                'item': controller.item.value,
+                                                'isReturn': controller
+                                                        .item
+                                                        .value!
+                                                        .possibleAction ==
+                                                    2,
+                                              },
+                                            );
                                           },
                                           height: 50,
                                           width: MediaQuery.of(context)

@@ -11,6 +11,8 @@ import 'package:ecommerce_app/app/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../cart/controller/cart_controller.dart';
+
 class AccountView extends StatelessWidget {
   AccountView({super.key});
 
@@ -50,7 +52,11 @@ class AccountView extends StatelessWidget {
                       ),
                       const Divider(color: AppColors.brandSeperator),
                       AccountListItem(
-                        onTap: () => Get.toNamed(Routes.myorders),
+                        onTap: (){
+                          if (!Get.isRegistered<CartController>()) {
+                            Get.put(CartController());
+                          }
+                          Get.toNamed(Routes.myorders);},
                         text: 'My Orders',
                         subTitle: 'View, modify and track orders',
                         icon: IconStrings.orderIcon,

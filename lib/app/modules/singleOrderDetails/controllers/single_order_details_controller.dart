@@ -74,13 +74,7 @@ class SingleOrderDetailsController extends GetxController
   }
 
   Future getTracking() async {
-    final idToken = storageProvider.readLoginDetails();
     loading.value = true;
-    var body = {
-      "id": idToken.$1 ?? '',
-      "token": idToken.$2 ?? '',
-      "item_id": item.value!.id!.toString(),
-    };
     try {
       trackResponse.value =
           await myOrderRepo.getTracking(itemId: item.value!.id!.toString());

@@ -26,6 +26,10 @@ import 'package:ecommerce_app/app/widgets/app_bottom_bar.dart';
 import 'package:ecommerce_app/app/widgets/no_connection.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
+import '../modules/cancelOrder/bindings/cancel_order_binding.dart';
+import '../modules/cancelOrder/views/cancel_order_view.dart';
+import '../modules/confirmCancel/bindings/confirm_cancel_binding.dart';
+import '../modules/confirmCancel/views/confirm_cancel_view.dart';
 import '../modules/my_orders/view/order_details_view.dart';
 import '../modules/singleOrderDetails/bindings/single_order_details_binding.dart';
 import '../modules/singleOrderDetails/views/single_order_details_view.dart';
@@ -58,6 +62,8 @@ class Routes {
   static const String myorders = '/my-orders';
   static const String ordersDetails = '/orders_details';
   static const String singelOrderDetails = '/single-order-details';
+  static const String cancelOrderView = '/CancelOrderView';
+  static const String confirmCancel = '/ConfirmCancelView';
 
   static final List<GetPage> pages = [
     GetPage(name: home, page: () => HomePage()),
@@ -86,6 +92,16 @@ class Routes {
       name: singelOrderDetails,
       page: () => const SingleOrderDetailsView(),
       binding: SingleOrderDetailsBinding(),
+    ),
+    GetPage(
+      name: confirmCancel,
+      page: () => const ConfirmCancelView(),
+      binding: ConfirmCancelBinding(),
+    ),
+    GetPage(
+      name: cancelOrderView,
+      page: () => const CancelOrderView(),
+      binding: CancelOrderBinding(),
     ),
     GetPage(
       name: orderconfirm,
