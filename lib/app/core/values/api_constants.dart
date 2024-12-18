@@ -28,7 +28,7 @@ class ApiConstants {
   static const categories = '/categories/';
   static const products = '/products/en';
   static const orders = '/my-orders/en';
-  static const orderDetails = '/order-details/';
+  static const orderDetails = '/order-details/en';
   static const profile = '/my-profile/en';
   static const deleteAccount = '/delete-account/';
   static const updateProfile = '/update-profile/';
@@ -36,7 +36,7 @@ class ApiConstants {
   static const checkout = '/checkout/en';
   static const finalCheckout = '/payment_callback';
   static const filter = '/filters/en';
-  static const track = '/tracking/';
+  static const track = '/tracking/en';
   static const cancelOrder = '/cancel-order/';
   static const faq = '/page_contents/faq';
   static const privacyPolicy = '/page_contents/pp_app';

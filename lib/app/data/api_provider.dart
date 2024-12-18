@@ -10,11 +10,11 @@ import 'package:http/http.dart' as http;
 
 class AuthService {
   Future<http.Response?> postRequest(
-      {required String url, required dynamic body}) async {
+      {required String url, dynamic body}) async {
     String uri = '${ApiConfig.apiUrl}$url';
     late http.Response response;
     try {
-      response = await http.post(Uri.parse(uri), body: body);
+      response = await http.post(Uri.parse(uri), body: body ?? {});
       debugPrint("$uri------$body----->${response.body}--------");
       if (response.statusCode == 200) {
         return response;
@@ -139,7 +139,7 @@ class AuthService {
   }
 
   Future<http.Response> viewtheCart(Map<String, dynamic> cartView) async {
-   // print('cart--$cartView');
+    // print('cart--$cartView');
     final response = await http.post(
       Uri.parse('${ApiConfig.apiUrl}${ApiConstants.cart}'),
       body: cartView,

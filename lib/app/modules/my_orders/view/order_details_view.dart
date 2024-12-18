@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../core/values/api_configs.dart';
 import '../../../core/values/colors.dart';
 import '../../../core/values/strings.dart';
+import '../../../routes/routes.dart';
 import '../../../widgets/appbar.dart';
 import '../../../widgets/curve_button.dart';
 import '../model/myorders_response.dart';
@@ -59,16 +60,16 @@ class OrderDetailsView extends GetView {
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: CurvedButton(
                         onClick: () async {
-                          // await Future.delayed(
-                          //     const Duration(milliseconds: 10));
-                          // Get.toNamed(
-                          //   Routes.SINGLE_ORDER_DETAILS,
-                          //   arguments: {
-                          //     'order': controller.order.value,
-                          //     'item':
-                          //     controller.order.value!.itemsNew![index],
-                          //   },
-                          // );
+                          await Future.delayed(
+                              const Duration(milliseconds: 10));
+                          Get.toNamed(
+                            Routes.singelOrderDetails,
+                            arguments: {
+                              'order': order,
+                              'item':
+                              order?.itemsNew![index],
+                            },
+                          );
                         },
                         height: MediaQuery.of(context).size.height * 0.185,
                         width: MediaQuery.of(context).size.width,
