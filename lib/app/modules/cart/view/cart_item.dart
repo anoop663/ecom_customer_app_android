@@ -36,7 +36,8 @@ class CartItem extends StatelessWidget {
                     Container(
                       width: MediaQuery.of(context).size.width * 0.3,
                       height: MediaQuery.of(context).size.height * 0.16 +
-                          (20 * product.product!.thisOptions!.length.toDouble()),
+                          (20 *
+                              product.product!.thisOptions!.length.toDouble()),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
@@ -122,6 +123,8 @@ class CartItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Obx(() => CurvedButton(
+                        isLoading: controller.isRemovingItemSlug.value ==
+                            product.slug.toString(),
                         onClick: () async {
                           if (!controller.isRemoving.value) {
                             await controller.removefromCartFunction(
@@ -130,20 +133,17 @@ class CartItem extends StatelessWidget {
                         },
                         width: MediaQuery.of(context).size.width * 0.29,
                         height: MediaQuery.of(context).size.height * 0.05,
-                        text: controller.isRemoving.value
-                            ? "Removing..."
-                            : "Remove",
+                        text: "Remove",
                         borderColor: AppColors.cartButtonBorder,
                         borderRadius: 4,
                         textColor: AppColors.removeButton,
                         fontSize: 16,
                         fontweight: FontWeight.w500,
-                        child: controller.isRemoving.value
-                            ? const LoadingWidget()
-                            : null,
                       )),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.015),
                   Obx(() => CurvedButton(
+                        isLoading: controller.isMovingToWishlistSlug.value ==
+                            product.slug.toString(),
                         onClick: () async {
                           if (!controller.isMovingToWishlist.value) {
                             await controller.movetoWishListFunction(
@@ -152,17 +152,12 @@ class CartItem extends StatelessWidget {
                         },
                         width: MediaQuery.of(context).size.width * 0.4,
                         height: MediaQuery.of(context).size.height * 0.05,
-                        text: controller.isMovingToWishlist.value
-                            ? "Moving..."
-                            : "Move to Wishlist",
+                        text: "Move to Wishlist",
                         borderColor: AppColors.cartButtonBorder,
                         borderRadius: 4,
                         textColor: AppColors.removeButton,
                         fontSize: 16,
                         fontweight: FontWeight.w500,
-                        child: controller.isMovingToWishlist.value
-                            ? const LoadingWidget()
-                            : null,
                       )),
                 ],
               ),

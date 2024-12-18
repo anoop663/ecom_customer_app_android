@@ -119,7 +119,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                                   radius: 8,
                                   backgroundColor: AppColors.accessoriesColor5,
                                   child: Text(
-                                    '${controller.cartResponse.value?.cartcount ?? 0}',
+                                    '${controller.cartResponse.value?.products?.length ?? 0}',
                                     style: TextStyle(
                                       fontSize: 11,
                                       color: AppColors.textColor1,

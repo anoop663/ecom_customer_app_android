@@ -17,7 +17,9 @@ class CartController extends GetxController {
   final scrollController = ScrollController();
   var cartItems = <Product>[].obs;
   var isRemoving = false.obs;
+  var isRemovingItemSlug = ''.obs;
   var isMovingToWishlist = false.obs;
+  var isMovingToWishlistSlug = ''.obs;
 
   /// Track loading states for each individual cart item
   final itemLoadingStates = <String, RxBool>{}.obs;
@@ -77,7 +79,7 @@ class CartController extends GetxController {
     final (String?, String?) idToken = storageProvider.readLoginDetails();
     final loadingState = itemLoadingStates[productSlug];
     isMovingToWishlist.value = true;
-
+    isMovingToWishlistSlug.value=productSlug;
     if (loadingState == null) return;
 
     loadingState.value = true;
@@ -93,7 +95,7 @@ class CartController extends GetxController {
     try {
       final response = await authService.moveToWishlist(homeAuth3.toJson());
       loadingState.value = false;
-
+      isMovingToWishlistSlug.value='';
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
 
@@ -123,7 +125,7 @@ class CartController extends GetxController {
     final (String?, String?) idToken = storageProvider.readLoginDetails();
     final loadingState = itemLoadingStates[productSlug];
     isRemoving.value = true;
-
+    isRemovingItemSlug.value=productSlug;
     if (loadingState == null) return;
 
     loadingState.value = true;
@@ -140,7 +142,7 @@ class CartController extends GetxController {
       final response = await authService.addToCart(homeAuth4.toJson());
       loadingState.value = false;
       isRemoving.value = true;
-
+      isRemovingItemSlug.value='';
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
 

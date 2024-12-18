@@ -130,17 +130,17 @@ class ProductPage extends StatelessWidget {
                       ),
                       Align(
                         alignment: Alignment.topRight,
-                        child: CircleAvatar(
+                        child: Obx(() => CircleAvatar(
                           radius: 8,
                           backgroundColor: AppColors.accessoriesColor5,
                           child: Text(
-                            '${cartcontroller.cartResponse.value?.cartcount ?? 0}',
+                            '${cartcontroller.cartResponse.value?.products?.length ?? 0}',
                             style: TextStyle(
                               fontSize: 11,
                               color: AppColors.textColor1,
                             ),
                           ),
-                        ),
+                        )),
                       ),
                     ],
                   ),
