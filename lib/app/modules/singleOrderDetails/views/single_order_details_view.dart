@@ -12,6 +12,7 @@ import '../../../widgets/price_summery.dart';
 import '../controllers/single_order_details_controller.dart';
 
 class SingleOrderDetailsView extends GetView<SingleOrderDetailsController> {
+  // ignore: use_super_parameters
   const SingleOrderDetailsView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 
 import '../../../core/values/colors.dart';
-import '../../../core/values/strings.dart';
 import '../../../routes/routes.dart';
 import '../../../widgets/appbar.dart';
 import '../../../widgets/curve_button.dart';
@@ -12,7 +11,7 @@ import '../../../widgets/loading_widget.dart';
 import '../controllers/confirm_cancel_controller.dart';
 
 class ConfirmCancelView extends GetView<ConfirmCancelController> {
-  const ConfirmCancelView({Key? key}) : super(key: key);
+  const ConfirmCancelView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -144,6 +144,7 @@ class AuthService {
       Uri.parse('${ApiConfig.apiUrl}${ApiConstants.cart}'),
       body: cartView,
     );
+    // ignore: avoid_print
     print('body is----$cartView----${jsonDecode(response.body)}-');
     return response;
   }

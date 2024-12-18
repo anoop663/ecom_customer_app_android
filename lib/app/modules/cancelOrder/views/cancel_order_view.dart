@@ -13,7 +13,7 @@ import '../../../widgets/curved_box.dart';
 import '../controllers/cancel_order_controller.dart';
 
 class CancelOrderView extends GetView<CancelOrderController> {
-  const CancelOrderView({Key? key}) : super(key: key);
+  const CancelOrderView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

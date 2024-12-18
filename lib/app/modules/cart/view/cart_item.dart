@@ -3,7 +3,6 @@ import 'package:ecommerce_app/app/core/values/colors.dart';
 import 'package:ecommerce_app/app/modules/cart/controller/cart_controller.dart';
 import 'package:ecommerce_app/app/modules/home/models/home_product_model.dart';
 import 'package:ecommerce_app/app/widgets/curve_button.dart';
-import 'package:ecommerce_app/app/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

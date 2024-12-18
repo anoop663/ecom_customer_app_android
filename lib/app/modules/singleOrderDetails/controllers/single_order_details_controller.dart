@@ -1,20 +1,15 @@
-import 'dart:convert';
 
-import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 
-import 'package:fpdart/fpdart.dart';
 import 'package:get/get.dart';
 
 import '../../../data/storage_provider.dart';
-import '../../home/models/home_product_model.dart';
 import '../../my_orders/model/myorders_response.dart' as orderlist;
 
 import '../../../data/api_provider.dart';
-import '../../my_orders/model/myorders_response.dart';
 import '../../my_orders/my_order_repo/my_order_repo.dart';
-import '../models/order-details-response.dart';
-import '../models/track-response.dart';
+import '../models/order_details_response.dart';
+import '../models/track_response.dart';
 
 class SingleOrderDetailsController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -54,10 +49,12 @@ class SingleOrderDetailsController extends GetxController
       response.value = await myOrderRepo.getOrderDetails(
           invoiceNumber: order.value!.invoiceNumber!);
       order.value = response.value?.order!;
+      // ignore: avoid_print
       print('possible action${item.value!.possibleAction!}');
       for (var element in response.value!.order!.items!) {
         if (element.id == item.value!.id) {
           item.value = element;
+          // ignore: avoid_print
           print('possible action${item.value!.possibleAction!}');
         }
       }

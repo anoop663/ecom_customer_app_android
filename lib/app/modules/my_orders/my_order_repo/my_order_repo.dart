@@ -6,8 +6,8 @@ import '../../../core/extensions/api_base_helper.dart';
 import '../../../core/values/api_constants.dart';
 import '../../../data/api_provider.dart';
 import '../../../data/storage_provider.dart';
-import '../../singleOrderDetails/models/order-details-response.dart';
-import '../../singleOrderDetails/models/track-response.dart';
+import '../../singleOrderDetails/models/order_details_response.dart';
+import '../../singleOrderDetails/models/track_response.dart';
 import '../model/myorders_response.dart' as myorder;
 
 class MyOrderRepo {
