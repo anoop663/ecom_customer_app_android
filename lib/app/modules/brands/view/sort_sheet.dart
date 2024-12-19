@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../../widgets/curve_button.dart';
+
 class SortSheet extends StatefulWidget {
   const SortSheet({
     super.key,
@@ -55,7 +57,7 @@ class _SortSheetState extends State<SortSheet> {
         ),
         Expanded(
           child: ListView.builder(
-            itemCount: widget.items!.length,
+            itemCount: widget.items?.length,
             itemBuilder: (context, i) {
               return ListTile(
                 onTap: () {
@@ -88,6 +90,50 @@ class _SortSheetState extends State<SortSheet> {
             },
           ),
         ),
+        // Container(
+        //   decoration:
+        //       const BoxDecoration(color: AppColors.textColor1, boxShadow: [
+        //     BoxShadow(
+        //       color: Color.fromRGBO(0, 0, 0, 0.05),
+        //       spreadRadius: 2,
+        //       blurRadius: 9,
+        //       offset: Offset(
+        //         0,
+        //         -2,
+        //       ),
+        //     ),
+        //   ]),
+        //   child: Row(
+        //     children: [
+        //       Expanded(
+        //         child: CurvedButton(
+        //           onClick: () {
+        //             setState(() {
+        //               selectedItem = '';
+        //             });
+        //             Get.back();
+        //           },
+        //           text: 'CLOSE',
+        //           textColor: AppColors.bottomNotSelectedColor,
+        //           borderRadius: 0,
+        //         ),
+        //       ),
+        //       Expanded(
+        //         child: CurvedButton(
+        //           onClick: () {
+        //             if (widget.onTap != null) {
+        //               widget.onTap!(selectedItem);
+        //             }
+        //           },
+        //           text: 'APPLY',
+        //           textColor: AppColors.textColor1,
+        //           buttonColor: AppColors.bottomSelectedColor,
+        //           borderRadius: 0,
+        //         ),
+        //       )
+        //     ],
+        //   ),
+        // ),
       ],
     );
   }

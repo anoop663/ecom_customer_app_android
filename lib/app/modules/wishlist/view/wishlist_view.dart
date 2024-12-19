@@ -153,10 +153,8 @@ class WishListView extends StatelessWidget {
                                     onPressed: () {
                                       addtobagWishlistController
                                           .movetoCartWishlist(product.slug);
-
                                       removeFromWishlistController
                                           .removeFromWishlist(product.slug);
-
                                       Future.delayed(const Duration(seconds: 2),
                                           () {
                                         wishListController

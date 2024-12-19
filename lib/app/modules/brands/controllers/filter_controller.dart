@@ -144,4 +144,13 @@ class FilterController extends GetxController {
   //         colorText: Colors.white, backgroundColor: Colors.black);
   //   }
   // }
+  final sortItems = [
+    'Price: Low to High',
+    'Price: High to Low',
+    'Name: A to Z',
+    'Name: Z to A',
+    'Top Rated',
+    'Low Rated',
+    'Popular'
+  ];
 }

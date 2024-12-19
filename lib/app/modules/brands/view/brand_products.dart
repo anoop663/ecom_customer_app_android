@@ -222,9 +222,18 @@ class _BrandProductsState extends State<BrandProducts> {
                       }
                       await Get.bottomSheet(
                         SortSheet(
+                          currentSelection:
+                              brandProductController.selectedSortItem.value,
+                          items: Get.put(FilterController()).sortItems,
                           onTap: (filter) {
                             // ignore: avoid_print
                             print(filter);
+
+                            brandProductController.selectedSortItem.value =
+                                filter;
+                            brandProductController.getBrandProducts1(
+                                sortOrder: 'DESC', sortby: 'price');
+                            Get.back();
                           },
                         ),
                         persistent: true,

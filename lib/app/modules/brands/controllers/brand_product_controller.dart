@@ -15,9 +15,10 @@ class BrandProductController extends GetxController {
 
   var isLoading = false.obs;
   var brandproductResponse = Rxn<BrandReponseModel>();
-
+  final selectedSortItem = ''.obs;
   // Function to fetch brand products
-  void getBrandProducts1({String? filter}) async {
+  void getBrandProducts1(
+      {String? filter, String? sortby, String? sortOrder}) async {
     var idToken = storageProvider.readLoginDetails();
     isLoading.value = true;
 
@@ -39,6 +40,48 @@ class BrandProductController extends GetxController {
     // }
 
     // Create BrandProductModel with or without filters based on availability
+    if (selectedSortItem.value != '') {
+      switch (selectedSortItem.value) {
+        case 'Price: Low to High':
+          sortby = 'price';
+          sortOrder = 'asc';
+          break;
+        case 'Price: High to Low':
+          sortby = 'price';
+          sortOrder = 'DESC';
+          break;
+        case 'Name: A to Z':
+          sortby = 'name';
+          sortOrder = 'asc';
+          break;
+        case 'Name: Z to A':
+          sortby = 'name';
+          sortOrder = 'DESC';
+          break;
+        case 'New Products':
+          sortby = 'date';
+          sortOrder = 'asc';
+          break;
+        case 'Old Products':
+          sortby = 'date';
+          sortOrder = 'DESC';
+          break;
+        case 'Top Rated':
+          sortby = 'rating';
+          sortOrder = 'DESC';
+          break;
+        case 'Low Rated':
+          sortby = 'rating';
+          sortOrder = 'asc';
+          break;
+        case 'Popular':
+          sortby = 'popularity';
+          sortOrder = 'DESC';
+          break;
+        default:
+      }
+    }
+
     BrandProductModel2 brandProductModel = BrandProductModel2(
         id: idToken.$1,
         token: idToken.$2,
@@ -46,10 +89,19 @@ class BrandProductController extends GetxController {
         value: value,
         filters: filter);
 
-    try {
-      final response =
-          await authService.brandbaseProduct(brandProductModel.toJson());
 
+    SortModel sortModel = SortModel(
+        id: idToken.$1,
+        token: idToken.$2,
+        from: by,
+        value: value,
+        sortBy: sortby,
+        sortOrder: sortOrder);
+    print('sort dsara----${sortModel.toJson()}');
+
+    try {
+      final response = await authService.brandbaseProduct(
+          sortby == null ? brandProductModel.toJson() : sortModel.toJson());
       isLoading.value = false;
 
       if (response.statusCode == 200) {

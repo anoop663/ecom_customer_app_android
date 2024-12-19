@@ -19,3 +19,31 @@ class BrandProductModel2 {
     };
   }
 }
+
+class SortModel {
+  String? id;
+  String? token;
+  String? from;
+  String? value;
+  String? sortBy;
+  String? sortOrder;
+
+  SortModel(
+      {this.id,
+      this.token,
+      this.sortBy,
+      this.value,
+      this.from,
+      this.sortOrder});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'token': token,
+      'by': from,
+      'value': value,
+      'sort_by': sortBy,
+      'sort_order': sortOrder,
+    };
+  }
+}

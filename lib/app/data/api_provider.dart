@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:ecommerce_app/app/core/values/api_configs.dart';
 import 'package:ecommerce_app/app/core/values/api_constants.dart';
@@ -86,6 +87,7 @@ class AuthService {
       Uri.parse('${ApiConfig.apiUrl}${ApiConstants.products}'),
       body: brandProducts,
     );
+    debugPrint('body-----$brandProducts=====${jsonDecode(response.body)}');
     return response;
   }
 
