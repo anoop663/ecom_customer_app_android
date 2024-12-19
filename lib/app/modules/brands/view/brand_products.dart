@@ -236,7 +236,6 @@ class _BrandProductsState extends State<BrandProducts> {
                             Get.back();
                           },
                         ),
-
                         persistent: true,
                         backgroundColor: currentTheme.primaryColor,
                       );
