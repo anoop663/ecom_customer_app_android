@@ -17,7 +17,6 @@ import '../widgets/curve_button.dart';
 import '../widgets/loading_widget.dart';
 
 class NavigationController extends GetxController {
-////123
   var selectedIndex = 0.obs;
 
   void updateIndex(int index) {
