@@ -11,6 +11,8 @@ import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../../widgets/loading_widget.dart';
+
 // ignore: must_be_immutable
 class ProductPage extends StatelessWidget {
   final ProductController controller = Get.put(ProductController());
@@ -131,16 +133,16 @@ class ProductPage extends StatelessWidget {
                       Align(
                         alignment: Alignment.topRight,
                         child: Obx(() => CircleAvatar(
-                          radius: 8,
-                          backgroundColor: AppColors.accessoriesColor5,
-                          child: Text(
-                            '${cartcontroller.cartResponse.value?.products?.length ?? 0}',
-                            style: TextStyle(
-                              fontSize: 11,
-                              color: AppColors.textColor1,
-                            ),
-                          ),
-                        )),
+                              radius: 8,
+                              backgroundColor: AppColors.accessoriesColor5,
+                              child: Text(
+                                '${cartcontroller.cartResponse.value?.products?.length ?? 0}',
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  color: AppColors.textColor1,
+                                ),
+                              ),
+                            )),
                       ),
                     ],
                   ),
@@ -283,28 +285,39 @@ class ProductPage extends StatelessWidget {
           // Add to Cart Button on the right
           Expanded(
               child: CurvedButton(
-            isLoading: addToCartController.isLoading.value,
-            onClick: () async {
-              addToCartController.addtoCartFunction(productSlug);
-            },
-            buttonColor: AppColors.bottomSelectedColor,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  IconStrings.cartIcon,
-                  height: 19,
-                  color: AppColors.primary,
-                ),
-                const SizedBox(width: 14),
-                Text(
-                  'ADD TO BAG',
-                  style: Get.theme.textTheme.titleMedium!.copyWith(
-                    color: AppColors.primary,
-                  ),
-                ),
-              ],
-            ),
+            onClick: num.parse(controller.productResponse.value!.product!
+                        .stores!.first.stock!) !=
+                    0
+                ? () async {
+                    addToCartController.addtoCartFunction(productSlug: productSlug);
+                  }
+                : null,
+            buttonColor: !addToCartController.isLoading.value
+                ? AppColors.bottomSelectedColor
+                : AppColors.searchBox,
+            child: !addToCartController.isLoading.value
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        IconStrings.cartIcon,
+                        height: 19,
+                        color: AppColors.primary,
+                      ),
+                      const SizedBox(width: 14),
+                      Text(
+                        num.parse(controller.productResponse.value!.product!
+                                    .stores!.first.stock!) !=
+                                0
+                            ? 'ADD TO BAG'
+                            : 'OUT OF STOCK',
+                        style: Get.theme.textTheme.titleMedium!.copyWith(
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ],
+                  )
+                : Center(child: LoadingWidget()),
           )),
         ],
       ),

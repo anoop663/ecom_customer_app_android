@@ -6,6 +6,8 @@ import 'package:ecommerce_app/app/widgets/curve_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../products/controllers/add_to_cart.dart';
+
 class CartItem extends StatelessWidget {
   const CartItem({super.key, required this.product});
   final Product product;
@@ -88,6 +90,80 @@ class CartItem extends StatelessWidget {
                                 ),
                               );
                             },
+                          ),
+                          Row(
+                            children: [
+                              const Text(
+                                'Qty:',
+                                style: TextStyle(
+                                  color: AppColors.viewAll,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              CurvedButton(
+                                onClick: () {
+                                  Get.find<AddToCartController>()
+                                      .addtoCartFunction(
+                                          productSlug: product.slug!,
+                                          quantity:
+                                              (int.parse(product.quantity!) - 1)
+                                                  .toString());
+                                },
+                                buttonColor: AppColors.sizeDropDownButton,
+                                borderColor: AppColors.sizeDropDownButton,
+                                borderRadius: 4,
+                                width: MediaQuery.of(context).size.width * 0.06,
+                                height: 22,
+                                text: '-',
+                                textColor: AppColors.viewAll,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                product.quantity!,
+                                style: const TextStyle(
+                                  color: AppColors.viewAll,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 7,
+                              ),
+                              CurvedButton(
+                                onClick: () {
+                                  if (!Get.isRegistered<
+                                      AddToCartController>()) {
+                                    Get.put(AddToCartController());
+                                    Get.find<AddToCartController>()
+                                        .addtoCartFunction(
+                                            productSlug: product.slug!,
+                                            quantity:
+                                                (int.parse(product.quantity!) +
+                                                        1)
+                                                    .toString());
+                                  }
+                                  Get.find<AddToCartController>()
+                                      .addtoCartFunction(
+                                          productSlug: product.slug!,
+                                          quantity:
+                                              (int.parse(product.quantity!) + 1)
+                                                  .toString());
+                                },
+                                buttonColor: AppColors.sizeDropDownButton,
+                                borderColor: AppColors.sizeDropDownButton,
+                                borderRadius: 4,
+                                width: MediaQuery.of(context).size.width * 0.06,
+                                height: 22,
+                                text: '+',
+                                textColor: AppColors.viewAll,
+                              ),
+                            ],
                           ),
                           Row(
                             children: [

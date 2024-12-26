@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:ecommerce_app/app/data/api_provider.dart';
 import 'package:ecommerce_app/app/data/storage_provider.dart';
+import 'package:ecommerce_app/app/modules/cart/controller/cart_controller.dart';
 import 'package:ecommerce_app/app/modules/products/model/add_to_cart_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,10 @@ class AddToCartController extends GetxController {
   final StorageProvider storageProvider = StorageProvider();
   var isLoading = false.obs;
 
-  void addtoCartFunction(productSlug) async {
+  void addtoCartFunction({
+    String? productSlug,
+    String? quantity,
+  }) async {
     (String?, String?) idToken = storageProvider.readLoginDetails();
     isLoading.value = true;
 
@@ -18,9 +22,8 @@ class AddToCartController extends GetxController {
       id: idToken.$1,
       token: idToken.$2,
       slug: productSlug,
-      quantity: '1',
+      quantity: quantity??'1',
       store: 'swan',
-      
     );
 
     try {
@@ -31,12 +34,11 @@ class AddToCartController extends GetxController {
         final responseData = json.decode(response.body);
 
         if (responseData['success'] == 1) {
-
           Get.snackbar('Success', 'Item added to Cart',
               colorText: Colors.white, backgroundColor: Colors.black);
+          Get.find<CartController>().viewCart(needLoading: false);
         } else {
-          Get.snackbar(
-              'Error', responseData['message'] ?? 'Item adding failed',
+          Get.snackbar('Error', responseData['message'] ?? 'Item adding failed',
               colorText: Colors.white, backgroundColor: Colors.black);
         }
       } else {

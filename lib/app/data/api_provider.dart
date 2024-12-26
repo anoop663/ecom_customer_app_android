@@ -93,6 +93,8 @@ class AuthService {
 
   Future<http.Response> productFetch(
       Map<String, dynamic> productDetails, String productSlug) async {
+    print(  '${ApiConfig.apiUrl}${ApiConstants.productDetails}/$productSlug');
+    print(  '$productDetails');
     final response = await http.post(
       Uri.parse(
           '${ApiConfig.apiUrl}${ApiConstants.productDetails}/$productSlug'),

@@ -31,9 +31,9 @@ class CartController extends GetxController {
   }
 
   /// View cart details
-  Future viewCart() async {
+  Future viewCart({bool needLoading = true}) async {
     final (String?, String?) idToken = storageProvider.readLoginDetails();
-    loading.value = true;
+    loading.value = needLoading;
 
     final CartModel homeAuth2 = CartModel(
       id: idToken.$1,
@@ -49,7 +49,7 @@ class CartController extends GetxController {
 
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
-       // print('reds--$responseData');
+        // print('reds--$responseData');
         if (responseData['success'] == 1) {
           cartResponse.value = CartResponse.fromJson(responseData);
           cartItems.value = cartResponse.value!.products!;
@@ -79,7 +79,7 @@ class CartController extends GetxController {
     final (String?, String?) idToken = storageProvider.readLoginDetails();
     final loadingState = itemLoadingStates[productSlug];
     isMovingToWishlist.value = true;
-    isMovingToWishlistSlug.value=productSlug;
+    isMovingToWishlistSlug.value = productSlug;
     if (loadingState == null) return;
 
     loadingState.value = true;
@@ -95,7 +95,7 @@ class CartController extends GetxController {
     try {
       final response = await authService.moveToWishlist(homeAuth3.toJson());
       loadingState.value = false;
-      isMovingToWishlistSlug.value='';
+      isMovingToWishlistSlug.value = '';
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
 
@@ -125,7 +125,7 @@ class CartController extends GetxController {
     final (String?, String?) idToken = storageProvider.readLoginDetails();
     final loadingState = itemLoadingStates[productSlug];
     isRemoving.value = true;
-    isRemovingItemSlug.value=productSlug;
+    isRemovingItemSlug.value = productSlug;
     if (loadingState == null) return;
 
     loadingState.value = true;
@@ -142,7 +142,7 @@ class CartController extends GetxController {
       final response = await authService.addToCart(homeAuth4.toJson());
       loadingState.value = false;
       isRemoving.value = true;
-      isRemovingItemSlug.value='';
+      isRemovingItemSlug.value = '';
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
 
