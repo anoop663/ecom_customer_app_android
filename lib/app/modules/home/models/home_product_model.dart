@@ -248,7 +248,7 @@ class Product {
   final String? rewardPoint;
 
   final bool? isLiked;
-  final int? cart;
+  var cart;
   final int? reviewscount;
   final int? ratingcount;
   final String? sellerrating;

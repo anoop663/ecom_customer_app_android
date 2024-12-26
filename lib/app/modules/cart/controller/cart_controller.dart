@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../home/models/home_product_model.dart';
+import '../../products/controllers/product_controller.dart';
 
 class CartController extends GetxController {
   final AuthService authService = AuthService();
@@ -127,7 +128,6 @@ class CartController extends GetxController {
     isRemoving.value = true;
     isRemovingItemSlug.value = productSlug;
     if (loadingState == null) return;
-
     loadingState.value = true;
 
     HomeAuth4 homeAuth4 = HomeAuth4(
@@ -145,10 +145,17 @@ class CartController extends GetxController {
       isRemovingItemSlug.value = '';
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
-
         if (responseData['success'] == 1) {
           cartItems.removeWhere((item) => item.slug == productSlug);
           cartResponse.refresh();
+          if (Get.isRegistered<ProductController>()) {
+            var procduct = Get.find<ProductController>();
+            if (procduct.productResponse.value?.product?.slug == productSlug) {
+              procduct.fetchProductDetails(productSlug: productSlug);
+            }
+          } else {
+            print('not registerd');
+          }
 
           isRemoving.value = false;
           Get.snackbar('Success', 'Item removed from cart',

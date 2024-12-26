@@ -5,7 +5,10 @@ import 'package:ecommerce_app/app/modules/home/models/home_product_model.dart';
 import 'package:ecommerce_app/app/widgets/curve_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
+import '../../../core/values/strings.dart';
+import '../../../widgets/loading_widget.dart';
 import '../../products/controllers/add_to_cart.dart';
 
 class CartItem extends StatelessWidget {
@@ -15,6 +18,8 @@ class CartItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final CartController controller = Get.find<CartController>();
+    final AddToCartController addToCartController =
+        Get.put(AddToCartController());
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
@@ -91,79 +96,81 @@ class CartItem extends StatelessWidget {
                               );
                             },
                           ),
-                          Row(
-                            children: [
-                              const Text(
-                                'Qty:',
-                                style: TextStyle(
-                                  color: AppColors.viewAll,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
+                          Obx(
+                            () => Row(
+                              children: [
+                                const Text(
+                                  'Qty:',
+                                  style: TextStyle(
+                                    color: AppColors.viewAll,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              CurvedButton(
-                                onClick: () {
-                                  Get.find<AddToCartController>()
-                                      .addtoCartFunction(
-                                          productSlug: product.slug!,
-                                          quantity:
-                                              (int.parse(product.quantity!) - 1)
-                                                  .toString());
-                                },
-                                buttonColor: AppColors.sizeDropDownButton,
-                                borderColor: AppColors.sizeDropDownButton,
-                                borderRadius: 4,
-                                width: MediaQuery.of(context).size.width * 0.06,
-                                height: 22,
-                                text: '-',
-                                textColor: AppColors.viewAll,
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                product.quantity!,
-                                style: const TextStyle(
-                                  color: AppColors.viewAll,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
+                                const SizedBox(
+                                  width: 5,
                                 ),
-                              ),
-                              const SizedBox(
-                                width: 7,
-                              ),
-                              CurvedButton(
-                                onClick: () {
-                                  if (!Get.isRegistered<
-                                      AddToCartController>()) {
-                                    Get.put(AddToCartController());
-                                    Get.find<AddToCartController>()
-                                        .addtoCartFunction(
-                                            productSlug: product.slug!,
-                                            quantity:
-                                                (int.parse(product.quantity!) +
-                                                        1)
-                                                    .toString());
-                                  }
-                                  Get.find<AddToCartController>()
-                                      .addtoCartFunction(
-                                          productSlug: product.slug!,
-                                          quantity:
-                                              (int.parse(product.quantity!) + 1)
-                                                  .toString());
-                                },
-                                buttonColor: AppColors.sizeDropDownButton,
-                                borderColor: AppColors.sizeDropDownButton,
-                                borderRadius: 4,
-                                width: MediaQuery.of(context).size.width * 0.06,
-                                height: 22,
-                                text: '+',
-                                textColor: AppColors.viewAll,
-                              ),
-                            ],
+                                CurvedButton(
+                                  onClick: () {
+                                    addToCartController.addtoCartFunction(
+                                        productSlug: product.slug!,
+                                        quantity:
+                                            (int.parse(product.quantity!) - 1)
+                                                .toString());
+                                  },
+                                  buttonColor: AppColors.sizeDropDownButton,
+                                  borderColor: AppColors.sizeDropDownButton,
+                                  borderRadius: 4,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.06,
+                                  height: 22,
+                                  text: '-',
+                                  textColor: AppColors.viewAll,
+                                ),
+                                addToCartController.isItemSlug.value ==
+                                        product.slug
+                                    ? LottieBuilder.asset(
+                                        AnimationStrings.loadingAnimation,
+                                        height: 50,
+                                        width: 50,
+                                      )
+                                    : Row(
+                                        children: [
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          Text(
+                                            product.quantity!,
+                                            style: const TextStyle(
+                                              color: AppColors.viewAll,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                        ],
+                                      ),
+                                CurvedButton(
+                                  onClick: () {
+                                    addToCartController.addtoCartFunction(
+                                        productSlug: product.slug!,
+                                        quantity:
+                                            (int.parse(product.quantity!) + 1)
+                                                .toString());
+                                  },
+                                  buttonColor: AppColors.sizeDropDownButton,
+                                  borderColor: AppColors.sizeDropDownButton,
+                                  borderRadius: 4,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.06,
+                                  height: 22,
+                                  text: '+',
+                                  textColor: AppColors.viewAll,
+                                ),
+                              ],
+                            ),
                           ),
                           Row(
                             children: [

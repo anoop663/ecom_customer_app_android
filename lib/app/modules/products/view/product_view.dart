@@ -289,7 +289,10 @@ class ProductPage extends StatelessWidget {
                         .stores!.first.stock!) !=
                     0
                 ? () async {
-                    addToCartController.addtoCartFunction(productSlug: productSlug);
+                    controller.productResponse.value!.product!.cart == 0
+                        ? addToCartController.addtoCartFunction(
+                            from: 'productDetails', productSlug: productSlug)
+                        : Get.toNamed(Routes.cart);
                   }
                 : null,
             buttonColor: !addToCartController.isLoading.value
@@ -305,16 +308,22 @@ class ProductPage extends StatelessWidget {
                         color: AppColors.primary,
                       ),
                       const SizedBox(width: 14),
-                      Text(
-                        num.parse(controller.productResponse.value!.product!
-                                    .stores!.first.stock!) !=
-                                0
-                            ? 'ADD TO BAG'
-                            : 'OUT OF STOCK',
-                        style: Get.theme.textTheme.titleMedium!.copyWith(
-                          color: AppColors.primary,
+                      Obx(
+                        () => Text(
+                          num.parse(controller.productResponse.value!.product!
+                                      .stores!.first.stock!) !=
+                                  0
+                              ? controller.productResponse.value!.product!
+                                          .cart ==
+                                      0
+                                  ? 'ADD TO BAG'
+                                  : 'Go to Cart'
+                              : 'OUT OF STOCK',
+                          style: Get.theme.textTheme.titleMedium!.copyWith(
+                            color: AppColors.primary,
+                          ),
                         ),
-                      ),
+                      )
                     ],
                   )
                 : Center(child: LoadingWidget()),
