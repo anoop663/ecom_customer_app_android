@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../../../widgets/curve_button.dart';
 
 class SortSheet extends StatefulWidget {
   const SortSheet({

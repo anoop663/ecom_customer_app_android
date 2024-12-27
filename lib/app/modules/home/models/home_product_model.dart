@@ -248,6 +248,7 @@ class Product {
   final String? rewardPoint;
 
   final bool? isLiked;
+  // ignore: prefer_typing_uninitialized_variables
   var cart;
   final int? reviewscount;
   final int? ratingcount;

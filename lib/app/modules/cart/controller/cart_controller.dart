@@ -154,6 +154,7 @@ class CartController extends GetxController {
               procduct.fetchProductDetails(productSlug: productSlug);
             }
           } else {
+            // ignore: avoid_print
             print('not registerd');
           }
 

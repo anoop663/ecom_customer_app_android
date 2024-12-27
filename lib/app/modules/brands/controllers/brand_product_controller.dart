@@ -97,6 +97,7 @@ class BrandProductController extends GetxController {
         value: value,
         sortBy: sortby,
         sortOrder: sortOrder);
+    // ignore: avoid_print
     print('sort dsara----${sortModel.toJson()}');
 
     try {

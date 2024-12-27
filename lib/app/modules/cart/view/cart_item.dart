@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../core/values/strings.dart';
-import '../../../widgets/loading_widget.dart';
 import '../../products/controllers/add_to_cart.dart';
 
 class CartItem extends StatelessWidget {

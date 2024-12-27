@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:ecommerce_app/app/core/values/api_configs.dart';
 import 'package:ecommerce_app/app/core/values/api_constants.dart';
@@ -93,7 +92,9 @@ class AuthService {
 
   Future<http.Response> productFetch(
       Map<String, dynamic> productDetails, String productSlug) async {
+    // ignore: avoid_print
     print(  '${ApiConfig.apiUrl}${ApiConstants.productDetails}/$productSlug');
+    // ignore: avoid_print
     print(  '$productDetails');
     final response = await http.post(
       Uri.parse(
