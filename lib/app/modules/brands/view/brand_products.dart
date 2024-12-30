@@ -8,7 +8,7 @@ import 'package:ecommerce_app/app/modules/brands/controllers/filter_controller.d
 import 'package:ecommerce_app/app/modules/brands/view/filter_sheet.dart';
 import 'package:ecommerce_app/app/modules/brands/view/sort_sheet.dart';
 import 'package:ecommerce_app/app/modules/products/controllers/add_to_wishlist.dart';
-import 'package:ecommerce_app/app/widgets/appbar.dart';
+import 'package:ecommerce_app/app/widgets/app_bar.dart';
 import 'package:ecommerce_app/app/widgets/product_bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

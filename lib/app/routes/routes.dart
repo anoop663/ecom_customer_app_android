@@ -26,13 +26,13 @@ import 'package:ecommerce_app/app/widgets/app_bottom_bar.dart';
 import 'package:ecommerce_app/app/widgets/no_connection.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
-import '../modules/cancelOrder/bindings/cancel_order_binding.dart';
-import '../modules/cancelOrder/views/cancel_order_view.dart';
-import '../modules/confirmCancel/bindings/confirm_cancel_binding.dart';
-import '../modules/confirmCancel/views/confirm_cancel_view.dart';
+import '../modules/cancel_order/bindings/cancel_order_binding.dart';
+import '../modules/cancel_order/views/cancel_order_view.dart';
+import '../modules/confirm_cancel/bindings/confirm_cancel_binding.dart';
+import '../modules/confirm_cancel/views/confirm_cancel_view.dart';
 import '../modules/my_orders/view/order_details_view.dart';
-import '../modules/singleOrderDetails/bindings/single_order_details_binding.dart';
-import '../modules/singleOrderDetails/views/single_order_details_view.dart';
+import '../modules/single_order_details/bindings/single_order_details_binding.dart';
+import '../modules/single_order_details/views/single_order_details_view.dart';
 
 class Routes {
   static const String home = '/home';

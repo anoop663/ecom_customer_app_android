@@ -5,7 +5,7 @@ import '../../../core/values/colors.dart';
 import '../../../core/values/constants.dart';
 import '../../../core/values/strings.dart';
 import '../../../routes/routes.dart';
-import '../../../widgets/appbar.dart';
+import '../../../widgets/app_bar.dart';
 import '../../../widgets/curve_button.dart';
 import '../../../widgets/loading_widget.dart';
 import '../../../widgets/price_summery.dart';

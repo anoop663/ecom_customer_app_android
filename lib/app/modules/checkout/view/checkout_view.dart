@@ -7,7 +7,7 @@ import 'package:ecommerce_app/app/modules/checkout/controller/chekout_controller
 import 'package:ecommerce_app/app/modules/home/models/home_product_model.dart';
 import 'package:ecommerce_app/app/routes/routes.dart';
 import 'package:ecommerce_app/app/widgets/add_radiobox.dart';
-import 'package:ecommerce_app/app/widgets/appbar.dart';
+import 'package:ecommerce_app/app/widgets/app_bar.dart';
 import 'package:ecommerce_app/app/widgets/curve_button.dart';
 import 'package:ecommerce_app/app/widgets/curved_box.dart';
 import 'package:ecommerce_app/app/widgets/curved_container_icon.dart';

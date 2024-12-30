@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 import '../../../core/values/colors.dart';
 import '../../../routes/routes.dart';
-import '../../../widgets/appbar.dart';
+import '../../../widgets/app_bar.dart';
 import '../../../widgets/curve_button.dart';
 import '../../../widgets/loading_widget.dart';
 import '../controllers/confirm_cancel_controller.dart';

@@ -1,6 +1,6 @@
 import 'package:ecommerce_app/app/core/values/api_configs.dart';
 import 'package:ecommerce_app/app/modules/categories/controllers/category_product_controller.dart';
-import 'package:ecommerce_app/app/widgets/appbar.dart';
+import 'package:ecommerce_app/app/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

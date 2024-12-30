@@ -3,7 +3,7 @@ import 'package:ecommerce_app/app/core/values/strings.dart';
 import 'package:ecommerce_app/app/modules/address_manage/controller/address_list_controller.dart';
 import 'package:ecommerce_app/app/modules/address_manage/model/address_response_model.dart';
 import 'package:ecommerce_app/app/routes/routes.dart';
-import 'package:ecommerce_app/app/widgets/appbar.dart';
+import 'package:ecommerce_app/app/widgets/app_bar.dart';
 import 'package:ecommerce_app/app/widgets/curve_button.dart';
 import 'package:ecommerce_app/app/widgets/curved_box.dart';
 import 'package:ecommerce_app/app/widgets/loading_widget.dart';

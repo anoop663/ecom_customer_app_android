@@ -1,7 +1,7 @@
 import 'package:ecommerce_app/app/modules/home/controllers/home_controller.dart';
 import 'package:ecommerce_app/app/modules/products/controllers/add_to_wishlist.dart';
 import 'package:ecommerce_app/app/routes/routes.dart';
-import 'package:ecommerce_app/app/widgets/appbar.dart';
+import 'package:ecommerce_app/app/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
