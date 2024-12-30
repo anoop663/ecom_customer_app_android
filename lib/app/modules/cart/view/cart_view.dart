@@ -127,7 +127,7 @@ class CartView extends StatelessWidget {
                                             ),
                                             const SizedBox(height: 20),
                                             PriceSummaryItem(
-                                              title: 'Grand Total',
+                                              title: 'Grand Total (Excl. VAT)',
                                               subTitle:
                                                   '₹ ${cartController.cartResponse.value!.grandTotal!}',
                                             ),

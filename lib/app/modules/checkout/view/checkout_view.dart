@@ -751,7 +751,7 @@ class _PriceExpandTileState extends State<PriceExpandTile> {
                 children: [
                   const SizedBox(height: 10),
                   PriceSummaryItem(
-                    title: 'Grand Total',
+                    title: 'Grand Total (Excl. VAT)',
                     subTitle: '₹ $grandTotal',
                   ),
                   const SizedBox(height: 10),
