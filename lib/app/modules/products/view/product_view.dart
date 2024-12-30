@@ -317,7 +317,7 @@ class ProductPage extends StatelessWidget {
                                           .cart ==
                                       0
                                   ? 'ADD TO BAG'
-                                  : 'Go to Cart'
+                                  : 'GO TO CART'
                               : 'OUT OF STOCK',
                           style: Get.theme.textTheme.titleMedium!.copyWith(
                             color: AppColors.primary,
