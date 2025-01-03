@@ -16,10 +16,10 @@ class RemoveFromWishlistController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    removeFromWishlist(productSlug);
+    // removeFromWishlist(productSlug);
   }
 
-   removeFromWishlist(productSlug) async {
+   removeFromWishlist({String? productSlug,String? storeSlug}) async {
     final (String?, String?) idToken = storageProvider.readLoginDetails();
     isLoading.value = true;
 
@@ -28,18 +28,17 @@ class RemoveFromWishlistController extends GetxController {
       token: idToken.$2,
       slug: productSlug,
       quantity: '0',
-      store: 'swan',
+      store: storeSlug,
     );
 
     try {
-      final response = await authService.removeWishlist(homeAuth2.toJson());
+      final response = await authService.removeItemFromWishlist(homeAuth2.toJson());
       isLoading.value = false;
 
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
 
         if (responseData['success'] == 1) {
-          
 
           //Get.snackbar('Success', 'Item removed successfully',
           //    colorText: Colors.white, backgroundColor: Colors.black);

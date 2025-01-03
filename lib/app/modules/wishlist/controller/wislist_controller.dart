@@ -26,7 +26,7 @@ class WishListController extends GetxController {
       id: idToken.$1,
       token: idToken.$2,
     );
-
+    print(homeAuth2.toJson());
     try {
       final response = await authService.showWishlist(homeAuth2.toJson());
       isLoading.value = false;
@@ -39,6 +39,8 @@ class WishListController extends GetxController {
 
           //Get.snackbar('Success', 'WishList showing successfully',
           //    colorText: Colors.white, backgroundColor: Colors.black);
+        } else if (responseData['success'] == 0) {
+          wishlistResponse.value = null;
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Items showing failed',

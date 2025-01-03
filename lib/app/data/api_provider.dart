@@ -93,9 +93,9 @@ class AuthService {
   Future<http.Response> productFetch(
       Map<String, dynamic> productDetails, String productSlug) async {
     // ignore: avoid_print
-    print(  '${ApiConfig.apiUrl}${ApiConstants.productDetails}/$productSlug');
+    print('${ApiConfig.apiUrl}${ApiConstants.productDetails}/$productSlug');
     // ignore: avoid_print
-    print(  '$productDetails');
+    print('$productDetails');
     final response = await http.post(
       Uri.parse(
           '${ApiConfig.apiUrl}${ApiConstants.productDetails}/$productSlug'),
@@ -140,6 +140,16 @@ class AuthService {
       Uri.parse('${ApiConfig.apiUrl}${ApiConstants.moveToCart}'),
       body: productDetails,
     );
+    return response;
+  }
+
+  Future<http.Response> removeItemFromWishlist(
+      Map<String, dynamic> productDetails) async {
+    final response = await http.post(
+      Uri.parse('${ApiConfig.apiUrl}${ApiConstants.addToWishlist}'),
+      body: productDetails,
+    );
+    print(response.statusCode);
     return response;
   }
 

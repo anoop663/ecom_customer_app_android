@@ -104,8 +104,12 @@ class WishListView extends StatelessWidget {
                                   child: GestureDetector(
                                     onTap: () async {
                                       // Handle wishlist item removal
+                                      print(product.slug);
+                                      print(product.storeSlug);
                                       await removeFromWishlistController
-                                          .removeFromWishlist(product.slug);
+                                          .removeFromWishlist(
+                                              productSlug: product.slug,
+                                              storeSlug: product.storeSlug);
                                       wishListController.showWishListFunction();
                                     },
                                     child: Container(
@@ -154,7 +158,8 @@ class WishListView extends StatelessWidget {
                                       addtobagWishlistController
                                           .movetoCartWishlist(product.slug);
                                       removeFromWishlistController
-                                          .removeFromWishlist(product.slug);
+                                          .removeFromWishlist(
+                                              productSlug: product.slug,storeSlug: product.storeSlug);
                                       Future.delayed(const Duration(seconds: 2),
                                           () {
                                         wishListController
