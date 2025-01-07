@@ -26,6 +26,7 @@ class WishListController extends GetxController {
       id: idToken.$1,
       token: idToken.$2,
     );
+    // ignore: avoid_print
     print(homeAuth2.toJson());
     try {
       final response = await authService.showWishlist(homeAuth2.toJson());

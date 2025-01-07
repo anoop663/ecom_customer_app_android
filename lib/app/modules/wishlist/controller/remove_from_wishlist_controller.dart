@@ -14,6 +14,7 @@ class RemoveFromWishlistController extends GetxController {
   String productSlug = '';
 
   @override
+  // ignore: unnecessary_overrides
   void onInit() {
     super.onInit();
     // removeFromWishlist(productSlug);

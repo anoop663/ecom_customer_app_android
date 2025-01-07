@@ -104,7 +104,9 @@ class WishListView extends StatelessWidget {
                                   child: GestureDetector(
                                     onTap: () async {
                                       // Handle wishlist item removal
+                                      // ignore: avoid_print
                                       print(product.slug);
+                                      // ignore: avoid_print
                                       print(product.storeSlug);
                                       await removeFromWishlistController
                                           .removeFromWishlist(

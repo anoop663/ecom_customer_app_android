@@ -149,6 +149,7 @@ class AuthService {
       Uri.parse('${ApiConfig.apiUrl}${ApiConstants.addToWishlist}'),
       body: productDetails,
     );
+    // ignore: avoid_print
     print(response.statusCode);
     return response;
   }
