@@ -1,8 +1,9 @@
-import 'package:ecommerce_app/app/core/extensions/circlular_slider.dart';
-import 'package:ecommerce_app/app/core/values/colors.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:soulstyle/app/core/extensions/circlular_slider.dart';
+import 'package:soulstyle/app/core/values/colors.dart';
 
 
 class AppFilterSlider extends StatefulWidget {

@@ -1,11 +1,12 @@
-import 'package:ecommerce_app/app/core/values/colors.dart';
-import 'package:ecommerce_app/app/core/values/strings.dart';
-import 'package:ecommerce_app/app/modules/signin/controllers/signin_controller.dart';
-import 'package:ecommerce_app/app/routes/routes.dart';
-import 'package:ecommerce_app/app/widgets/app_text_filed.dart';
-import 'package:ecommerce_app/app/widgets/curve_button.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:soulstyle/app/core/values/colors.dart';
+import 'package:soulstyle/app/core/values/strings.dart';
+import 'package:soulstyle/app/modules/signin/controllers/signin_controller.dart';
+import 'package:soulstyle/app/routes/routes.dart';
+import 'package:soulstyle/app/widgets/app_text_filed.dart';
+import 'package:soulstyle/app/widgets/curve_button.dart';
 
 class SigninPage extends StatelessWidget {
   const SigninPage({super.key});

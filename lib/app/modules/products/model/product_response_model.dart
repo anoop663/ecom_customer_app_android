@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:ecommerce_app/app/modules/home/models/home_product_model.dart';
+import 'package:soulstyle/app/modules/home/models/home_product_model.dart';
 
 
 ProductDetailsResponse productDetailsResponseFromJson(String str) =>

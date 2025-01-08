@@ -1,9 +1,9 @@
 import 'dart:convert';
-import 'package:ecommerce_app/app/data/api_provider.dart';
-import 'package:ecommerce_app/app/data/storage_provider.dart';
-import 'package:ecommerce_app/app/modules/address_manage/model/address_create_model.dart';
-import 'package:ecommerce_app/app/modules/address_manage/model/addressfunction_model.dart';
-import 'package:ecommerce_app/app/routes/routes.dart';
+import 'package:soulstyle/app/data/api_provider.dart';
+import 'package:soulstyle/app/data/storage_provider.dart';
+import 'package:soulstyle/app/modules/address_manage/model/address_create_model.dart';
+import 'package:soulstyle/app/modules/address_manage/model/addressfunction_model.dart';
+import 'package:soulstyle/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

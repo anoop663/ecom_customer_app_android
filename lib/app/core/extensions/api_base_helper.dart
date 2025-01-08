@@ -7,14 +7,14 @@ import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
-import 'package:ecommerce_app/app/controllers/base_controller.dart';
-import 'package:ecommerce_app/app/core/values/api_configs.dart';
-import 'package:ecommerce_app/app/routes/routes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' as geti;
 import 'package:http/http.dart' as http;
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
+import 'package:soulstyle/app/controllers/base_controller.dart';
+import 'package:soulstyle/app/core/values/api_configs.dart';
+import 'package:soulstyle/app/routes/routes.dart';
 
 class ApiBaseHelper {
   final String _baseUrl = ApiConfig.apiUrl;

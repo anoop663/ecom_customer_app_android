@@ -1,14 +1,15 @@
-import 'package:ecommerce_app/app/core/values/api_configs.dart';
-import 'package:ecommerce_app/app/core/values/colors.dart';
-import 'package:ecommerce_app/app/core/values/strings.dart';
-import 'package:ecommerce_app/app/modules/wishlist/controller/add_to_bag_controller.dart';
-import 'package:ecommerce_app/app/modules/wishlist/controller/remove_from_wishlist_controller.dart';
-import 'package:ecommerce_app/app/modules/wishlist/controller/wislist_controller.dart';
-import 'package:ecommerce_app/app/widgets/app_bar.dart';
-import 'package:ecommerce_app/app/widgets/empty_wishlist.dart';
-import 'package:ecommerce_app/app/widgets/loading_widget.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:soulstyle/app/core/values/api_configs.dart';
+import 'package:soulstyle/app/core/values/colors.dart';
+import 'package:soulstyle/app/core/values/strings.dart';
+import 'package:soulstyle/app/modules/wishlist/controller/add_to_bag_controller.dart';
+import 'package:soulstyle/app/modules/wishlist/controller/remove_from_wishlist_controller.dart';
+import 'package:soulstyle/app/modules/wishlist/controller/wislist_controller.dart';
+import 'package:soulstyle/app/widgets/app_bar.dart';
+import 'package:soulstyle/app/widgets/empty_wishlist.dart';
+import 'package:soulstyle/app/widgets/loading_widget.dart';
 
 class WishListView extends StatelessWidget {
   WishListView({super.key});

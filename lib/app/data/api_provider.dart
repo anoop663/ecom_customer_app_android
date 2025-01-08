@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:ecommerce_app/app/core/values/api_configs.dart';
-import 'package:ecommerce_app/app/core/values/api_constants.dart';
-import 'package:ecommerce_app/app/core/values/constants.dart';
+import 'package:soulstyle/app/core/values/api_configs.dart';
+import 'package:soulstyle/app/core/values/api_constants.dart';
+import 'package:soulstyle/app/core/values/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;

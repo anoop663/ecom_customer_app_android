@@ -1,12 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:ecommerce_app/app/modules/cart/controller/cart_controller.dart';
-import 'package:ecommerce_app/app/modules/products/controllers/add_to_wishlist.dart';
-import 'package:ecommerce_app/app/routes/routes.dart';
+import 'package:soulstyle/app/modules/cart/controller/cart_controller.dart';
+import 'package:soulstyle/app/modules/products/controllers/add_to_wishlist.dart';
+import 'package:soulstyle/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ecommerce_app/app/modules/home/controllers/home_controller.dart';
-import 'package:ecommerce_app/app/core/values/api_configs.dart';
-import 'package:ecommerce_app/app/widgets/app_bar.dart';
+import 'package:soulstyle/app/modules/home/controllers/home_controller.dart';
+import 'package:soulstyle/app/core/values/api_configs.dart';
+import 'package:soulstyle/app/widgets/app_bar.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

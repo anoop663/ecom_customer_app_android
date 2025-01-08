@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'package:ecommerce_app/app/data/api_provider.dart';
-import 'package:ecommerce_app/app/modules/products/model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ecommerce_app/app/data/storage_provider.dart';
-import 'package:ecommerce_app/app/modules/products/model/product_response_model.dart';
+import 'package:soulstyle/app/data/api_provider.dart';
+import 'package:soulstyle/app/data/storage_provider.dart';
+import 'package:soulstyle/app/modules/products/model/product_model.dart';
+import 'package:soulstyle/app/modules/products/model/product_response_model.dart';
 
 class ProductController extends GetxController {
   var isLoading = false.obs;

@@ -1,5 +1,5 @@
-import 'package:ecommerce_app/app/modules/home/models/home_response.dart';
 import 'package:flutter/material.dart';
+import 'package:soulstyle/app/modules/home/models/home_response.dart';
 
 
 class BrandContainer extends StatelessWidget {

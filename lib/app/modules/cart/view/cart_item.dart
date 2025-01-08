@@ -1,8 +1,8 @@
-import 'package:ecommerce_app/app/core/values/api_configs.dart';
-import 'package:ecommerce_app/app/core/values/colors.dart';
-import 'package:ecommerce_app/app/modules/cart/controller/cart_controller.dart';
-import 'package:ecommerce_app/app/modules/home/models/home_product_model.dart';
-import 'package:ecommerce_app/app/widgets/curve_button.dart';
+import 'package:soulstyle/app/core/values/api_configs.dart';
+import 'package:soulstyle/app/core/values/colors.dart';
+import 'package:soulstyle/app/modules/cart/controller/cart_controller.dart';
+import 'package:soulstyle/app/modules/home/models/home_product_model.dart';
+import 'package:soulstyle/app/widgets/curve_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';

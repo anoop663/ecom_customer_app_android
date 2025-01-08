@@ -1,10 +1,10 @@
 import 'dart:convert'; // Needed for json decoding
-import 'package:ecommerce_app/app/core/values/enums.dart';
-import 'package:ecommerce_app/app/data/api_provider.dart';
-import 'package:ecommerce_app/app/modules/signup/models/register_model.dart';
-import 'package:ecommerce_app/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:soulstyle/app/core/values/enums.dart';
+import 'package:soulstyle/app/data/api_provider.dart';
+import 'package:soulstyle/app/modules/signup/models/register_model.dart';
+import 'package:soulstyle/app/routes/routes.dart';
 
 class SignupController extends GetxController {
   final AuthService authService = AuthService();

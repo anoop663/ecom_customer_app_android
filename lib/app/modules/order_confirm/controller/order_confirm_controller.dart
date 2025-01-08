@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/app/modules/checkout/model/checkout_response.dart';
+import 'package:soulstyle/app/modules/checkout/model/checkout_response.dart';
 import 'package:get/get.dart';
 
 

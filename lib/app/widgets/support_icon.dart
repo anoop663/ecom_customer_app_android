@@ -1,8 +1,9 @@
-import 'package:ecommerce_app/app/core/values/api_configs.dart';
-import 'package:ecommerce_app/app/core/values/colors.dart';
-import 'package:ecommerce_app/app/core/values/strings.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:soulstyle/app/core/values/api_configs.dart';
+import 'package:soulstyle/app/core/values/colors.dart';
+import 'package:soulstyle/app/core/values/strings.dart';
 
 class SupportIcon extends StatelessWidget {
   const SupportIcon({

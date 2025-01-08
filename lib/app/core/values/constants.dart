@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:ecommerce_app/app/core/values/colors.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:soulstyle/app/core/values/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 

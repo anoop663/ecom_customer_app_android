@@ -1,14 +1,13 @@
 import 'dart:convert';
-
-import 'package:ecommerce_app/app/data/api_provider.dart';
-import 'package:ecommerce_app/app/data/storage_provider.dart';
-import 'package:ecommerce_app/app/modules/home/models/home_product_model.dart';
-import 'package:ecommerce_app/app/modules/search/model/popular_search_response.dart';
-import 'package:ecommerce_app/app/modules/search/model/search_model.dart';
-import 'package:ecommerce_app/app/modules/search/model/search_response_model.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:soulstyle/app/data/api_provider.dart';
+import 'package:soulstyle/app/data/storage_provider.dart';
+import 'package:soulstyle/app/modules/home/models/home_product_model.dart';
+import 'package:soulstyle/app/modules/search/model/popular_search_response.dart';
+import 'package:soulstyle/app/modules/search/model/search_model.dart';
+import 'package:soulstyle/app/modules/search/model/search_response_model.dart';
 
 class SearchController1 extends GetxController {
   final loading = false.obs;

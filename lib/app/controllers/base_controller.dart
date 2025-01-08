@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:ecommerce_app/app/core/utils/app_connectivity.dart';
-import 'package:ecommerce_app/app/data/storage_provider.dart';
-import 'package:ecommerce_app/app/modules/address_manage/model/address_response_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:soulstyle/app/core/utils/app_connectivity.dart';
+import 'package:soulstyle/app/data/storage_provider.dart';
+import 'package:soulstyle/app/modules/address_manage/model/address_response_model.dart';
 
 import '../core/values/colors.dart';
 import '../core/values/constants.dart';

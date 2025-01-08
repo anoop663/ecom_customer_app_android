@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'package:ecommerce_app/app/data/api_provider.dart';
-import 'package:ecommerce_app/app/data/storage_provider.dart';
-import 'package:ecommerce_app/app/modules/brands/model/brand_filter_model.dart';
-import 'package:ecommerce_app/app/modules/brands/model/brand_reponse_model.dart';
+import 'package:soulstyle/app/data/api_provider.dart';
+import 'package:soulstyle/app/data/storage_provider.dart';
+import 'package:soulstyle/app/modules/brands/model/brand_filter_model.dart';
+import 'package:soulstyle/app/modules/brands/model/brand_reponse_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

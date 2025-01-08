@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'package:ecommerce_app/app/data/api_provider.dart';
-import 'package:ecommerce_app/app/data/storage_provider.dart';
-import 'package:ecommerce_app/app/modules/cart/controller/cart_controller.dart';
-import 'package:ecommerce_app/app/modules/products/controllers/product_controller.dart';
-import 'package:ecommerce_app/app/modules/products/model/add_to_cart_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:soulstyle/app/data/api_provider.dart';
+import 'package:soulstyle/app/data/storage_provider.dart';
+import 'package:soulstyle/app/modules/cart/controller/cart_controller.dart';
+import 'package:soulstyle/app/modules/products/controllers/product_controller.dart';
+import 'package:soulstyle/app/modules/products/model/add_to_cart_model.dart';
 
 class AddToCartController extends GetxController {
   final AuthService authService = AuthService();

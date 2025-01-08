@@ -1,14 +1,14 @@
-import 'package:ecommerce_app/app/core/values/colors.dart';
-import 'package:ecommerce_app/app/core/values/strings.dart';
-import 'package:ecommerce_app/app/modules/cart/controller/cart_controller.dart';
-import 'package:ecommerce_app/app/modules/cart/view/cart_item.dart';
-import 'package:ecommerce_app/app/modules/cart/view/empty_cart.dart';
-import 'package:ecommerce_app/app/routes/routes.dart';
-import 'package:ecommerce_app/app/widgets/app_bar.dart';
-import 'package:ecommerce_app/app/widgets/curve_button.dart';
-import 'package:ecommerce_app/app/widgets/loading_widget.dart';
-import 'package:ecommerce_app/app/widgets/price_summery.dart';
-import 'package:ecommerce_app/app/widgets/support_icon.dart';
+import 'package:soulstyle/app/core/values/colors.dart';
+import 'package:soulstyle/app/core/values/strings.dart';
+import 'package:soulstyle/app/modules/cart/controller/cart_controller.dart';
+import 'package:soulstyle/app/modules/cart/view/cart_item.dart';
+import 'package:soulstyle/app/modules/cart/view/empty_cart.dart';
+import 'package:soulstyle/app/routes/routes.dart';
+import 'package:soulstyle/app/widgets/app_bar.dart';
+import 'package:soulstyle/app/widgets/curve_button.dart';
+import 'package:soulstyle/app/widgets/loading_widget.dart';
+import 'package:soulstyle/app/widgets/price_summery.dart';
+import 'package:soulstyle/app/widgets/support_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

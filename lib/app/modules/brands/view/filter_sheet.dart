@@ -1,8 +1,8 @@
-import 'package:ecommerce_app/app/core/values/colors.dart';
-import 'package:ecommerce_app/app/modules/brands/controllers/filter_controller.dart';
-import 'package:ecommerce_app/app/widgets/app_filter_slider.dart';
-import 'package:ecommerce_app/app/widgets/curve_button.dart';
-import 'package:ecommerce_app/app/widgets/loading_widget.dart';
+import 'package:soulstyle/app/core/values/colors.dart';
+import 'package:soulstyle/app/modules/brands/controllers/filter_controller.dart';
+import 'package:soulstyle/app/widgets/app_filter_slider.dart';
+import 'package:soulstyle/app/widgets/curve_button.dart';
+import 'package:soulstyle/app/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';

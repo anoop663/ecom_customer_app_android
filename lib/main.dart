@@ -1,8 +1,9 @@
-import 'package:ecommerce_app/app/core/theme/app_theme.dart';
-import 'package:ecommerce_app/app/routes/routes.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:soulstyle/app/core/theme/app_theme.dart';
+import 'package:soulstyle/app/routes/routes.dart';
 
 void main() async {
   Paint().isAntiAlias = true;

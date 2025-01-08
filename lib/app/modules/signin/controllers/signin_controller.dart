@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'package:ecommerce_app/app/data/api_provider.dart';
-import 'package:ecommerce_app/app/modules/signin/models/login_model.dart';
-import 'package:ecommerce_app/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:soulstyle/app/data/api_provider.dart';
+import 'package:soulstyle/app/modules/signin/models/login_model.dart';
+import 'package:soulstyle/app/routes/routes.dart';
 
 class SigninController extends GetxController {
   final AuthService authService = AuthService();

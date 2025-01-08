@@ -1,10 +1,11 @@
 import 'dart:convert';
-import 'package:ecommerce_app/app/data/api_provider.dart';
-import 'package:ecommerce_app/app/data/storage_provider.dart';
-import 'package:ecommerce_app/app/modules/wishlist/model/remove_wishlist.dart';
-import 'package:ecommerce_app/app/modules/wishlist/model/wishlist_response.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:soulstyle/app/data/api_provider.dart';
+import 'package:soulstyle/app/data/storage_provider.dart';
+import 'package:soulstyle/app/modules/wishlist/model/remove_wishlist.dart';
+import 'package:soulstyle/app/modules/wishlist/model/wishlist_response.dart';
 
 class RemoveFromWishlistController extends GetxController {
   final AuthService authService = AuthService();

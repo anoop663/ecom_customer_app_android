@@ -1,8 +1,9 @@
-import 'package:ecommerce_app/app/core/values/colors.dart';
-import 'package:ecommerce_app/app/core/values/strings.dart';
-import 'package:ecommerce_app/app/modules/splash_screen/controller/splash_controller.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:soulstyle/app/core/values/colors.dart';
+import 'package:soulstyle/app/core/values/strings.dart';
+import 'package:soulstyle/app/modules/splash_screen/controller/splash_controller.dart';
 
 class SpashScreen extends StatelessWidget {
   SpashScreen({super.key});

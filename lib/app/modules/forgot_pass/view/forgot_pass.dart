@@ -1,7 +1,7 @@
-import 'package:ecommerce_app/app/core/values/colors.dart';
-import 'package:ecommerce_app/app/core/values/strings.dart';
-import 'package:ecommerce_app/app/modules/forgot_pass/controller/forgot_controller.dart';
-import 'package:ecommerce_app/app/widgets/curve_button.dart';
+import 'package:soulstyle/app/core/values/colors.dart';
+import 'package:soulstyle/app/core/values/strings.dart';
+import 'package:soulstyle/app/modules/forgot_pass/controller/forgot_controller.dart';
+import 'package:soulstyle/app/widgets/curve_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

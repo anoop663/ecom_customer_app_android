@@ -1,15 +1,15 @@
 import 'dart:convert';
 
-import 'package:ecommerce_app/app/core/values/api_configs.dart';
-import 'package:ecommerce_app/app/core/values/colors.dart';
-import 'package:ecommerce_app/app/core/values/strings.dart';
-import 'package:ecommerce_app/app/modules/brands/controllers/brand_product_controller.dart';
-import 'package:ecommerce_app/app/modules/brands/controllers/filter_controller.dart';
-import 'package:ecommerce_app/app/modules/brands/view/filter_sheet.dart';
-import 'package:ecommerce_app/app/modules/brands/view/sort_sheet.dart';
-import 'package:ecommerce_app/app/modules/products/controllers/add_to_wishlist.dart';
-import 'package:ecommerce_app/app/widgets/app_bar.dart';
-import 'package:ecommerce_app/app/widgets/product_bottom_button.dart';
+import 'package:soulstyle/app/core/values/api_configs.dart';
+import 'package:soulstyle/app/core/values/colors.dart';
+import 'package:soulstyle/app/core/values/strings.dart';
+import 'package:soulstyle/app/modules/brands/controllers/brand_product_controller.dart';
+import 'package:soulstyle/app/modules/brands/controllers/filter_controller.dart';
+import 'package:soulstyle/app/modules/brands/view/filter_sheet.dart';
+import 'package:soulstyle/app/modules/brands/view/sort_sheet.dart';
+import 'package:soulstyle/app/modules/products/controllers/add_to_wishlist.dart';
+import 'package:soulstyle/app/widgets/app_bar.dart';
+import 'package:soulstyle/app/widgets/product_bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

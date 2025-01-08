@@ -1,9 +1,8 @@
 import 'dart:convert';
-
-import 'package:ecommerce_app/app/data/api_provider.dart';
-import 'package:ecommerce_app/app/modules/web_view_pages/model/web_view_response.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:soulstyle/app/data/api_provider.dart';
+import 'package:soulstyle/app/modules/web_view_pages/model/web_view_response.dart';
 
 class WebViewController extends GetxController {
   final isLoading = false.obs;
