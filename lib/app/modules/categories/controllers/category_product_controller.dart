@@ -1,10 +1,11 @@
 import 'dart:convert';
-import 'package:soulstyle/app/data/api_provider.dart';
-import 'package:soulstyle/app/data/storage_provider.dart';
-import 'package:soulstyle/app/modules/brands/model/brand_product_model.dart';
-import 'package:soulstyle/app/modules/brands/model/brand_reponse_model.dart';
-import 'package:flutter/material.dart';
+import 'package:ecommerce_app/app/data/api_provider.dart';
+import 'package:ecommerce_app/app/data/storage_provider.dart';
+import 'package:ecommerce_app/app/modules/brands/model/brand_product_model.dart';
+import 'package:ecommerce_app/app/modules/brands/model/brand_reponse_model.dart';
 import 'package:get/get.dart';
+
+import '../../../core/values/colors.dart';
 
 class CategoriesProductController extends GetxController {
   final AuthService authService = AuthService();
@@ -37,20 +38,20 @@ class CategoriesProductController extends GetxController {
         if (responseData['success'] == 1) {
           brandproductResponse.value = BrandReponseModel.fromJson(responseData);
           Get.snackbar('Success', 'Product Listed',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Failed to retrieve products',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
+            colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
       }
     } catch (e) {
       isLoading.value = false;
       Get.snackbar('Error', 'Failed to load products: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
     }
   }
 }

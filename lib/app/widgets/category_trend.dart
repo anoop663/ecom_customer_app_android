@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../core/values/colors.dart';
+
 class CategoryTrend extends StatelessWidget {
   CategoryTrend({super.key});
 
@@ -57,7 +59,7 @@ class CategoryTrend extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 14.0,
                 fontWeight: FontWeight.w400,
-                color: Colors.black,
+                color: AppColors.textColor2,
               ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis, // Ensures long titles are truncated

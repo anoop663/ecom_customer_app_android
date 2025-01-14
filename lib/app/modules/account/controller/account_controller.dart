@@ -1,11 +1,12 @@
 import 'dart:convert';
 
-import 'package:soulstyle/app/data/api_provider.dart';
-import 'package:soulstyle/app/data/storage_provider.dart';
-import 'package:soulstyle/app/modules/account/model/account_response.dart';
-import 'package:soulstyle/app/modules/home/models/home_product_model.dart';
-import 'package:flutter/material.dart';
+import 'package:ecommerce_app/app/data/api_provider.dart';
+import 'package:ecommerce_app/app/data/storage_provider.dart';
+import 'package:ecommerce_app/app/modules/account/model/account_response.dart';
+import 'package:ecommerce_app/app/modules/home/models/home_product_model.dart';
 import 'package:get/get.dart';
+
+import '../../../core/values/colors.dart';
 
 class AccountController extends GetxController {
   final isLoading = false.obs;
@@ -54,15 +55,15 @@ class AccountController extends GetxController {
       Get.snackbar(
         'Success',
         'Logged out from the account',
-        colorText: Colors.white,
-        backgroundColor: Colors.black,
+        colorText: AppColors.primary,
+        backgroundColor: AppColors.textColor2,
       );
     } catch (e) {
       Get.snackbar(
         'Failed',
         'Failed to log out: $e',
-        colorText: Colors.white,
-        backgroundColor: Colors.black,
+        colorText: AppColors.primary,
+        backgroundColor: AppColors.textColor2,
       );
     }
   }
@@ -71,8 +72,8 @@ class AccountController extends GetxController {
     Get.snackbar(
       'Error',
       message,
-      colorText: Colors.white,
-      backgroundColor: Colors.red,
+      colorText: AppColors.primary,
+      backgroundColor: AppColors.redColor,
     );
   }
 }

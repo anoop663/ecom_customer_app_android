@@ -1,10 +1,12 @@
 import 'dart:convert';
-import 'package:soulstyle/app/data/api_provider.dart';
-import 'package:soulstyle/app/data/storage_provider.dart';
-import 'package:soulstyle/app/modules/brands/model/brand_filter_model.dart';
-import 'package:soulstyle/app/modules/brands/model/brand_reponse_model.dart';
-import 'package:flutter/material.dart';
+import 'package:ecommerce_app/app/data/api_provider.dart';
+import 'package:ecommerce_app/app/data/storage_provider.dart';
+import 'package:ecommerce_app/app/modules/brands/model/brand_filter_model.dart';
+import 'package:ecommerce_app/app/modules/brands/model/brand_reponse_model.dart';
 import 'package:get/get.dart';
+
+import '../../../core/values/colors.dart';
+import '../../products/controllers/add_to_wishlist.dart';
 
 class BrandProductController extends GetxController {
   // Retrieve passed arguments
@@ -89,7 +91,6 @@ class BrandProductController extends GetxController {
         value: value,
         filters: filter);
 
-
     SortModel sortModel = SortModel(
         id: idToken.$1,
         token: idToken.$2,
@@ -116,16 +117,45 @@ class BrandProductController extends GetxController {
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Failed to retrieve products',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
+            colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
       }
     } catch (e) {
       isLoading.value = false;
       Get.snackbar('Error', 'Failed to load products: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
     }
+  }
+
+  void addAndRemovewishList({String? slug}) async {
+    Product selectedProduct = brandproductResponse
+        .value!.products.returnData!.data
+        .firstWhere((e) => e.slug == slug, orElse: () => Product());
+   // print(slug);
+   // print(selectedProduct.slug);
+    if (selectedProduct.slug != null) {
+      if (selectedProduct.wishlist == 1) {
+        selectedProduct.wishlist = 0;
+      } else {
+        selectedProduct.wishlist = 1;
+      }
+    }
+    update();
+    bool value = await Get.find<AddToWishlistController>().addOrRemoveWishList(
+        productSlug: slug,
+        quantity: selectedProduct.wishlist.toString()) as bool;
+    if (value == false) {
+      if (selectedProduct.slug != null) {
+        if (selectedProduct.wishlist == 1) {
+          selectedProduct.wishlist = 0;
+        } else {
+          selectedProduct.wishlist = 1;
+        }
+      }
+    }
+    update();
   }
 }

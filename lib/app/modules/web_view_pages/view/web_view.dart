@@ -1,10 +1,9 @@
-
+import 'package:ecommerce_app/app/core/values/colors.dart';
+import 'package:ecommerce_app/app/modules/web_view_pages/controller/web_view_controller.dart';
+import 'package:ecommerce_app/app/routes/routes.dart';
+import 'package:ecommerce_app/app/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:soulstyle/app/core/values/colors.dart';
-import 'package:soulstyle/app/modules/web_view_pages/controller/web_view_controller.dart';
-import 'package:soulstyle/app/routes/routes.dart';
-import 'package:soulstyle/app/widgets/loading_widget.dart';
 
 
 class WebViewView extends StatelessWidget {

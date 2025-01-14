@@ -1,17 +1,20 @@
 import 'dart:convert';
 
-import 'package:soulstyle/app/core/values/api_configs.dart';
-import 'package:soulstyle/app/core/values/colors.dart';
-import 'package:soulstyle/app/core/values/strings.dart';
-import 'package:soulstyle/app/modules/brands/controllers/brand_product_controller.dart';
-import 'package:soulstyle/app/modules/brands/controllers/filter_controller.dart';
-import 'package:soulstyle/app/modules/brands/view/filter_sheet.dart';
-import 'package:soulstyle/app/modules/brands/view/sort_sheet.dart';
-import 'package:soulstyle/app/modules/products/controllers/add_to_wishlist.dart';
-import 'package:soulstyle/app/widgets/app_bar.dart';
-import 'package:soulstyle/app/widgets/product_bottom_button.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce_app/app/core/values/api_configs.dart';
+import 'package:ecommerce_app/app/core/values/colors.dart';
+import 'package:ecommerce_app/app/core/values/strings.dart';
+import 'package:ecommerce_app/app/modules/brands/controllers/brand_product_controller.dart';
+import 'package:ecommerce_app/app/modules/brands/controllers/filter_controller.dart';
+import 'package:ecommerce_app/app/modules/brands/view/filter_sheet.dart';
+import 'package:ecommerce_app/app/modules/brands/view/sort_sheet.dart';
+import 'package:ecommerce_app/app/modules/products/controllers/add_to_wishlist.dart';
+import 'package:ecommerce_app/app/widgets/app_bar.dart';
+import 'package:ecommerce_app/app/widgets/product_bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../core/utils/shimmer_utils.dart';
 
 class BrandProducts extends StatefulWidget {
   const BrandProducts({super.key});
@@ -97,26 +100,29 @@ class _BrandProductsState extends State<BrandProducts> {
                                             BorderRadius.circular(10.0),
                                       ),
                                       child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        child: product.image.isNotEmpty
-                                            ? Image.network(
-                                                ApiConfig.productImageUrl +
-                                                    product.image,
-                                                fit: BoxFit.cover,
-                                                errorBuilder: (context, error,
-                                                    stackTrace) {
-                                                  // Display placeholder image on error
-                                                  return Image.asset(
-                                                    'assets/images/no_image.png',
-                                                    fit: BoxFit.cover,
-                                                  );
-                                                },
-                                              )
-                                            : Image.asset(
-                                                'assets/images/no_image.png',
-                                                fit: BoxFit.cover,
-                                              ),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10)),
+                                        child: CachedNetworkImage(
+                                          placeholder: (context, url) {
+                                            return ShimmerUtil().container(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.2,
+                                              width: double.infinity,
+                                            );
+                                          },
+                                          imageUrl: ApiConfig.productImageUrl +
+                                              product.image!,
+                                          fit: BoxFit.cover,
+                                          alignment: Alignment.center,
+                                          errorWidget: (context, url, error) {
+                                            return Image.asset(
+                                              ImageStrings.noImage,
+                                              fit: BoxFit.cover,
+                                            );
+                                          },
+                                        ),
                                       ),
                                     ),
                                     const SizedBox(height: 5),
@@ -128,17 +134,17 @@ class _BrandProductsState extends State<BrandProducts> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            product.name,
+                                            product.name ?? '',
                                             style: const TextStyle(
                                               fontSize: 14.0,
-                                              color: Colors.black,
+                                              color: AppColors.textColor2,
                                             ),
                                           ),
                                           Text(
                                             '₹ ${product.price}',
                                             style: const TextStyle(
                                               fontSize: 16.0,
-                                              color: Colors.black,
+                                              color: AppColors.textColor2,
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
@@ -157,8 +163,12 @@ class _BrandProductsState extends State<BrandProducts> {
                                     right: 8.0,
                                     child: GestureDetector(
                                       onTap: () {
-                                        wishListController
-                                            .toggleFavorite(product.slug);
+                                        // wishListController
+                                        //     .toggleFavorite(product.slug!,);
+                                        brandProductController
+                                            .addAndRemovewishList(
+                                          slug: product.slug!,
+                                        );
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.all(6.0),
@@ -168,14 +178,24 @@ class _BrandProductsState extends State<BrandProducts> {
                                               ? Colors.transparent
                                               : Colors.transparent,
                                         ),
-                                        child: Icon(
-                                          isFavorite
-                                              ? Icons.favorite // Filled heart
-                                              : Icons
-                                                  .favorite_border, // Outline heart
-                                          color: isFavorite
-                                              ? Colors.red
-                                              : Colors.black,
+                                        child: GetBuilder<BrandProductController>(
+                                          builder: (ctrl) {
+                                            return Icon(
+                                              // isFavorite
+                                              product.wishlist == 1
+                                                  ? Icons.favorite // Filled heart
+                                                  : Icons
+                                                      .favorite_border, // Outline heart
+                                              color: productsData
+                                                          .products
+                                                          .returnData!
+                                                          .data[index]
+                                                          .wishlist ==
+                                                      1
+                                                  ? AppColors.redColor
+                                                  : AppColors.textColor2,
+                                            );
+                                          }
                                         ),
                                       ),
                                     ),
@@ -194,7 +214,7 @@ class _BrandProductsState extends State<BrandProducts> {
                       child: const Center(
                         child: Text(
                           'No Products available',
-                          style: TextStyle(color: Colors.black, fontSize: 15),
+                          style: TextStyle(color: AppColors.textColor2, fontSize: 15),
                         ),
                       ),
                     ),
@@ -207,7 +227,7 @@ class _BrandProductsState extends State<BrandProducts> {
             left: 0,
             right: 0,
             child: Container(
-              color: Colors.white,
+              color: AppColors.primary,
               padding:
                   const EdgeInsets.symmetric(horizontal: 50.0, vertical: 8.0),
               child: Row(

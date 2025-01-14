@@ -1,7 +1,7 @@
+import 'package:ecommerce_app/app/widgets/view_all.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:soulstyle/app/widgets/view_all.dart';
 
 class SectionTitle extends StatelessWidget {
   const SectionTitle({

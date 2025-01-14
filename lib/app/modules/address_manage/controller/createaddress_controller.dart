@@ -1,11 +1,13 @@
 import 'dart:convert';
-import 'package:soulstyle/app/data/api_provider.dart';
-import 'package:soulstyle/app/data/storage_provider.dart';
-import 'package:soulstyle/app/modules/address_manage/model/address_create_model.dart';
-import 'package:soulstyle/app/modules/address_manage/model/addressfunction_model.dart';
-import 'package:soulstyle/app/routes/routes.dart';
+import 'package:ecommerce_app/app/data/api_provider.dart';
+import 'package:ecommerce_app/app/data/storage_provider.dart';
+import 'package:ecommerce_app/app/modules/address_manage/model/address_create_model.dart';
+import 'package:ecommerce_app/app/modules/address_manage/model/addressfunction_model.dart';
+import 'package:ecommerce_app/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../core/values/colors.dart';
 
 class CreateAddressController extends GetxController {
   final AuthService authService = AuthService();
@@ -65,8 +67,8 @@ class CreateAddressController extends GetxController {
         Get.snackbar(
           'Success',
           'Address added',
-          colorText: Colors.white,
-          backgroundColor: Colors.black,
+          colorText: AppColors.textColor1,
+          backgroundColor: AppColors.textColor2,
         );
 
         // Add a 2-second delay before navigating to the address page
@@ -75,13 +77,13 @@ class CreateAddressController extends GetxController {
       } else {
         Get.snackbar(
             'Error', responseData['message'] ?? 'Failed to add address',
-            colorText: Colors.white,
+            colorText: AppColors.textColor1,
             backgroundColor: const Color.fromARGB(255, 203, 165, 165));
       }
     } catch (e) {
       isLoading.value = false;
       Get.snackbar('Error', 'Failed to add address: $e',
-          colorText: Colors.white,
+          colorText: AppColors.textColor1,
           backgroundColor: const Color.fromARGB(255, 208, 169, 169));
     }
   }
@@ -106,19 +108,19 @@ class CreateAddressController extends GetxController {
 
         if (responseData['success'] == 1) {
           Get.snackbar('Success', 'Item added to Cart',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
         } else {
           Get.snackbar('Error', responseData['message'] ?? 'Item adding failed',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
+            colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
       }
     } catch (e) {
       isLoading.value = false;
       Get.snackbar('Error', 'Failed to add to Cart: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
     }
   }
 
@@ -141,20 +143,20 @@ class CreateAddressController extends GetxController {
 
         if (responseData['success'] == 1) {
           Get.snackbar('Success', 'Address Deleted',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Address deleting failed',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
+            colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
       }
     } catch (e) {
       isLoading.value = false;
       Get.snackbar('Error', 'Failed to delete address: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
     }
   }
 
@@ -177,20 +179,20 @@ class CreateAddressController extends GetxController {
 
         if (responseData['success'] == 1) {
           Get.snackbar('Success', 'Address updated',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Address updation failed',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
+            colorText: AppColors.textColor1, backgroundColor: Colors.black);
       }
     } catch (e) {
       isLoading.value = false;
       Get.snackbar('Error', 'Failed to update address: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.textColor1, backgroundColor: Colors.black);
     }
   }
 }

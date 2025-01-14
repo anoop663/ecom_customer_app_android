@@ -92,48 +92,48 @@ class Return {
 }
 
 class Product {
-  final String slug;
-  final int status;
-  final String storeSlug;
-  final String purchaseReward;
-  final String rewardPoint;
-  final String code;
-  final String name;
-  final String appDescription;
-  final String stock;
-  final String symbolLeft;
-  final String symbolRight;
-  final String oldPrice;
-  final String price;
-  final String discount;
-  final String rating;
-  final String image;
-  final int wishlist;
-  final int cart;
-  final String store;
-  final String manufacturer;
+  final String? slug;
+  final int? status;
+  final String? storeSlug;
+  final String? purchaseReward;
+  final String? rewardPoint;
+  final String? code;
+  final String? name;
+  final String? appDescription;
+  final String? stock;
+  final String? symbolLeft;
+  final String? symbolRight;
+  final String? oldPrice;
+  final String? price;
+  final String? discount;
+  final String? rating;
+  final String? image;
+   int? wishlist;
+  final int? cart;
+  final String? store;
+  final String? manufacturer;
 
   Product({
-    required this.slug,
-    required this.status,
-    required this.storeSlug,
-    required this.purchaseReward,
-    required this.rewardPoint,
-    required this.code,
-    required this.name,
-    required this.appDescription,
-    required this.stock,
-    required this.symbolLeft,
-    required this.symbolRight,
-    required this.oldPrice,
-    required this.price,
-    required this.discount,
-    required this.rating,
-    required this.image,
-    required this.wishlist,
-    required this.cart,
-    required this.store,
-    required this.manufacturer,
+     this.slug,
+     this.status,
+     this.storeSlug,
+     this.purchaseReward,
+     this.rewardPoint,
+     this.code,
+     this.name,
+     this.appDescription,
+     this.stock,
+     this.symbolLeft,
+     this.symbolRight,
+     this.oldPrice,
+     this.price,
+     this.discount,
+     this.rating,
+     this.image,
+     this.wishlist,
+     this.cart,
+     this.store,
+     this.manufacturer,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(

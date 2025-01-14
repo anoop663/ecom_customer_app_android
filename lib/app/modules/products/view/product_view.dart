@@ -1,11 +1,11 @@
-import 'package:soulstyle/app/core/values/colors.dart';
-import 'package:soulstyle/app/core/values/strings.dart';
-import 'package:soulstyle/app/modules/cart/controller/cart_controller.dart';
-import 'package:soulstyle/app/modules/products/controllers/add_to_cart.dart';
-import 'package:soulstyle/app/modules/products/controllers/add_to_wishlist.dart';
-import 'package:soulstyle/app/modules/products/controllers/product_controller.dart';
-import 'package:soulstyle/app/routes/routes.dart';
-import 'package:soulstyle/app/widgets/curve_button.dart';
+import 'package:ecommerce_app/app/core/values/colors.dart';
+import 'package:ecommerce_app/app/core/values/strings.dart';
+import 'package:ecommerce_app/app/modules/cart/controller/cart_controller.dart';
+import 'package:ecommerce_app/app/modules/products/controllers/add_to_cart.dart';
+import 'package:ecommerce_app/app/modules/products/controllers/add_to_wishlist.dart';
+import 'package:ecommerce_app/app/modules/products/controllers/product_controller.dart';
+import 'package:ecommerce_app/app/routes/routes.dart';
+import 'package:ecommerce_app/app/widgets/curve_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -63,7 +63,7 @@ class ProductPage extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               errorBuilder: (context, error, stackTrace) {
                 return Image.asset(
-                  'assets/images/no_image.png',
+                  ImageStrings.noImage,
                   fit: BoxFit.cover,
                   width: MediaQuery.of(context).size.width,
                 );
@@ -163,7 +163,7 @@ class ProductPage extends StatelessWidget {
         effect: const ScrollingDotsEffect(
           dotHeight: 8,
           dotWidth: 8,
-          activeDotColor: Colors.black,
+          activeDotColor: AppColors.textColor2,
           dotColor: Colors.grey,
         ),
       ),
@@ -175,7 +175,7 @@ class ProductPage extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16.0),
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: AppColors.primary,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(24),
             topRight: Radius.circular(10),
@@ -189,7 +189,7 @@ class ProductPage extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
-                color: Colors.black,
+                color: AppColors.textColor2,
               ),
             ),
             const SizedBox(height: 15),
@@ -198,7 +198,7 @@ class ProductPage extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
-                color: Colors.black,
+                color: AppColors.textColor2,
               ),
             ),
             const SizedBox(height: 16),
@@ -221,7 +221,7 @@ class ProductPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
-                  color: Colors.black,
+                  color: AppColors.textColor2,
                 ),
               ),
             ),
@@ -232,7 +232,7 @@ class ProductPage extends StatelessWidget {
                   description,
                   style: const TextStyle(
                     fontSize: 14,
-                    color: Colors.black,
+                    color: AppColors.textColor2,
                   ),
                 ),
               ),
@@ -261,7 +261,7 @@ class ProductPage extends StatelessWidget {
           Expanded(
             child: CurvedButton(
               onClick: () {
-                wishlistController.wislistFunction(productSlug);
+                wishlistController.wislistFunction(productSlug,);
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

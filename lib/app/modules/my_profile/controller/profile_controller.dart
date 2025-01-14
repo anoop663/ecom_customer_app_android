@@ -1,11 +1,13 @@
 import 'dart:convert';
 
-import 'package:soulstyle/app/data/api_provider.dart';
-import 'package:soulstyle/app/data/storage_provider.dart';
-import 'package:soulstyle/app/modules/home/models/home_product_model.dart';
-import 'package:soulstyle/app/modules/my_profile/model/profile_response.dart';
+import 'package:ecommerce_app/app/data/api_provider.dart';
+import 'package:ecommerce_app/app/data/storage_provider.dart';
+import 'package:ecommerce_app/app/modules/home/models/home_product_model.dart';
+import 'package:ecommerce_app/app/modules/my_profile/model/profile_response.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../core/values/colors.dart';
 
 class ProfileController extends GetxController {
   final nameController = TextEditingController();
@@ -65,8 +67,8 @@ class ProfileController extends GetxController {
     Get.snackbar(
       'Error',
       message,
-      colorText: Colors.white,
-      backgroundColor: Colors.black,
+      colorText: AppColors.textColor1,
+      backgroundColor: AppColors.textColor2,
     );
   }
 

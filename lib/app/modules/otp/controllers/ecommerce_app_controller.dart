@@ -1,11 +1,13 @@
 import 'dart:convert';
 
-import 'package:soulstyle/app/data/api_provider.dart';
-import 'package:soulstyle/app/modules/otp/models/otp_model.dart';
-import 'package:soulstyle/app/routes/routes.dart';
+import 'package:ecommerce_app/app/data/api_provider.dart';
+import 'package:ecommerce_app/app/modules/otp/models/otp_model.dart';
+import 'package:ecommerce_app/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+
+import '../../../core/values/colors.dart';
 
 class OtpController extends GetxController {
   final AuthService authService = AuthService();
@@ -19,7 +21,7 @@ class OtpController extends GetxController {
   void verifyOtp() async {
     if (otpController.text.isEmpty) {
       Get.snackbar('Error', 'Please enter OTP',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
       return;
     }
 
@@ -48,21 +50,21 @@ class OtpController extends GetxController {
 
           // Navigate to home page after successful OTP verification
           Get.snackbar('Success', 'OTP verified successfully',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
           Get.offAllNamed(Routes.bottombar);
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Invalid OTP',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
+            colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
       }
     } catch (e) {
       isLoading.value = false;
       Get.snackbar('Error', 'Failed to verify OTP: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
     }
   }
 

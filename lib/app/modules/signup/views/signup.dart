@@ -1,12 +1,12 @@
-
+import 'package:ecommerce_app/app/core/values/colors.dart';
+import 'package:ecommerce_app/app/core/values/enums.dart';
+import 'package:ecommerce_app/app/core/values/strings.dart';
+import 'package:ecommerce_app/app/modules/signup/controllers/register_controller.dart';
+import 'package:ecommerce_app/app/routes/routes.dart';
+import 'package:ecommerce_app/app/widgets/app_text_filed.dart';
+import 'package:ecommerce_app/app/widgets/curve_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:soulstyle/app/core/values/enums.dart';
-import 'package:soulstyle/app/core/values/strings.dart';
-import 'package:soulstyle/app/modules/signup/controllers/register_controller.dart';
-import 'package:soulstyle/app/routes/routes.dart';
-import 'package:soulstyle/app/widgets/app_text_filed.dart';
-import 'package:soulstyle/app/widgets/curve_button.dart';
 
 class SignupPage extends StatelessWidget {
   final SignupController signupController = Get.put(SignupController());
@@ -26,7 +26,7 @@ class SignupPage extends StatelessWidget {
               width: screenSize.width,
               child: Image.asset(
                 ImageStrings.signupBg,
-                color: Colors.black.withOpacity(0.6),
+                color: AppColors.textColor2.withOpacity(0.6),
                 colorBlendMode: BlendMode.darken,
                 fit: BoxFit.cover,
               ),
@@ -35,7 +35,7 @@ class SignupPage extends StatelessWidget {
               top: 40.0,
               left: 16.0,
               child: IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
+                icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.primary),
                 onPressed: () => Get.back(),
               ),
             ),
@@ -103,26 +103,26 @@ class SignupPage extends StatelessWidget {
                             child: RadioListTile<Gender>(
                               title: const Text(
                                 'Male',
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: AppColors.primary),
                               ),
                               value: Gender.male,
                               groupValue: signupController.selectedGender.value,
                               onChanged: (value) => signupController
                                   .selectedGender.value = value!,
-                              activeColor: Colors.white,
+                              activeColor: AppColors.primary,
                             ),
                           ),
                           Expanded(
                             child: RadioListTile<Gender>(
                               title: const Text(
                                 'Female',
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: AppColors.primary),
                               ),
                               value: Gender.female,
                               groupValue: signupController.selectedGender.value,
                               onChanged: (value) => signupController
                                   .selectedGender.value = value!,
-                              activeColor: Colors.white,
+                              activeColor: AppColors.primary,
                             ),
                           ),
                         ],

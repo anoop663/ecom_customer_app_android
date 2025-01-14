@@ -1,7 +1,7 @@
-import 'package:soulstyle/app/core/values/colors.dart';
-import 'package:soulstyle/app/core/values/strings.dart';
-import 'package:soulstyle/app/modules/forgot_pass/controller/forgot_controller.dart';
-import 'package:soulstyle/app/widgets/curve_button.dart';
+import 'package:ecommerce_app/app/core/values/colors.dart';
+import 'package:ecommerce_app/app/core/values/strings.dart';
+import 'package:ecommerce_app/app/modules/forgot_pass/controller/forgot_controller.dart';
+import 'package:ecommerce_app/app/widgets/curve_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -33,7 +33,7 @@ class ForgotPage extends StatelessWidget {
             left: 16,
             child: IconButton(
               icon: const Icon(Icons.arrow_back_ios_new_outlined,
-                  color: Colors.white),
+                  color: AppColors.textColor1),
               onPressed: () {
                 Get.back();
               },
@@ -92,7 +92,7 @@ class ForgotPage extends StatelessWidget {
                         isSelected: true,
                         child: forgotController.isLoading.value
                             ? const CircularProgressIndicator(
-                                color: Colors.white,
+                                color: AppColors.textColor1,
                               )
                             : null,
                       )),

@@ -1,8 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecommerce_app/app/core/values/api_configs.dart';
+import 'package:ecommerce_app/app/modules/home/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:soulstyle/app/core/values/api_configs.dart';
-import 'package:soulstyle/app/modules/home/controllers/home_controller.dart';
 
 class AppCarosal extends StatelessWidget {
   AppCarosal({super.key});

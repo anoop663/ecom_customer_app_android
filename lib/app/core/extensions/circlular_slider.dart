@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../values/colors.dart';
+
 class CircleSliderThumb implements RangeSliderThumbShape {
   const CircleSliderThumb({
     this.radius = 15.0,
-    this.ringColor = Colors.black,
+    this.ringColor = AppColors.textColor2,
   });
 
   final double radius;
@@ -32,11 +34,11 @@ class CircleSliderThumb implements RangeSliderThumbShape {
     final Canvas canvas = context.canvas;
 
     final fillPaint = Paint()
-      ..color = Colors.white
+      ..color = AppColors.primary
       ..style = PaintingStyle.fill;
 
     final borderPaint = Paint()
-      ..color = Colors.black
+      ..color = AppColors.textColor2
       ..strokeWidth = 2
       ..style = PaintingStyle.stroke;
 

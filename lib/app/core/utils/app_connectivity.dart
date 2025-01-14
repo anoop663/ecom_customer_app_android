@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:soulstyle/app/core/values/api_configs.dart';
+import 'package:ecommerce_app/app/core/values/api_configs.dart';
 
 //Still not used it as it will add in the last
 class AppConnectivity {

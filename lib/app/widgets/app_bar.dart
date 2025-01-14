@@ -1,11 +1,10 @@
-
+import 'package:ecommerce_app/app/core/values/colors.dart';
+import 'package:ecommerce_app/app/core/values/strings.dart';
+import 'package:ecommerce_app/app/modules/cart/controller/cart_controller.dart';
+import 'package:ecommerce_app/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:soulstyle/app/core/values/colors.dart';
-import 'package:soulstyle/app/core/values/strings.dart';
-import 'package:soulstyle/app/modules/cart/controller/cart_controller.dart';
-import 'package:soulstyle/app/routes/routes.dart';
 
 // ignore: must_be_immutable
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -40,7 +39,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
             ? Hero(
                 tag: 'logo',
                 child: Material(
-                  color: Colors.white,
+                  color: AppColors.textColor1,
                   child: InkWell(
                     onTap: () {
                       if (!Navigator.canPop(context)) {
@@ -80,7 +79,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                   Hero(
                     tag: 'search',
                     child: Material(
-                      color: Colors.white,
+                      color: AppColors.textColor1,
                       child: InkWell(
                         onTap: () => Get.toNamed(Routes.search),
                         child: Image.asset(

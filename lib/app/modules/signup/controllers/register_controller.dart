@@ -1,10 +1,12 @@
 import 'dart:convert'; // Needed for json decoding
+import 'package:ecommerce_app/app/core/values/enums.dart';
+import 'package:ecommerce_app/app/data/api_provider.dart';
+import 'package:ecommerce_app/app/modules/signup/models/register_model.dart';
+import 'package:ecommerce_app/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:soulstyle/app/core/values/enums.dart';
-import 'package:soulstyle/app/data/api_provider.dart';
-import 'package:soulstyle/app/modules/signup/models/register_model.dart';
-import 'package:soulstyle/app/routes/routes.dart';
+
+import '../../../core/values/colors.dart';
 
 class SignupController extends GetxController {
   final AuthService authService = AuthService();
@@ -37,27 +39,27 @@ class SignupController extends GetxController {
   bool validateInputs() {
     if (nameController.text.isEmpty) {
       Get.snackbar('Error', 'Full name is required',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
       return false;
     }
     if (phoneController.text.isEmpty || !phoneRegex.hasMatch(phoneController.text)) {
       Get.snackbar('Error', 'Enter a valid phone number',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
       return false;
     }
     if (emailController.text.isEmpty || !emailRegex.hasMatch(emailController.text)) {
       Get.snackbar('Error', 'Enter a valid email',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
       return false;
     }
     if (passwordController.text.isEmpty || passwordController.text.length < 6) {
       Get.snackbar('Error', 'Password must be at least 6 characters',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
       return false;
     }
     if (passwordController.text != confirmPasswordController.text) {
       Get.snackbar('Error', 'Passwords do not match',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
       return false;
     }
     return true;
@@ -92,21 +94,21 @@ class SignupController extends GetxController {
 
           Get.snackbar(
               'Success', responseData['message'] ?? 'Registration successful',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
           Get.toNamed(Routes.otp, arguments: {'id': userId});
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Registration failed',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
+            colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
       }
     } catch (e) {
       isLoading.value = false;
       Get.snackbar('Error', 'Failed to register: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
     }
   }
 }

@@ -1,10 +1,11 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
+import 'package:ecommerce_app/app/data/api_provider.dart';
+import 'package:ecommerce_app/app/data/storage_provider.dart';
+import 'package:ecommerce_app/app/modules/home/models/home_product_model.dart';
+import 'package:ecommerce_app/app/modules/wishlist/model/wishlist_response.dart';
 import 'package:get/get.dart';
-import 'package:soulstyle/app/data/api_provider.dart';
-import 'package:soulstyle/app/data/storage_provider.dart';
-import 'package:soulstyle/app/modules/home/models/home_product_model.dart';
-import 'package:soulstyle/app/modules/wishlist/model/wishlist_response.dart';
+
+import '../../../core/values/colors.dart';
 
 class WishListController extends GetxController {
   final AuthService authService = AuthService();
@@ -39,22 +40,22 @@ class WishListController extends GetxController {
           wishlistResponse.value = WishListResponse.fromJson(responseData);
 
           //Get.snackbar('Success', 'WishList showing successfully',
-          //    colorText: Colors.white, backgroundColor: Colors.black);
+          //    colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
         } else if (responseData['success'] == 0) {
           wishlistResponse.value = null;
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Items showing failed',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
+            colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
       }
     } catch (e) {
       isLoading.value = false;
       Get.snackbar('Error', 'Failed to show wishlist: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
     }
   }
 }

@@ -2,6 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../core/values/colors.dart';
+
 // The following code is the same that is found inside the Flutter framework
 //just adding the `color,disabledColor,expandedColor` for personalizing the `ExpandedIcon`
 
@@ -241,9 +243,9 @@ class CustomExpansionPanelList extends StatefulWidget {
   ///
   /// The color of the icon.
   ///
-  /// Defaults to [Colors.black54] when the theme's
+  /// Defaults to [AppColors.textColor254] when the theme's
   /// [ThemeData.brightness] is [Brightness.light] and to
-  /// [Colors.white60] when it is [Brightness.dark]. This adheres to the
+  /// [AppColors.textColor160] when it is [Brightness.dark]. This adheres to the
   /// Material Design specifications for [icons](https://material.io/design/iconography/system-icons.html#color)
   /// and for [dark theme](https://material.io/design/color/dark-theme.html#ui-application)
   final Color? color;
@@ -251,18 +253,18 @@ class CustomExpansionPanelList extends StatefulWidget {
   /// The color of the icon when it is disabled,
   /// i.e. if [onPressed] is null.
   ///
-  /// Defaults to [Colors.black38] when the theme's
+  /// Defaults to [AppColors.textColor238] when the theme's
   /// [ThemeData.brightness] is [Brightness.light] and to
-  /// [Colors.white38] when it is [Brightness.dark]. This adheres to the
+  /// [AppColors.textColor138] when it is [Brightness.dark]. This adheres to the
   /// Material Design specifications for [icons](https://material.io/design/iconography/system-icons.html#color)
   /// and for [dark theme](https://material.io/design/color/dark-theme.html#ui-application)
   final Color? disabledColor;
 
   /// The color of the icon when the icon is expanded.
   ///
-  /// Defaults to [Colors.black54] when the theme's
+  /// Defaults to [AppColors.textColor254] when the theme's
   /// [ThemeData.brightness] is [Brightness.light] and to
-  /// [Colors.white] when it is [Brightness.dark]. This adheres to the
+  /// [AppColors.textColor1] when it is [Brightness.dark]. This adheres to the
   /// Material Design specifications for [icons](https://material.io/design/iconography/system-icons.html#color)
   /// and for [dark theme](https://material.io/design/color/dark-theme.html#ui-application)
   final Color? expandedColor;
@@ -665,9 +667,9 @@ class CustomExpandIcon extends StatefulWidget {
 
   /// The color of the icon.
   ///
-  /// Defaults to [Colors.black54] when the theme's
+  /// Defaults to [AppColors.textColor254] when the theme's
   /// [ThemeData.brightness] is [Brightness.light] and to
-  /// [Colors.white60] when it is [Brightness.dark]. This adheres to the
+  /// [AppColors.textColor160] when it is [Brightness.dark]. This adheres to the
   /// Material Design specifications for [icons](https://material.io/design/iconography/system-icons.html#color)
   /// and for [dark theme](https://material.io/design/color/dark-theme.html#ui-application)
   final Color? color;
@@ -754,9 +756,9 @@ class _CustomExpandIconState extends State<CustomExpandIcon>
 
     switch (Theme.of(context).brightness) {
       case Brightness.light:
-        return Colors.black54;
+        return AppColors.black54;
       case Brightness.dark:
-        return Colors.white60;
+        return AppColors.white60;
     }
   }
 

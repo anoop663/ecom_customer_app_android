@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
+import '../core/values/colors.dart';
+
 class BestSeller extends StatelessWidget {
   BestSeller({super.key});
 
@@ -52,14 +54,14 @@ class BestSeller extends StatelessWidget {
                 productName ?? 'Unknown Product',
                 style: const TextStyle(
                   fontSize: 14.0,
-                  color: Colors.black,
+                  color: AppColors.textColor2,
                 ),
               ),
               Text(
                 productPrice ?? 'Unknown Price',
                 style: const TextStyle(
                   fontSize: 16.0,
-                  color: Colors.black,
+                  color: AppColors.textColor2,
                   fontWeight: FontWeight.w500,
                 ),
               ),

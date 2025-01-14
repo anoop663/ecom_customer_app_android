@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../../core/values/colors.dart';
 import '../../../data/storage_provider.dart';
 import '../../my_orders/model/myorders_response.dart' as orderlist;
 
@@ -64,8 +65,8 @@ class SingleOrderDetailsController extends GetxController
       Get.snackbar(
         'Error',
         'Failed to load orders: $e',
-        colorText: Colors.white,
-        backgroundColor: Colors.black,
+        colorText: AppColors.textColor1,
+        backgroundColor: AppColors.textColor2,
       );
     }
   }
@@ -81,8 +82,8 @@ class SingleOrderDetailsController extends GetxController
       Get.snackbar(
         'Error',
         'Failed to load orders: $e',
-        colorText: Colors.white,
-        backgroundColor: Colors.black,
+        colorText: AppColors.textColor1,
+        backgroundColor: AppColors.textColor2,
       );
     }
   }

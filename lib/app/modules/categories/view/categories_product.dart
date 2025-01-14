@@ -1,8 +1,10 @@
-import 'package:soulstyle/app/core/values/api_configs.dart';
-import 'package:soulstyle/app/modules/categories/controllers/category_product_controller.dart';
-import 'package:soulstyle/app/widgets/app_bar.dart';
+import 'package:ecommerce_app/app/core/values/api_configs.dart';
+import 'package:ecommerce_app/app/modules/categories/controllers/category_product_controller.dart';
+import 'package:ecommerce_app/app/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../core/values/colors.dart';
 
 class CategoriesProduct extends StatelessWidget {
   CategoriesProduct({super.key});
@@ -35,7 +37,7 @@ class CategoriesProduct extends StatelessWidget {
               const Text(
                 'Products',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: AppColors.textColor2,
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
                 ),
@@ -67,7 +69,7 @@ class CategoriesProduct extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10.0),
                               image: DecorationImage(
                                 image: NetworkImage(
-                                    ApiConfig.productImageUrl + product.image),
+                                    ApiConfig.productImageUrl + product.image!),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -80,17 +82,17 @@ class CategoriesProduct extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  product.name,
+                                  product.name??'',
                                   style: const TextStyle(
                                     fontSize: 14.0,
-                                    color: Colors.black,
+                                    color: AppColors.textColor2,
                                   ),
                                 ),
                                 Text(
                                   '₹ ${product.price}',
                                   style: const TextStyle(
                                     fontSize: 16.0,
-                                    color: Colors.black,
+                                    color: AppColors.textColor2,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),

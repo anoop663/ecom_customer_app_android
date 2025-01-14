@@ -1,10 +1,9 @@
-
+import 'package:ecommerce_app/app/core/extensions/custom_page_scroll.dart';
+import 'package:ecommerce_app/app/core/values/api_configs.dart';
+import 'package:ecommerce_app/app/core/values/colors.dart';
+import 'package:ecommerce_app/app/core/values/strings.dart';
+import 'package:ecommerce_app/app/widgets/curve_button.dart';
 import 'package:flutter/material.dart';
-import 'package:soulstyle/app/core/extensions/custom_page_scroll.dart';
-import 'package:soulstyle/app/core/values/api_configs.dart';
-import 'package:soulstyle/app/core/values/colors.dart';
-import 'package:soulstyle/app/core/values/strings.dart';
-import 'package:soulstyle/app/widgets/curve_button.dart';
 
 class CurvedContainerWithImage extends StatelessWidget {
   const CurvedContainerWithImage({

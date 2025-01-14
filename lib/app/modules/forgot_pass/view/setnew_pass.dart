@@ -1,9 +1,11 @@
-import 'package:soulstyle/app/core/values/strings.dart';
-import 'package:soulstyle/app/modules/forgot_pass/controller/newpass_controller.dart';
-import 'package:soulstyle/app/widgets/app_text_filed.dart';
-import 'package:soulstyle/app/widgets/curve_button.dart';
+import 'package:ecommerce_app/app/core/values/strings.dart';
+import 'package:ecommerce_app/app/modules/forgot_pass/controller/newpass_controller.dart';
+import 'package:ecommerce_app/app/widgets/app_text_filed.dart';
+import 'package:ecommerce_app/app/widgets/curve_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../core/values/colors.dart';
 
 class SetNewPassword extends StatelessWidget {
   final NewpassController newpassController = Get.put(NewpassController());
@@ -16,10 +18,10 @@ class SetNewPassword extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: AppColors.textColor2,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+          icon: const Icon(Icons.arrow_back_ios, color: AppColors.textColor1),
           onPressed: () {
             Get.back();
           },
@@ -33,7 +35,7 @@ class SetNewPassword extends StatelessWidget {
               width: screenSize.width,
               child: Image.asset(
                 ImageStrings.splashImage1,
-                color: Colors.black.withOpacity(0.6),
+                color: AppColors.textColor2.withOpacity(0.6),
                 colorBlendMode: BlendMode.darken,
                 fit: BoxFit.cover,
               ),

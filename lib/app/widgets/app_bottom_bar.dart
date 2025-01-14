@@ -1,14 +1,13 @@
-
+import 'package:ecommerce_app/app/controllers/base_controller.dart';
+import 'package:ecommerce_app/app/core/values/colors.dart';
+import 'package:ecommerce_app/app/core/values/strings.dart';
+import 'package:ecommerce_app/app/modules/account/view/account_view.dart';
+import 'package:ecommerce_app/app/modules/best_items/view/best_items_view.dart';
+import 'package:ecommerce_app/app/modules/brands/view/brand_view.dart';
+import 'package:ecommerce_app/app/modules/categories/view/categories_view.dart';
+import 'package:ecommerce_app/app/modules/home/views/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:soulstyle/app/controllers/base_controller.dart';
-import 'package:soulstyle/app/core/values/colors.dart';
-import 'package:soulstyle/app/core/values/strings.dart';
-import 'package:soulstyle/app/modules/account/view/account_view.dart';
-import 'package:soulstyle/app/modules/best_items/view/best_items_view.dart';
-import 'package:soulstyle/app/modules/brands/view/brand_view.dart';
-import 'package:soulstyle/app/modules/categories/view/categories_view.dart';
-import 'package:soulstyle/app/modules/home/views/home.dart';
 
 class AppBottomBar extends StatelessWidget {
   final PageController _pageController = PageController();

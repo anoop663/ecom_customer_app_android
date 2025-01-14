@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:soulstyle/app/modules/address_manage/model/address_response_model.dart';
+import 'package:ecommerce_app/app/modules/address_manage/model/address_response_model.dart';
 
 import '../../home/models/home_product_model.dart';
 

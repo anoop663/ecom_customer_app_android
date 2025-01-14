@@ -1,10 +1,9 @@
-
+import 'package:ecommerce_app/app/core/values/colors.dart';
+import 'package:ecommerce_app/app/core/values/strings.dart';
+import 'package:ecommerce_app/app/routes/routes.dart';
+import 'package:ecommerce_app/app/widgets/curve_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:soulstyle/app/core/values/colors.dart';
-import 'package:soulstyle/app/core/values/strings.dart';
-import 'package:soulstyle/app/routes/routes.dart';
-import 'package:soulstyle/app/widgets/curve_button.dart';
 
 class NoConnection extends StatelessWidget {
    const NoConnection({super.key});

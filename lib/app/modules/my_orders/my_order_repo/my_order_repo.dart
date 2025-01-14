@@ -1,9 +1,9 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../../../core/extensions/api_base_helper.dart';
 import '../../../core/values/api_constants.dart';
+import '../../../core/values/colors.dart';
 import '../../../data/api_provider.dart';
 import '../../../data/storage_provider.dart';
 import '../../single_order_details/models/order_details_response.dart';
@@ -27,8 +27,8 @@ class MyOrderRepo {
         Get.snackbar(
           'Error',
           responseData['message'] ?? 'Failed to retrieve orders',
-          colorText: Colors.white,
-          backgroundColor: Colors.black,
+          colorText: AppColors.textColor1,
+          backgroundColor: AppColors.textColor2,
         );
         return null;
       }
@@ -52,8 +52,8 @@ class MyOrderRepo {
         Get.snackbar(
           'Error',
           responseData['message'] ?? 'Failed to retrieve orders',
-          colorText: Colors.white,
-          backgroundColor: Colors.black,
+          colorText: AppColors.textColor1,
+          backgroundColor: AppColors.textColor2,
         );
         return null;
       }
@@ -77,8 +77,8 @@ class MyOrderRepo {
         Get.snackbar(
           'Error',
           responseData['message'] ?? 'Failed to retrieve orders',
-          colorText: Colors.white,
-          backgroundColor: Colors.black,
+          colorText: AppColors.textColor1,
+          backgroundColor: AppColors.textColor2,
         );
         return null;
       }
@@ -103,8 +103,8 @@ class MyOrderRepo {
         Get.snackbar(
           'Error',
           responseData['message'] ?? 'Failed to retrieve orders',
-          colorText: Colors.white,
-          backgroundColor: Colors.black,
+          colorText: AppColors.textColor1,
+          backgroundColor: AppColors.textColor2,
         );
         return null;
       }
@@ -147,8 +147,8 @@ class MyOrderRepo {
         Get.snackbar(
           'Error',
           responseData['message'] ?? 'Failed to retrieve orders',
-          colorText: Colors.white,
-          backgroundColor: Colors.black,
+          colorText: AppColors.textColor1,
+          backgroundColor: AppColors.textColor2,
         );
         return null;
       }

@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/app/modules/my_orders/controller/my_order_controller.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -66,8 +67,7 @@ class OrderDetailsView extends GetView {
                             Routes.singelOrderDetails,
                             arguments: {
                               'order': order,
-                              'item':
-                              order?.itemsNew![index],
+                              'item': order?.itemsNew![index],
                             },
                           );
                         },
@@ -169,9 +169,11 @@ class OrderDetailsView extends GetView {
                                           width: 5,
                                         ),
                                         Text(
-                                          order.updatedAt
-                                              .toString()
-                                              .substring(0, 19),
+                                          Get.find<MyOrdersController>()
+                                              .formatDate(order.createdAt!),
+                                          // order.updatedAt
+                                          //     .toString()
+                                          //     .substring(0, 19),
                                           style: Get.theme.textTheme.bodyMedium!
                                               .copyWith(
                                             color: AppColors.orderDetailDate,

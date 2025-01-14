@@ -4,7 +4,11 @@ class AppColors {
   static const Color primary = Colors.white;
   static const Color primaryDark = Colors.white;
   static const Color textColor1 = Colors.white;
+  static const Color white60 = Color(0x99FFFFFF);
+  static const Color redColor = Colors.red;
   static const Color textColor2 = Colors.black;
+  static const Color black54 = Color(0x8A000000);
+  static const Color shimmerBaseColor = Color(0xFFF3F1F1);
   static const Color noFocusColor = Color.fromRGBO(255, 255, 255, 0.5);
   static const Color carouselIndexDark = Color.fromRGBO(33, 33, 33, 0.2);
   static const Color transparent = Colors.transparent;

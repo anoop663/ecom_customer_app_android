@@ -1,11 +1,13 @@
 import 'dart:convert';
 
-import 'package:soulstyle/app/data/api_provider.dart';
-import 'package:soulstyle/app/modules/forgot_pass/model/newpass_model.dart';
-import 'package:soulstyle/app/routes/routes.dart';
+import 'package:ecommerce_app/app/data/api_provider.dart';
+import 'package:ecommerce_app/app/modules/forgot_pass/model/newpass_model.dart';
+import 'package:ecommerce_app/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+
+import '../../../core/values/colors.dart';
 
 class NewpassController extends GetxController {
   final AuthService authService = AuthService();
@@ -34,12 +36,12 @@ class NewpassController extends GetxController {
   void verifyOtp() async {
     if (otpController.text.isEmpty || newPassController.text.isEmpty || confirmPassController.text.isEmpty) {
       Get.snackbar('Error', 'Please fill all the details',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
       return;
     }
     if (newPassController.text != confirmPassController.text) {
       Get.snackbar('Error', 'Passwords do not match',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
       return;
     }
 
@@ -64,21 +66,21 @@ class NewpassController extends GetxController {
           
           // Navigate to login page after successful OTP change
           Get.snackbar('Success', 'New Password set successfully',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
           Get.offAllNamed(Routes.signin);
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Password setting failed',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
+            colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
       }
     } catch (e) {
       isLoading.value = false;
       Get.snackbar('Error', 'Failed to set Password: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
     }
   }
 

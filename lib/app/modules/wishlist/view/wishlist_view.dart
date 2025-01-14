@@ -1,15 +1,18 @@
-
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce_app/app/core/values/api_configs.dart';
+import 'package:ecommerce_app/app/core/values/colors.dart';
+import 'package:ecommerce_app/app/core/values/strings.dart';
+import 'package:ecommerce_app/app/modules/wishlist/controller/add_to_bag_controller.dart';
+import 'package:ecommerce_app/app/modules/wishlist/controller/remove_from_wishlist_controller.dart';
+import 'package:ecommerce_app/app/modules/wishlist/controller/wislist_controller.dart';
+import 'package:ecommerce_app/app/widgets/app_bar.dart';
+import 'package:ecommerce_app/app/widgets/empty_wishlist.dart';
+import 'package:ecommerce_app/app/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:soulstyle/app/core/values/api_configs.dart';
-import 'package:soulstyle/app/core/values/colors.dart';
-import 'package:soulstyle/app/core/values/strings.dart';
-import 'package:soulstyle/app/modules/wishlist/controller/add_to_bag_controller.dart';
-import 'package:soulstyle/app/modules/wishlist/controller/remove_from_wishlist_controller.dart';
-import 'package:soulstyle/app/modules/wishlist/controller/wislist_controller.dart';
-import 'package:soulstyle/app/widgets/app_bar.dart';
-import 'package:soulstyle/app/widgets/empty_wishlist.dart';
-import 'package:soulstyle/app/widgets/loading_widget.dart';
+
+import '../../../core/utils/shimmer_utils.dart';
+import '../../../routes/routes.dart';
 
 class WishListView extends StatelessWidget {
   WishListView({super.key});
@@ -69,35 +72,67 @@ class WishListView extends StatelessWidget {
                           children: [
                             Stack(
                               children: [
-                                Container(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.29,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.0),
+                                InkWell(
+                                  onTap: (){
+                                    Get.toNamed(
+                                      Routes.productdetails,
+                                      arguments: {
+                                        'product-slug': product.slug,
+                                      },
+                                    );
+                                  },
+                                  child: Container(
+                                    height:
+                                        MediaQuery.of(context).size.height * 0.29,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    // ignore: unnecessary_null_comparison
+                                    child:ClipRRect(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)),
+                                      child: CachedNetworkImage(
+                                        placeholder: (context, url) {
+                                          return ShimmerUtil().container(
+                                            width: double.infinity,
+                                          );
+                                        },
+                                        imageUrl: '${ApiConfig.productImageUrl}${product.image}',
+                                        fit: BoxFit.cover,
+                                        alignment: Alignment.center,
+                                        errorWidget: (context, url, error) {
+                                          return Image.asset(
+                                            ImageStrings.noImage,
+                                            fit: BoxFit.cover,
+                                          );
+                                        },
+                                      ),
+                                    ),
+
+
+                                    // product.image != null &&
+                                    //         product.image.isNotEmpty
+                                    //     ? Image.network(
+                                    //         '${ApiConfig.productImageUrl}${product.image}',
+                                    //         fit: BoxFit.cover,
+                                    //         errorBuilder:
+                                    //             (context, error, stackTrace) {
+                                    //           return Image.asset(
+                                    //             ImageStrings.noImage,
+                                    //             fit: BoxFit.cover,
+                                    //             width: MediaQuery.of(context)
+                                    //                 .size
+                                    //                 .width,
+                                    //           );
+                                    //         },
+                                    //       )
+                                    //     : Image.asset(
+                                    //         ImageStrings.noImage,
+                                    //         fit: BoxFit.cover,
+                                    //         width:
+                                    //             MediaQuery.of(context).size.width,
+                                    //       ),
                                   ),
-                                  // ignore: unnecessary_null_comparison
-                                  child: product.image != null &&
-                                          product.image.isNotEmpty
-                                      ? Image.network(
-                                          '${ApiConfig.productImageUrl}${product.image}',
-                                          fit: BoxFit.cover,
-                                          errorBuilder:
-                                              (context, error, stackTrace) {
-                                            return Image.asset(
-                                              'assets/images/no_image.png',
-                                              fit: BoxFit.cover,
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                            );
-                                          },
-                                        )
-                                      : Image.asset(
-                                          'assets/images/no_image.png',
-                                          fit: BoxFit.cover,
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                        ),
                                 ),
                                 Positioned(
                                   top: 8.0,
@@ -118,12 +153,12 @@ class WishListView extends StatelessWidget {
                                     child: Container(
                                       decoration: const BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: Colors.white,
+                                        color: AppColors.primary,
                                       ),
                                       padding: const EdgeInsets.all(4.0),
                                       child: const Icon(
                                         Icons.close,
-                                        color: Colors.black,
+                                        color: AppColors.textColor2,
                                         size: 24.0,
                                       ),
                                     ),
@@ -142,7 +177,7 @@ class WishListView extends StatelessWidget {
                                     product.name,
                                     style: const TextStyle(
                                       fontSize: 14.0,
-                                      color: Colors.black,
+                                      color: AppColors.textColor2,
                                     ),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -151,7 +186,7 @@ class WishListView extends StatelessWidget {
                                     '₹ ${product.price}',
                                     style: const TextStyle(
                                       fontSize: 16.0,
-                                      color: Colors.black,
+                                      color: AppColors.textColor2,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -170,7 +205,7 @@ class WishListView extends StatelessWidget {
                                       });
                                     },
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.white,
+                                      backgroundColor: AppColors.textColor1,
                                       side: const BorderSide(
                                           color: Color.fromARGB(
                                               255, 228, 220, 220)),
@@ -190,7 +225,7 @@ class WishListView extends StatelessWidget {
                                         const Text(
                                           'ADD TO BAG',
                                           style: TextStyle(
-                                            color: Colors.black,
+                                            color: AppColors.textColor2,
                                             fontWeight: FontWeight.w500,
                                             fontSize: 16,
                                           ),

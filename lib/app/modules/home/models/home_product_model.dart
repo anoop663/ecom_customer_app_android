@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:soulstyle/app/core/values/api_configs.dart';
+import 'package:ecommerce_app/app/core/values/api_configs.dart';
 import 'package:get/get.dart';
 
 class HomeAuth {

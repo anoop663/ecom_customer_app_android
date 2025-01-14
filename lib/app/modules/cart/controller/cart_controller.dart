@@ -1,12 +1,13 @@
 import 'dart:convert';
-import 'package:soulstyle/app/data/api_provider.dart';
-import 'package:soulstyle/app/data/storage_provider.dart';
-import 'package:soulstyle/app/modules/cart/model/cart_model.dart';
-import 'package:soulstyle/app/modules/cart/model/cart_response_model.dart';
-import 'package:soulstyle/app/modules/products/model/add_to_cart_model.dart';
+import 'package:ecommerce_app/app/data/api_provider.dart';
+import 'package:ecommerce_app/app/data/storage_provider.dart';
+import 'package:ecommerce_app/app/modules/cart/model/cart_model.dart';
+import 'package:ecommerce_app/app/modules/cart/model/cart_response_model.dart';
+import 'package:ecommerce_app/app/modules/products/model/add_to_cart_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../core/values/colors.dart';
 import '../../home/models/home_product_model.dart';
 import '../../products/controllers/product_controller.dart';
 
@@ -62,16 +63,16 @@ class CartController extends GetxController {
           cartResponse.value = null;
           // Get.snackbar(
           //     'Error', responseData['message'] ?? 'Items viewing failed',
-          //     colorText: Colors.white, backgroundColor: Colors.black);
+          //     colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
+            colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
       }
     } catch (e) {
       loading.value = false;
       Get.snackbar('Error', 'Failed to view cart: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
     }
   }
 
@@ -105,19 +106,19 @@ class CartController extends GetxController {
           cartResponse.refresh();
           isMovingToWishlist.value = false;
           Get.snackbar('Success', 'Item moved to wishlist',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
         } else {
           Get.snackbar('Error', responseData['message'] ?? 'Item moving failed',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
+            colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
       }
     } catch (e) {
       loadingState.value = false;
       Get.snackbar('Error', 'Failed to move to wishlist: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
     }
   }
 
@@ -160,20 +161,20 @@ class CartController extends GetxController {
 
           isRemoving.value = false;
           Get.snackbar('Success', 'Item removed from cart',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Item removing failed',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
+            colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
       }
     } catch (e) {
       loadingState.value = false;
       Get.snackbar('Error', 'Failed to remove from cart: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
     }
   }
 }

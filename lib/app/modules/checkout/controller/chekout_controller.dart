@@ -1,19 +1,20 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
-import 'package:soulstyle/app/data/api_provider.dart';
-import 'package:soulstyle/app/data/storage_provider.dart';
-import 'package:soulstyle/app/modules/address_manage/model/address_response_model.dart';
-import 'package:soulstyle/app/modules/cart/model/cart_model.dart';
-import 'package:soulstyle/app/modules/cart/model/cart_response_model.dart';
-import 'package:soulstyle/app/modules/checkout/model/checkout_model.dart';
-import 'package:soulstyle/app/modules/checkout/model/checkout_response.dart';
-import 'package:soulstyle/app/modules/home/models/home_product_model.dart';
-import 'package:soulstyle/app/routes/routes.dart';
+import 'package:ecommerce_app/app/data/api_provider.dart';
+import 'package:ecommerce_app/app/data/storage_provider.dart';
+import 'package:ecommerce_app/app/modules/address_manage/model/address_response_model.dart';
+import 'package:ecommerce_app/app/modules/cart/model/cart_model.dart';
+import 'package:ecommerce_app/app/modules/cart/model/cart_response_model.dart';
+import 'package:ecommerce_app/app/modules/checkout/model/checkout_model.dart';
+import 'package:ecommerce_app/app/modules/checkout/model/checkout_response.dart';
+import 'package:ecommerce_app/app/modules/home/models/home_product_model.dart';
+import 'package:ecommerce_app/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
+import '../../../core/values/colors.dart';
 import '../../../core/values/constants.dart';
 import '../../cart/controller/cart_controller.dart';
 import '../model/payment_callback_model.dart';
@@ -103,16 +104,16 @@ class CheckoutScreenController extends GetxController {
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Failed to list address',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
+            colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
       }
     } catch (e) {
       loading.value = false;
       Get.snackbar('Error', 'Failed to load address: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
     }
   }
 
@@ -146,16 +147,16 @@ class CheckoutScreenController extends GetxController {
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Items viewing failed',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
+            colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
       }
     } catch (e) {
       loading.value = false;
       Get.snackbar('Error', 'Failed to view cart: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
     }
   }
 
@@ -200,12 +201,12 @@ class CheckoutScreenController extends GetxController {
           } else {
             Get.snackbar(
                 'Error', responseData1['message'] ?? 'Failed to list address',
-                colorText: Colors.white, backgroundColor: Colors.black);
+                colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
             loading.value = false;
           }
         } else {
           Get.snackbar('Error', 'Server error: ${response.statusCode}',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
           loading.value = false;
         }
       } else {
@@ -225,16 +226,16 @@ class CheckoutScreenController extends GetxController {
             } else {
               Get.snackbar(
                   'Error', responseData1['message'] ?? 'Failed to list address',
-                  colorText: Colors.white, backgroundColor: Colors.black);
+                  colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
             }
           } else {
             Get.snackbar('Error', 'Server error: ${response.statusCode}',
-                colorText: Colors.white, backgroundColor: Colors.black);
+                colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
           }
         } catch (e) {
           loading.value = false;
           Get.snackbar('Error', 'Failed to load address: $e',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
         }
       }
     }
@@ -277,17 +278,17 @@ class CheckoutScreenController extends GetxController {
           isLoading.value = false;
           Get.snackbar(
               'Error', responseData1['message'] ?? 'Failed to list address',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
         }
       } else {
         isLoading.value = false;
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
+            colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
       }
     } catch (e) {
       isLoading.value = false;
       Get.snackbar('Error', 'Failed to load address: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
     }
   }
 
@@ -314,16 +315,16 @@ class CheckoutScreenController extends GetxController {
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Items viewing failed',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
+            colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
       }
     } catch (e) {
       loading.value = false;
       Get.snackbar('Error', 'Failed to view cart: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
     }
   }
 

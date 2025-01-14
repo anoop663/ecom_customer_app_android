@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:ecommerce_app/app/core/utils/app_connectivity.dart';
+import 'package:ecommerce_app/app/data/storage_provider.dart';
+import 'package:ecommerce_app/app/modules/address_manage/model/address_response_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:soulstyle/app/core/utils/app_connectivity.dart';
-import 'package:soulstyle/app/data/storage_provider.dart';
-import 'package:soulstyle/app/modules/address_manage/model/address_response_model.dart';
 
 import '../core/values/colors.dart';
 import '../core/values/constants.dart';
@@ -82,20 +82,20 @@ class BaseController extends GetxController {
               AddressListResponse.fromJson(responseData);
 
           Get.snackbar('Success', 'Address Listed',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Failed to list address',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
+            colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
       }
     } catch (e) {
       addressLoading.value = false;
       Get.snackbar('Error', 'Failed to load address: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.textColor1, backgroundColor: Colors.black);
     }
   }
 

@@ -1,5 +1,4 @@
-
-import 'package:soulstyle/app/core/values/constants.dart';
+import 'package:ecommerce_app/app/core/values/constants.dart';
 
 class IconStrings {
   ///splash screen

@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'package:ecommerce_app/app/data/api_provider.dart';
+import 'package:ecommerce_app/app/modules/signin/models/login_model.dart';
+import 'package:ecommerce_app/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:soulstyle/app/data/api_provider.dart';
-import 'package:soulstyle/app/modules/signin/models/login_model.dart';
-import 'package:soulstyle/app/routes/routes.dart';
+
+import '../../../core/values/colors.dart';
 
 class SigninController extends GetxController {
   final AuthService authService = AuthService();
@@ -55,23 +57,23 @@ class SigninController extends GetxController {
 
           // Show success message and navigate to home page
           Get.snackbar('Success', 'Login successful',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
           Get.offAllNamed(Routes.bottombar); // Navigate to home page
         } else {
           // Show error message from the response
           Get.snackbar('Error', responseData['message'] ?? 'Login failed',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
         }
       } else {
         // Show server error message with status code
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
+            colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
       }
     } catch (e) {
       // Handle exception and show error message
       isLoading.value = false;
       Get.snackbar('Error', 'Failed to login: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
     }
   }
 

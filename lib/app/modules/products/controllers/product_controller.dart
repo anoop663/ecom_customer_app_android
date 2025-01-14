@@ -1,10 +1,11 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
+import 'package:ecommerce_app/app/data/api_provider.dart';
+import 'package:ecommerce_app/app/modules/products/model/product_model.dart';
 import 'package:get/get.dart';
-import 'package:soulstyle/app/data/api_provider.dart';
-import 'package:soulstyle/app/data/storage_provider.dart';
-import 'package:soulstyle/app/modules/products/model/product_model.dart';
-import 'package:soulstyle/app/modules/products/model/product_response_model.dart';
+import 'package:ecommerce_app/app/data/storage_provider.dart';
+import 'package:ecommerce_app/app/modules/products/model/product_response_model.dart';
+
+import '../../../core/values/colors.dart';
 
 class ProductController extends GetxController {
   var isLoading = false.obs;
@@ -48,16 +49,16 @@ class ProductController extends GetxController {
           //Get.snackbar(
           //  'Success',
           //  'Product Listed',
-          //  colorText: Colors.white,
-          //  backgroundColor: Colors.black,
+          //  colorText: AppColors.primary,
+          //  backgroundColor: AppColors.textColor2,
           //);
         } else {
           // Show an error message with response message or fallback
           Get.snackbar(
             'Error',
             responseData['message'] ?? 'Failed to retrieve products',
-            colorText: Colors.white,
-            backgroundColor: Colors.black,
+            colorText: AppColors.primary,
+            backgroundColor: AppColors.textColor2,
           );
         }
       } else {
@@ -65,8 +66,8 @@ class ProductController extends GetxController {
         Get.snackbar(
           'Error',
           'Server error: ${response.statusCode}',
-          colorText: Colors.white,
-          backgroundColor: Colors.black,
+          colorText: AppColors.primary,
+          backgroundColor: AppColors.textColor2,
         );
       }
     } catch (e) {
@@ -77,8 +78,8 @@ class ProductController extends GetxController {
       Get.snackbar(
         'Error',
         'Failed to load products: $e',
-        colorText: Colors.white,
-        backgroundColor: Colors.black,
+        colorText: AppColors.primary,
+        backgroundColor: AppColors.textColor2,
       );
     }
   }

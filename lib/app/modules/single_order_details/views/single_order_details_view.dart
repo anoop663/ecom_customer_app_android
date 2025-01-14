@@ -9,6 +9,7 @@ import '../../../widgets/app_bar.dart';
 import '../../../widgets/curve_button.dart';
 import '../../../widgets/loading_widget.dart';
 import '../../../widgets/price_summery.dart';
+import '../../my_orders/controller/my_order_controller.dart';
 import '../controllers/single_order_details_controller.dart';
 
 class SingleOrderDetailsView extends GetView<SingleOrderDetailsController> {
@@ -66,9 +67,13 @@ class SingleOrderDetailsView extends GetView<SingleOrderDetailsController> {
                                         ),
                                       ),
                                       TextSpan(
-                                        text: controller.order.value!.createdAt!
-                                            .toString()
-                                            .substring(0, 16),
+                                        text: Get.find<MyOrdersController>()
+                                            .formatDate(controller
+                                                .order.value!.createdAt!),
+
+                                        // controller.order.value!.createdAt!
+                                        //     .toString()
+                                        //     .substring(0, 16),
                                         style: Get.theme.textTheme.bodyMedium!
                                             .copyWith(
                                           color: AppColors.textColor2,
@@ -84,6 +89,7 @@ class SingleOrderDetailsView extends GetView<SingleOrderDetailsController> {
                             const SizedBox(
                               height: 20,
                             ),
+
                             ///product
                             CurvedButton(
                               height:
@@ -234,9 +240,11 @@ class SingleOrderDetailsView extends GetView<SingleOrderDetailsController> {
                                               width: 5,
                                             ),
                                             Text(
-                                              controller.item.value!.createdAt!
-                                                  .toString()
-                                                  .substring(0, 16),
+                                              Get.find<MyOrdersController>()
+                                                  .formatDate(controller.item.value!.createdAt.toString()),
+                                              // controller.item.value!.createdAt!
+                                              //     .toString()
+                                              //     .substring(0, 16),
                                               style: Get
                                                   .theme.textTheme.bodyMedium!
                                                   .copyWith(

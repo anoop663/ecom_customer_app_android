@@ -1,12 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:soulstyle/app/modules/cart/controller/cart_controller.dart';
-import 'package:soulstyle/app/modules/products/controllers/add_to_wishlist.dart';
-import 'package:soulstyle/app/routes/routes.dart';
+import 'package:ecommerce_app/app/modules/cart/controller/cart_controller.dart';
+import 'package:ecommerce_app/app/modules/products/controllers/add_to_wishlist.dart';
+import 'package:ecommerce_app/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:soulstyle/app/modules/home/controllers/home_controller.dart';
-import 'package:soulstyle/app/core/values/api_configs.dart';
-import 'package:soulstyle/app/widgets/app_bar.dart';
+import 'package:ecommerce_app/app/modules/home/controllers/home_controller.dart';
+import 'package:ecommerce_app/app/core/values/api_configs.dart';
+import 'package:ecommerce_app/app/widgets/app_bar.dart';
+
+import '../../../core/utils/shimmer_utils.dart';
+import '../../../core/values/colors.dart';
+import '../../../core/values/strings.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -65,11 +70,41 @@ class HomePage extends StatelessWidget {
                               child: Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 8.0),
-                                child: Image.network(
-                                  '${ApiConfig.bannerImageUrl}${banner.image ?? ''}',
+                                child: CachedNetworkImage(
+                                  placeholder: (context, url) {
+                                    return ShimmerUtil()
+                                        .container(width: double.infinity
+                                            // height:
+                                            // MediaQuery.of(context)
+                                            //     .size
+                                            //     .height *
+                                            //     0.28,
+                                            // width:
+                                            // MediaQuery.of(context)
+                                            //     .size
+                                            //     .width *
+                                            //     0.44,
+                                            );
+                                  },
+                                  imageUrl:
+                                      '${ApiConfig.bannerImageUrl}${banner.image ?? ''}',
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.28,
                                   fit: BoxFit.cover,
-                                  width: double.infinity,
+                                  alignment: Alignment.center,
+                                  errorWidget: (context, url, error) {
+                                    return Image.asset(
+                                      ImageStrings.noImage,
+                                      fit: BoxFit.cover,
+                                    );
+                                  },
                                 ),
+
+                                // Image.network(
+                                //   '${ApiConfig.bannerImageUrl}${banner.image ?? ''}',
+                                //   fit: BoxFit.cover,
+                                //   width: double.infinity,
+                                // ),
                               ),
                             );
                           },
@@ -88,7 +123,7 @@ class HomePage extends StatelessWidget {
                             Text(
                               'Our Brands',
                               style: const TextStyle(
-                                color: Colors.black,
+                                color: AppColors.textColor2,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -121,12 +156,35 @@ class HomePage extends StatelessWidget {
                                     },
                                     child: Container(
                                       margin: const EdgeInsets.all(7.0),
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        image: DecorationImage(
-                                          image: NetworkImage(brand.image!),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10)),
+                                        child: CachedNetworkImage(
+                                          placeholder: (context, url) {
+                                            return ShimmerUtil().container(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.28,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.44,
+                                            );
+                                          },
+                                          imageUrl: brand.image!,
+                                          // height: MediaQuery.of(context)
+                                          //     .size
+                                          //     .height *
+                                          //     0.28,
                                           fit: BoxFit.cover,
+                                          alignment: Alignment.center,
+                                          errorWidget: (context, url, error) {
+                                            return Image.asset(
+                                              ImageStrings.noImage,
+                                              fit: BoxFit.cover,
+                                            );
+                                          },
                                         ),
                                       ),
                                     ),
@@ -144,13 +202,14 @@ class HomePage extends StatelessWidget {
                             Text(
                               'Suggested for you',
                               style: const TextStyle(
-                                color: Colors.black,
+                                color: AppColors.textColor2,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                           ],
                         ),
+
                         //ProductCarousal(),
                         if (homeResponse?.suggestedProducts != null &&
                             homeResponse!.suggestedProducts!.isNotEmpty)
@@ -182,6 +241,7 @@ class HomePage extends StatelessWidget {
                                         Stack(
                                           children: [
                                             // Product Image
+
                                             Container(
                                               height: MediaQuery.of(context)
                                                       .size
@@ -195,14 +255,34 @@ class HomePage extends StatelessWidget {
                                               child: ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(12.0),
-                                                child: Image.network(
-                                                  '${ApiConfig.productImageUrl}${sugproducts.image}',
+                                                child: CachedNetworkImage(
+                                                  placeholder: (context, url) {
+                                                    return ShimmerUtil()
+                                                        .container(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.28,
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.44,
+                                                    );
+                                                  },
+                                                  imageUrl:
+                                                      '${ApiConfig.productImageUrl}${sugproducts.image}',
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.28,
                                                   fit: BoxFit.cover,
-                                                  errorBuilder: (context, error,
-                                                      stackTrace) {
-                                                    // Display a placeholder image on error
+                                                  alignment: Alignment.center,
+                                                  errorWidget:
+                                                      (context, url, error) {
                                                     return Image.asset(
-                                                      'assets/images/no_image.png',
+                                                      ImageStrings.noImage,
                                                       fit: BoxFit.cover,
                                                     );
                                                   },
@@ -210,20 +290,61 @@ class HomePage extends StatelessWidget {
                                               ),
                                             ),
                                             // Wishlist Icon
+                                            // Obx(() {
+                                            //   final isFavorite =
+                                            //       wishListController
+                                            //                   .favoriteStatus[
+                                            //               sugproducts.slug] ??
+                                            //           false;
+                                            //   return Positioned(
+                                            //     top: 10.0,
+                                            //     right: 10.0,
+                                            //     child: GestureDetector(
+                                            //       onTap: () {
+                                            //         wishListController
+                                            //             .toggleFavorite(
+                                            //                 sugproducts.slug!);
+                                            //       },
+                                            //       child: Container(
+                                            //         padding:
+                                            //             const EdgeInsets.all(
+                                            //                 6.0),
+                                            //         decoration: BoxDecoration(
+                                            //           shape: BoxShape.circle,
+                                            //           color: isFavorite
+                                            //               ? Colors.transparent
+                                            //               : Colors.transparent,
+                                            //         ),
+                                            //         child: Icon(
+                                            //           isFavorite
+                                            //               ? Icons
+                                            //                   .favorite // Filled heart
+                                            //               : Icons
+                                            //                   .favorite_border, // Outline heart
+                                            //           color: isFavorite
+                                            //               ? AppColors.redColor
+                                            //               : AppColors.textColor2,
+                                            //         ),
+                                            //       ),
+                                            //     ),
+                                            //   );
+                                            // }),
+                                            /// new wishlist icon added
+
                                             Obx(() {
-                                              final isFavorite =
-                                                  wishListController
-                                                              .favoriteStatus[
-                                                          sugproducts.slug] ??
-                                                      false;
                                               return Positioned(
                                                 top: 10.0,
                                                 right: 10.0,
                                                 child: GestureDetector(
                                                   onTap: () {
                                                     wishListController
-                                                        .toggleFavorite(
-                                                            sugproducts.slug!);
+                                                        .addAndRemovewishList(
+                                                            slug: sugproducts
+                                                                .slug);
+
+                                                    // wishListController
+                                                    //     .toggleFavorite(
+                                                    //     sugproducts.slug!);
                                                   },
                                                   child: Container(
                                                     padding:
@@ -231,19 +352,27 @@ class HomePage extends StatelessWidget {
                                                             6.0),
                                                     decoration: BoxDecoration(
                                                       shape: BoxShape.circle,
-                                                      color: isFavorite
+                                                      color: sugproducts
+                                                                  .wishlist
+                                                                  ?.value !=
+                                                              1
                                                           ? Colors.transparent
                                                           : Colors.transparent,
                                                     ),
                                                     child: Icon(
-                                                      isFavorite
+                                                      sugproducts.wishlist
+                                                                  ?.value ==
+                                                              1
                                                           ? Icons
                                                               .favorite // Filled heart
                                                           : Icons
                                                               .favorite_border, // Outline heart
-                                                      color: isFavorite
-                                                          ? Colors.red
-                                                          : Colors.black,
+                                                      color: sugproducts
+                                                                  .wishlist
+                                                                  ?.value ==
+                                                              1
+                                                          ? AppColors.redColor
+                                                          : AppColors.textColor2,
                                                     ),
                                                   ),
                                                 ),
@@ -318,7 +447,7 @@ class HomePage extends StatelessWidget {
                             Text(
                               'Best Sellers',
                               style: const TextStyle(
-                                color: Colors.black,
+                                color: AppColors.textColor2,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -365,13 +494,34 @@ class HomePage extends StatelessWidget {
                                               child: ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(12.0),
-                                                child: Image.network(
-                                                  '${ApiConfig.productImageUrl}${bestproducts.image}',
+                                                child: CachedNetworkImage(
+                                                  placeholder: (context, url) {
+                                                    return ShimmerUtil()
+                                                        .container(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.28,
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.44,
+                                                    );
+                                                  },
+                                                  imageUrl:
+                                                      '${ApiConfig.productImageUrl}${bestproducts.image}',
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.28,
                                                   fit: BoxFit.cover,
-                                                  errorBuilder: (context, error,
-                                                      stackTrace) {
+                                                  alignment: Alignment.center,
+                                                  errorWidget:
+                                                      (context, url, error) {
                                                     return Image.asset(
-                                                      'assets/images/no_image.png',
+                                                      ImageStrings.noImage,
                                                       fit: BoxFit.cover,
                                                     );
                                                   },
@@ -416,8 +566,8 @@ class HomePage extends StatelessWidget {
                                             //                 : Icons
                                             //                     .favorite_border, // Outline heart
                                             //             color: isFavorite
-                                            //                 ? Colors.red
-                                            //                 : Colors.black,
+                                            //                 ? AppColors.redColor
+                                            //                 : AppColors.textColor2,
                                             //           ),
                                             //         ),
                                             //       ),
@@ -438,14 +588,14 @@ class HomePage extends StatelessWidget {
                                                     'Unknown Product',
                                                 style: const TextStyle(
                                                   fontSize: 12.0,
-                                                  color: Colors.black,
+                                                  color: AppColors.textColor2,
                                                 ),
                                               ),
                                               Text(
                                                 '₹ ${bestproducts.price}',
                                                 style: const TextStyle(
                                                   fontSize: 16.0,
-                                                  color: Colors.black,
+                                                  color: AppColors.textColor2,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                               ),
@@ -468,7 +618,7 @@ class HomePage extends StatelessWidget {
                             Text(
                               'Trending Categories',
                               style: const TextStyle(
-                                color: Colors.black,
+                                color: AppColors.textColor2,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -530,7 +680,7 @@ class HomePage extends StatelessWidget {
                                     style: const TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w400,
-                                      color: Colors.black,
+                                      color: AppColors.textColor2,
                                     ),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -547,7 +697,7 @@ class HomePage extends StatelessWidget {
                         Text(
                           'Shop Exclusive Deals',
                           style: const TextStyle(
-                            color: Colors.black,
+                            color: AppColors.textColor2,
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
                           ),
@@ -604,7 +754,7 @@ class HomePage extends StatelessWidget {
           return Center(
             child: Text(
               'Failed to load home page data\n\nCheck your Internet connection',
-              style: TextStyle(color: Colors.red),
+              style: TextStyle(color: AppColors.redColor),
             ),
           );
         }

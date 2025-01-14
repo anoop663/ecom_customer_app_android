@@ -1,9 +1,11 @@
-import 'package:soulstyle/app/core/values/api_configs.dart';
-import 'package:soulstyle/app/core/values/colors.dart';
-import 'package:soulstyle/app/modules/home/models/home_product_model.dart';
-import 'package:soulstyle/app/widgets/curve_button.dart';
+import 'package:ecommerce_app/app/core/values/api_configs.dart';
+import 'package:ecommerce_app/app/core/values/colors.dart';
+import 'package:ecommerce_app/app/modules/home/models/home_product_model.dart';
+import 'package:ecommerce_app/app/widgets/curve_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../core/values/strings.dart';
 
 class CheckoutItems extends StatelessWidget {
   const CheckoutItems({super.key, required this.product});
@@ -41,12 +43,12 @@ class CheckoutItems extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10.0),
                         child: FadeInImage.assetNetwork(
-                          placeholder: 'assets/images/no_image.png',
+                          placeholder: ImageStrings.noImage,
                           image: '${ApiConfig.productImageUrl}${product.image}',
                           fit: BoxFit.cover,
                           imageErrorBuilder: (context, error, stackTrace) {
                             return Image.asset(
-                              'assets/images/no_image.png',
+                              ImageStrings.noImage,
                               fit: BoxFit.cover,
                             );
                           },

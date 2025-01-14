@@ -1,13 +1,16 @@
 import 'dart:convert';
+
+import 'package:ecommerce_app/app/data/api_provider.dart';
+import 'package:ecommerce_app/app/data/storage_provider.dart';
+import 'package:ecommerce_app/app/modules/home/models/home_product_model.dart';
+import 'package:ecommerce_app/app/modules/search/model/popular_search_response.dart';
+import 'package:ecommerce_app/app/modules/search/model/search_model.dart';
+import 'package:ecommerce_app/app/modules/search/model/search_response_model.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:soulstyle/app/data/api_provider.dart';
-import 'package:soulstyle/app/data/storage_provider.dart';
-import 'package:soulstyle/app/modules/home/models/home_product_model.dart';
-import 'package:soulstyle/app/modules/search/model/popular_search_response.dart';
-import 'package:soulstyle/app/modules/search/model/search_model.dart';
-import 'package:soulstyle/app/modules/search/model/search_response_model.dart';
+
+import '../../../core/values/colors.dart';
 
 class SearchController1 extends GetxController {
   final loading = false.obs;
@@ -68,16 +71,16 @@ class SearchController1 extends GetxController {
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Failed to retrieve products',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
+            colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
       }
     } catch (e) {
       loading.value = false;
       Get.snackbar('Error', 'Failed to load products: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
     }
   }
 
@@ -104,16 +107,16 @@ class SearchController1 extends GetxController {
         } else {
           Get.snackbar('Error',
               responseData1['message'] ?? 'Failed to retrieve products',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response1.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
+            colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
       }
     } catch (e) {
       loading.value = false;
       Get.snackbar('Error', 'Failed to load products: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
     }
   }
 }

@@ -1,14 +1,14 @@
 import 'dart:async';
 
+import 'package:ecommerce_app/app/core/values/colors.dart';
+import 'package:ecommerce_app/app/core/values/strings.dart';
+import 'package:ecommerce_app/app/modules/search/controller/search_controller.dart';
+import 'package:ecommerce_app/app/routes/routes.dart';
+import 'package:ecommerce_app/app/widgets/search_box.dart';
+import 'package:ecommerce_app/app/widgets/section_titile.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:soulstyle/app/core/values/colors.dart';
-import 'package:soulstyle/app/core/values/strings.dart';
-import 'package:soulstyle/app/modules/search/controller/search_controller.dart';
-import 'package:soulstyle/app/routes/routes.dart';
-import 'package:soulstyle/app/widgets/search_box.dart';
-import 'package:soulstyle/app/widgets/section_titile.dart';
 
 class SearchView extends StatelessWidget {
   final SearchController1 controller = Get.put(SearchController1());
@@ -206,7 +206,7 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: Hero(
         tag: 'logo',
         child: Material(
-          color: Colors.white,
+          color: AppColors.primary,
           child: InkWell(
             onTap: () {
               //Get.toNamed(

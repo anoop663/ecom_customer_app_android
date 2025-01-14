@@ -169,8 +169,8 @@ class Order {
   final String? orderCancelReason;
   final dynamic orderCancelDescription;
   final int? giftWrap;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
+  final String? createdAt;
+  final String? updatedAt;
   final String? orderWalletAmount;
   final String? orderTotalAmount;
   final String? orderNetTotalAmount;
@@ -316,12 +316,14 @@ class Order {
         orderCancelReason: json["order_cancel_reason"],
         orderCancelDescription: json["order_cancel_description"],
         giftWrap: json["gift_wrap"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
-        updatedAt: json["updated_at"] == null
-            ? null
-            : DateTime.parse(json["updated_at"]),
+    createdAt: json["created_at"],
+    updatedAt: json["updated_at"],
+        // createdAt: json["created_at"] == null
+        //     ? null
+        //     : DateTime.parse(json["created_at"]),
+        // updatedAt: json["updated_at"] == null
+        //     ? null
+        //     : DateTime.parse(json["updated_at"]),
         orderWalletAmount: json["order_wallet_amount"],
         orderTotalAmount: json["order_total_amount"],
         orderNetTotalAmount: json["order_net_total_amount"],
@@ -409,8 +411,8 @@ class Order {
         "order_cancel_reason": orderCancelReason,
         "order_cancel_description": orderCancelDescription,
         "gift_wrap": giftWrap,
-        "created_at": createdAt?.toIso8601String(),
-        "updated_at": updatedAt?.toIso8601String(),
+        "created_at": createdAt,
+        "updated_at": updatedAt,
         "order_wallet_amount": orderWalletAmount,
         "order_total_amount": orderTotalAmount,
         "order_net_total_amount": orderNetTotalAmount,

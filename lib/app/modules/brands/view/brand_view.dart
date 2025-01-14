@@ -1,8 +1,13 @@
-import 'package:soulstyle/app/modules/home/controllers/home_controller.dart';
-import 'package:soulstyle/app/routes/routes.dart';
-import 'package:soulstyle/app/widgets/app_bar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce_app/app/modules/home/controllers/home_controller.dart';
+import 'package:ecommerce_app/app/routes/routes.dart';
+import 'package:ecommerce_app/app/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../core/utils/shimmer_utils.dart';
+import '../../../core/values/colors.dart';
+import '../../../core/values/strings.dart';
 
 class BrandPage extends StatelessWidget {
   BrandPage({super.key});
@@ -22,7 +27,7 @@ class BrandPage extends StatelessWidget {
             const Text(
               'Brands',
               style: TextStyle(
-                color: Colors.black,
+                color: AppColors.textColor2,
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
               ),
@@ -51,17 +56,25 @@ class BrandPage extends StatelessWidget {
                           child: Container(
                             margin: const EdgeInsets.symmetric(vertical: 7.0),
                             height: MediaQuery.of(context).size.height * 0.6,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              image: DecorationImage(
-                                image: brand.image != null &&
-                                        brand.image!.isNotEmpty
-                                    ? NetworkImage(
-                                        brand.image!,
-                                      )
-                                    : const AssetImage(
-                                        'assets/images/no_image.png'),
+                            child: ClipRRect(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              child: CachedNetworkImage(
+                                placeholder: (context, url) {
+                                  return ShimmerUtil().container(
+                                    height: MediaQuery.of(context).size.height * 0.6,
+                                    width: double.infinity,
+                                  );
+                                },
+                                imageUrl: brand.image!,
                                 fit: BoxFit.cover,
+                                alignment: Alignment.center,
+                                errorWidget: (context, url, error) {
+                                  return Image.asset(
+                                    ImageStrings.noImage,
+                                    fit: BoxFit.cover,
+                                  );
+                                },
                               ),
                             ),
                           ),
@@ -72,7 +85,7 @@ class BrandPage extends StatelessWidget {
                             Text(
                               '0${index + 1}', // Display the number
                               style: const TextStyle(
-                                color: Colors.black,
+                                color: AppColors.textColor2,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -88,7 +101,7 @@ class BrandPage extends StatelessWidget {
                             Text(
                               brand.name!,
                               style: const TextStyle(
-                                color: Colors.black,
+                                color: AppColors.textColor2,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,
                               ),

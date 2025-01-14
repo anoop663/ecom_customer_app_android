@@ -1,11 +1,11 @@
-
-import 'package:soulstyle/app/data/api_provider.dart';
-import 'package:soulstyle/app/data/storage_provider.dart';
-import 'package:soulstyle/app/modules/home/models/home_product_model.dart';
-import 'package:soulstyle/app/modules/my_orders/model/myorders_response.dart';
-import 'package:flutter/material.dart';
+import 'package:ecommerce_app/app/data/api_provider.dart';
+import 'package:ecommerce_app/app/data/storage_provider.dart';
+import 'package:ecommerce_app/app/modules/home/models/home_product_model.dart';
+import 'package:ecommerce_app/app/modules/my_orders/model/myorders_response.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
+import '../../../core/values/colors.dart';
 import '../my_order_repo/my_order_repo.dart';
 
 class MyOrdersController extends GetxController {
@@ -36,10 +36,16 @@ class MyOrdersController extends GetxController {
       Get.snackbar(
         'Error',
         'Failed to load orders: $e',
-        colorText: Colors.white,
-        backgroundColor: Colors.black,
+        colorText: AppColors.textColor1,
+        backgroundColor: AppColors.textColor2,
       );
     }
+  }
+
+  String formatDate(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(dateTime);
+    return formattedDate;
   }
 
   // void getOrders() async {
@@ -64,16 +70,16 @@ class MyOrdersController extends GetxController {
   //         Get.snackbar(
   //           'Error',
   //           responseData['message'] ?? 'Failed to retrieve orders',
-  //           colorText: Colors.white,
-  //           backgroundColor: Colors.black,
+  //           colorText: AppColors.textColor1,
+  //           backgroundColor: AppColors.textColor2,
   //         );
   //       }
   //     } else {
   //       Get.snackbar(
   //         'Error',
   //         'Server error: ${apiResponse.statusCode}',
-  //         colorText: Colors.white,
-  //         backgroundColor: Colors.black,
+  //         colorText: AppColors.textColor1,
+  //         backgroundColor: AppColors.textColor2,
   //       );
   //     }
   //   } catch (e) {
@@ -81,8 +87,8 @@ class MyOrdersController extends GetxController {
   //     Get.snackbar(
   //       'Error',
   //       'Failed to load orders: $e',
-  //       colorText: Colors.white,
-  //       backgroundColor: Colors.black,
+  //       colorText: AppColors.textColor1,
+  //       backgroundColor: AppColors.textColor2,
   //     );
   //   }
   // }

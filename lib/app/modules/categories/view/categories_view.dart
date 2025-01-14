@@ -1,8 +1,13 @@
-import 'package:soulstyle/app/modules/home/controllers/home_controller.dart';
-import 'package:soulstyle/app/routes/routes.dart';
-import 'package:soulstyle/app/widgets/app_bar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce_app/app/modules/home/controllers/home_controller.dart';
+import 'package:ecommerce_app/app/routes/routes.dart';
+import 'package:ecommerce_app/app/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../core/utils/shimmer_utils.dart';
+import '../../../core/values/colors.dart';
+import '../../../core/values/strings.dart';
 
 class CategoriesPage extends StatelessWidget {
   CategoriesPage({super.key});
@@ -22,7 +27,7 @@ class CategoriesPage extends StatelessWidget {
             const Text(
               'Categories',
               style: TextStyle(
-                color: Colors.black,
+                color: AppColors.textColor2,
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
               ),
@@ -50,11 +55,28 @@ class CategoriesPage extends StatelessWidget {
                           child: Container(
                             margin: const EdgeInsets.symmetric(vertical: 2.0),
                             height: MediaQuery.of(context).size.height * 0.2,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              image: DecorationImage(
-                                image: NetworkImage(category.category!.image!),
+                            width: double.infinity,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              child: CachedNetworkImage(
+                                placeholder: (context, url) {
+                                  return ShimmerUtil()
+                                      .container(
+                                    height: MediaQuery.of(context).size.height * 0.2,
+                                    width: double.infinity,
+                                  );
+                                },
+                                imageUrl:
+                                category.category!.image!,
                                 fit: BoxFit.cover,
+                                alignment: Alignment.center,
+                                errorWidget:
+                                    (context, url, error) {
+                                  return Image.asset(
+                                    ImageStrings.noImage,
+                                    fit: BoxFit.cover,
+                                  );
+                                },
                               ),
                             ),
                           ),

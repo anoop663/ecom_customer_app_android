@@ -1,7 +1,6 @@
-
+import 'package:ecommerce_app/app/core/values/colors.dart';
+import 'package:ecommerce_app/app/core/values/strings.dart';
 import 'package:flutter/material.dart';
-import 'package:soulstyle/app/core/values/colors.dart';
-import 'package:soulstyle/app/core/values/strings.dart';
 
 class AppTheme {
   static ThemeData lightTheme = ThemeData(

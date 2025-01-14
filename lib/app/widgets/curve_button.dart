@@ -1,5 +1,5 @@
+import 'package:ecommerce_app/app/core/values/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:soulstyle/app/core/values/colors.dart';
 
 import 'loading_widget.dart';
 
@@ -16,8 +16,8 @@ class CurvedButton extends StatelessWidget {
       this.borderWidth,
       this.borderRadius,
       this.child,
-      this.buttonColor = Colors.white,
-      this.textColor = Colors.black,
+      this.buttonColor = AppColors.textColor1,
+      this.textColor = AppColors.textColor2,
       this.borderColor,
       this.isLoading = false});
 

@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:soulstyle/app/core/values/api_configs.dart';
-import 'package:soulstyle/app/core/values/api_constants.dart';
-import 'package:soulstyle/app/core/values/constants.dart';
+import 'package:ecommerce_app/app/core/values/api_configs.dart';
+import 'package:ecommerce_app/app/core/values/api_constants.dart';
+import 'package:ecommerce_app/app/core/values/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+
+import '../core/values/colors.dart';
 
 class AuthService {
   Future<http.Response?> postRequest(
@@ -22,8 +24,8 @@ class AuthService {
         Get.snackbar(
           'Error',
           'Server error: ${response.statusCode}',
-          colorText: Colors.white,
-          backgroundColor: Colors.black,
+          colorText: AppColors.primary,
+          backgroundColor: AppColors.textColor2,
         );
       }
     } on SocketException {

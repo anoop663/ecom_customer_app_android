@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/extensions/api_base_helper.dart';
+import '../../../core/values/colors.dart';
 import '../../../data/api_provider.dart';
 import '../../my_orders/my_order_repo/my_order_repo.dart';
 
@@ -67,8 +67,8 @@ class ConfirmCancelController extends GetxController {
       Get.snackbar(
         'Error',
         'Failed to load orders: $e',
-        colorText: Colors.white,
-        backgroundColor: Colors.black,
+        colorText: AppColors.textColor1,
+        backgroundColor: AppColors.textColor2,
       );
     }
   }
@@ -91,8 +91,8 @@ class ConfirmCancelController extends GetxController {
       Get.snackbar(
         'Error',
         'Failed to load orders: $e',
-        colorText: Colors.white,
-        backgroundColor: Colors.black,
+        colorText: AppColors.textColor1,
+        backgroundColor: AppColors.textColor2,
       );
     }
   }

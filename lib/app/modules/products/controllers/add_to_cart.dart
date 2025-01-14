@@ -1,11 +1,12 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
+import 'package:ecommerce_app/app/data/api_provider.dart';
+import 'package:ecommerce_app/app/data/storage_provider.dart';
+import 'package:ecommerce_app/app/modules/cart/controller/cart_controller.dart';
+import 'package:ecommerce_app/app/modules/products/controllers/product_controller.dart';
+import 'package:ecommerce_app/app/modules/products/model/add_to_cart_model.dart';
 import 'package:get/get.dart';
-import 'package:soulstyle/app/data/api_provider.dart';
-import 'package:soulstyle/app/data/storage_provider.dart';
-import 'package:soulstyle/app/modules/cart/controller/cart_controller.dart';
-import 'package:soulstyle/app/modules/products/controllers/product_controller.dart';
-import 'package:soulstyle/app/modules/products/model/add_to_cart_model.dart';
+
+import '../../../core/values/colors.dart';
 
 class AddToCartController extends GetxController {
   final AuthService authService = AuthService();
@@ -33,7 +34,7 @@ class AddToCartController extends GetxController {
         final responseData = json.decode(response.body);
         if (responseData['success'] == 1) {
           Get.snackbar('Success', 'Item added to Cart',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
           Get.find<CartController>().viewCart(needLoading: false);
           isItemSlug.value = '';
           if (!Get.isRegistered<ProductController>()) {
@@ -51,19 +52,19 @@ class AddToCartController extends GetxController {
           }
         } else {
           Get.snackbar('Error', responseData['message'] ?? 'Item adding failed',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
           isItemSlug.value = '';
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
+            colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
         isItemSlug.value = '';
       }
     } catch (e) {
       isLoading.value = false;
       isItemSlug.value = '';
       Get.snackbar('Error', 'Failed to add to Cart: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
     }
   }
 }

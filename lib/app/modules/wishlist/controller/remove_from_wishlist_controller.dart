@@ -1,11 +1,12 @@
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
+import 'package:ecommerce_app/app/data/api_provider.dart';
+import 'package:ecommerce_app/app/data/storage_provider.dart';
+import 'package:ecommerce_app/app/modules/home/controllers/home_controller.dart';
+import 'package:ecommerce_app/app/modules/wishlist/model/remove_wishlist.dart';
+import 'package:ecommerce_app/app/modules/wishlist/model/wishlist_response.dart';
 import 'package:get/get.dart';
-import 'package:soulstyle/app/data/api_provider.dart';
-import 'package:soulstyle/app/data/storage_provider.dart';
-import 'package:soulstyle/app/modules/wishlist/model/remove_wishlist.dart';
-import 'package:soulstyle/app/modules/wishlist/model/wishlist_response.dart';
+
+import '../../../core/values/colors.dart';
 
 class RemoveFromWishlistController extends GetxController {
   final AuthService authService = AuthService();
@@ -41,22 +42,22 @@ class RemoveFromWishlistController extends GetxController {
         final responseData = json.decode(response.body);
 
         if (responseData['success'] == 1) {
-
+         Get.find<HomeController>().homeLoad(needLoading: false);
           //Get.snackbar('Success', 'Item removed successfully',
-          //    colorText: Colors.white, backgroundColor: Colors.black);
+          //    colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Items removing failed',
-              colorText: Colors.white, backgroundColor: Colors.black);
+              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: Colors.white, backgroundColor: Colors.black);
+            colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
       }
     } catch (e) {
       isLoading.value = false;
       Get.snackbar('Error', 'Failed to remove item: $e',
-          colorText: Colors.white, backgroundColor: Colors.black);
+          colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
     }
   }
 }

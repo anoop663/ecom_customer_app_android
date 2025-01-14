@@ -1,7 +1,6 @@
-
+import 'package:ecommerce_app/app/data/storage_provider.dart';
+import 'package:ecommerce_app/app/routes/routes.dart';
 import 'package:get/get.dart';
-import 'package:soulstyle/app/data/storage_provider.dart';
-import 'package:soulstyle/app/routes/routes.dart';
 
 class SplashController extends GetxController with GetTickerProviderStateMixin {
   final isLoading = false.obs;

@@ -14,12 +14,12 @@ class Loading extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          Container(color: Colors.black.withOpacity(0.2)),
+          Container(color: AppColors.textColor2.withOpacity(0.2)),
           Container(
             height: 90,
             width: 90,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.textColor1,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Center(
