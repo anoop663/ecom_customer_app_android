@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
@@ -14,7 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
-import '../../../core/values/colors.dart';
 import '../../../core/values/constants.dart';
 import '../../cart/controller/cart_controller.dart';
 import '../model/payment_callback_model.dart';
@@ -30,6 +31,7 @@ class CheckoutScreenController extends GetxController {
   final checkOutResponse = Rxn<CheckoutResponse>();
   final addressResponse2 = Rxn<AddressListResponse>();
   final paymentMode = (-1).obs;
+  RxInt selectedMode=4.obs;
   final AuthService authService = AuthService();
   final StorageProvider storageProvider = StorageProvider();
   final scrollController = ScrollController();
@@ -41,9 +43,10 @@ class CheckoutScreenController extends GetxController {
   var initialLoading = true.obs;
   var cartItems1 = <Product>[].obs;
   late Razorpay razorpay;
-  @override
+
   @override
   void onInit() {
+    print('init calling');
     super.onInit();
     razorpay = Razorpay();
     razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
@@ -68,8 +71,9 @@ class CheckoutScreenController extends GetxController {
   }
 
   Future _startInitialLoading() async {
+    log('........loading...');
     await getAddressFunction1();
-    getCheckOut();
+    await getCheckOut();
     Future.delayed(const Duration(seconds: 2), () {
       initialLoading.value = false;
     });
@@ -83,9 +87,10 @@ class CheckoutScreenController extends GetxController {
       token: idToken.$2,
     );
     try {
+      selectedAddress.value = Address();
       final response = await authService
           .getAddress(authData5.toJson())
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 15));
       loading.value = false;
       if (response.statusCode == 200) {
         log('responce iss---${json.decode(response.body)}');
@@ -96,29 +101,32 @@ class CheckoutScreenController extends GetxController {
             (address1) => address1.isDefault == 1,
             orElse: () => Address(),
           );
+          log('default address iss---${jsonEncode(defaultAddress)}');
           if (defaultAddress != null) {
             selectedAddress.value = (defaultAddress.id == null
                 ? addressResponse2.value?.addresses?.first
                 : defaultAddress)!;
+            log('selectedAddress address iss---${jsonEncode(selectedAddress.value)}');
           }
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Failed to list address',
-              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
+              colorText: Colors.white, backgroundColor: Colors.black);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
+            colorText: Colors.white, backgroundColor: Colors.black);
       }
     } catch (e) {
       loading.value = false;
       Get.snackbar('Error', 'Failed to load address: $e',
-          colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
+          colorText: Colors.white, backgroundColor: Colors.black);
     }
   }
 
   @override
   void onReady() {
+    print('ondeadae---');
     // checkOut();
     // getCheckOut();
   }
@@ -147,22 +155,22 @@ class CheckoutScreenController extends GetxController {
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Items viewing failed',
-              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
+              colorText: Colors.white, backgroundColor: Colors.black);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
+            colorText: Colors.white, backgroundColor: Colors.black);
       }
     } catch (e) {
       loading.value = false;
       Get.snackbar('Error', 'Failed to view cart: $e',
-          colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
+          colorText: Colors.white, backgroundColor: Colors.black);
     }
   }
 
   // var onlinePaymentResponse;
   void checkOut() async {
-   // print('payment mode --${paymentMode.value}');
+    // print('payment mode --${paymentMode.value}');
     var idToken = storageProvider.readLoginDetails();
     CheckoutModel authData5 = CheckoutModel(
       id: idToken.$1,
@@ -172,7 +180,7 @@ class CheckoutScreenController extends GetxController {
       paymentMode: paymentMode.value.toString(),
     );
 
-    // ignore: avoid_print
+    
     print('checkOutResponse.value===${authData5.toJson()}');
     if (paymentMode.value == -1) {
       appToast('', 'Select a payment mode to continue');
@@ -201,12 +209,12 @@ class CheckoutScreenController extends GetxController {
           } else {
             Get.snackbar(
                 'Error', responseData1['message'] ?? 'Failed to list address',
-                colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
+                colorText: Colors.white, backgroundColor: Colors.black);
             loading.value = false;
           }
         } else {
           Get.snackbar('Error', 'Server error: ${response.statusCode}',
-              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
+              colorText: Colors.white, backgroundColor: Colors.black);
           loading.value = false;
         }
       } else {
@@ -226,16 +234,16 @@ class CheckoutScreenController extends GetxController {
             } else {
               Get.snackbar(
                   'Error', responseData1['message'] ?? 'Failed to list address',
-                  colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
+                  colorText: Colors.white, backgroundColor: Colors.black);
             }
           } else {
             Get.snackbar('Error', 'Server error: ${response.statusCode}',
-                colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
+                colorText: Colors.white, backgroundColor: Colors.black);
           }
         } catch (e) {
           loading.value = false;
           Get.snackbar('Error', 'Failed to load address: $e',
-              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
+              colorText: Colors.white, backgroundColor: Colors.black);
         }
       }
     }
@@ -248,7 +256,7 @@ class CheckoutScreenController extends GetxController {
       ExternalWalletResponse? walletResponse,
       PaymentSuccessResponse? successResponse}) async {
     var idToken = storageProvider.readLoginDetails();
-     isLoading.value = true;
+    isLoading.value = true;
     FinalCheckoutModel finalCheckoutModel = FinalCheckoutModel(
       id: idToken.$1,
       token: idToken.$2,
@@ -258,7 +266,7 @@ class CheckoutScreenController extends GetxController {
           ? successResponse.data!['razorpay_payment_id']
           : failureResponse?.error!['metadata']['payment_id'],
     );
-   // print(finalCheckoutModel.toJson());
+    // print(finalCheckoutModel.toJson());
     try {
       final response =
           await authService.finalCheckOut(body: finalCheckoutModel.toJson());
@@ -278,17 +286,17 @@ class CheckoutScreenController extends GetxController {
           isLoading.value = false;
           Get.snackbar(
               'Error', responseData1['message'] ?? 'Failed to list address',
-              colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
+              colorText: Colors.white, backgroundColor: Colors.black);
         }
       } else {
         isLoading.value = false;
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
+            colorText: Colors.white, backgroundColor: Colors.black);
       }
     } catch (e) {
       isLoading.value = false;
       Get.snackbar('Error', 'Failed to load address: $e',
-          colorText: AppColors.primary, backgroundColor: AppColors.textColor2);
+          colorText: Colors.white, backgroundColor: Colors.black);
     }
   }
 
@@ -315,39 +323,32 @@ class CheckoutScreenController extends GetxController {
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Items viewing failed',
-              colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
+              colorText: Colors.white, backgroundColor: Colors.black);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
+            colorText: Colors.white, backgroundColor: Colors.black);
       }
     } catch (e) {
       loading.value = false;
       Get.snackbar('Error', 'Failed to view cart: $e',
-          colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
+          colorText: Colors.white, backgroundColor: Colors.black);
     }
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     // Do something when payment succeeds
-    // ignore: avoid_print
     print('PaymentSuccessResponse---${response.data}');
-    // ignore: avoid_print
     print('PaymentSuccessResponse---${response.orderId}');
-    // ignore: avoid_print
     print('PaymentSuccessResponse---${response.paymentId}');
-    // ignore: avoid_print
     print('PaymentSuccessResponse---${response.signature}');
     finalCheckOut(successResponse: response, status: 'success');
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
     // Do something when payment fails
-    // ignore: avoid_print
     print(' PaymentFailureResponse---${response.message}');
-    // ignore: avoid_print
     print(' PaymentFailureResponse---${response.code}');
-    // ignore: avoid_print
     print(' PaymentFailureResponse---${response.error}');
 
     finalCheckOut(failureResponse: response, status: 'failure');
@@ -355,7 +356,6 @@ class CheckoutScreenController extends GetxController {
 
   void _handleExternalWallet(ExternalWalletResponse response) {
     // Do something when an external wallet was selected
-    // ignore: avoid_print
     print(' ExternalWalletResponse---${response.walletName}');
     // finalCheckOut(razorPayResponce: response.walletName, status: 'failure');
   }
@@ -418,7 +418,6 @@ class CheckoutScreenController extends GetxController {
         orderId: data['id'],
       );
     }
-    // ignore: avoid_print
     print('responce is---${response.body}');
   }
 }

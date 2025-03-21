@@ -17,7 +17,6 @@ import '../widgets/curve_button.dart';
 import '../widgets/loading_widget.dart';
 
 class NavigationController extends GetxController {
-
   var selectedIndex = 0.obs;
 
   void updateIndex(int index) {
@@ -82,15 +81,18 @@ class BaseController extends GetxController {
               AddressListResponse.fromJson(responseData);
 
           Get.snackbar('Success', 'Address Listed',
-              colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
+              colorText: AppColors.textColor1,
+              backgroundColor: AppColors.textColor2);
         } else {
           Get.snackbar(
               'Error', responseData['message'] ?? 'Failed to list address',
-              colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
+              colorText: AppColors.textColor1,
+              backgroundColor: AppColors.textColor2);
         }
       } else {
         Get.snackbar('Error', 'Server error: ${response.statusCode}',
-            colorText: AppColors.textColor1, backgroundColor: AppColors.textColor2);
+            colorText: AppColors.textColor1,
+            backgroundColor: AppColors.textColor2);
       }
     } catch (e) {
       addressLoading.value = false;
@@ -271,6 +273,9 @@ class BaseController extends GetxController {
                                     ),
                                     CurvedButton(
                                       onClick: () async {
+                                        // ignore: avoid_print
+                                        print(addressListResponse
+                                            .value!.addresses![index]);
                                         Get.find<CheckoutScreenController>()
                                                 .selectedAddress
                                                 .value =

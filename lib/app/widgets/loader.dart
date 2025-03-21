@@ -14,6 +14,7 @@ class Loading extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
+          // ignore: deprecated_member_use
           Container(color: AppColors.textColor2.withOpacity(0.2)),
           Container(
             height: 90,

@@ -12,6 +12,7 @@ import 'package:ecommerce_app/app/widgets/support_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../checkout/controller/chekout_controller.dart';
 
 class CartView extends StatelessWidget {
   const CartView({super.key});
@@ -241,24 +242,21 @@ class CartView extends StatelessWidget {
                                       //   Get.put(MyAddressListController());
                                       //   Get.find<MyAddressListController>()
                                       //       .getAddressFunction();
-                                      // }else{
+                                      // } else {
                                       //   Get.find<MyAddressListController>()
                                       //       .getAddressFunction();
                                       // }
                                       //
-                                      // if (!Get.isRegistered<
-                                      //     BaseController>()) {
+                                      // if (!Get.isRegistered<BaseController>()) {
                                       //   Get.put(BaseController());
                                       //   Get.find<BaseController>()
                                       //       .openAddressListBottomSheet();
-                                      // }else{
+                                      // } else {
                                       //   Get.find<BaseController>()
                                       //       .openAddressListBottomSheet();
                                       // }
-
-
+                                      Get.put(CheckoutScreenController());
                                       Get.toNamed(Routes.checkout);
-
                                     },
                                     text: 'PROCEED',
                                     textColor: AppColors.primary,

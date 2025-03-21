@@ -23,6 +23,7 @@ class _SaltedKey<S, V> extends LocalKey {
   final V value;
 
   @override
+  // ignore: hash_and_equals
   bool operator ==(Object other) {
     if (other.runtimeType != runtimeType) return false;
     return other is _SaltedKey<S, V> &&

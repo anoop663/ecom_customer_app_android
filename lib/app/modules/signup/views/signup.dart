@@ -26,6 +26,7 @@ class SignupPage extends StatelessWidget {
               width: screenSize.width,
               child: Image.asset(
                 ImageStrings.signupBg,
+                // ignore: deprecated_member_use
                 color: AppColors.textColor2.withOpacity(0.6),
                 colorBlendMode: BlendMode.darken,
                 fit: BoxFit.cover,
