@@ -32,7 +32,7 @@ class _SaltedKey<S, V> extends LocalKey {
 
   @override
   // ignore: deprecated_member_use
-  int get hashCode => hashValues(runtimeType, salt, value);
+ // int get hashCode => hashValues(runtimeType, salt, value);
 
   @override
   String toString() {

@@ -10,6 +10,14 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 android {
+    compileSdkVersion 35
+    defaultConfig {
+        applicationId "com.android.application"
+        minSdkVersion 21
+        targetSdkVersion 35
+        versionCode 1
+        versionName "1.0"
+    }
     namespace = "com.soulstyle.ecom_app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
